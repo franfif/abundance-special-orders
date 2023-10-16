@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.urls import reverse
 
 
 class Vendor(models.Model):
@@ -65,6 +66,7 @@ class Order(models.Model):
     description = models.CharField(max_length=128)
     vendor = models.ForeignKey(Vendor, on_delete=models.PROTECT, blank=True, null=True)
     product_number = models.CharField(max_length=64, blank=True, null=True)
+
     quantity = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(1)], blank=True, null=True
     )
@@ -75,14 +77,23 @@ class Order(models.Model):
         blank=True,
         null=True,
     )
+    has_bottle_deposit = models.BooleanField(null=True, blank=True)
+    number_bottle_deposit = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1)], blank=True, null=True
+    )
+
     customer = models.ForeignKey(
         Customer, on_delete=models.PROTECT, blank=True, null=True
     )
+    paid = models.BooleanField(default=False)
+
     status = models.CharField(choices=ORDER_STATUS, max_length=64, null=True)
+    is_stand_by = models.BooleanField(default=False)
+    memo = models.TextField(max_length=500, null=True, blank=True)
+    employee_initials = models.CharField(max_length=5)
+
     date_created = models.DateField(auto_now_add=True)
     date_ordered = models.DateField(null=True, blank=True)
     date_received = models.DateField(null=True, blank=True)
     date_called = models.DateField(null=True, blank=True)
     date_picked_up = models.DateField(null=True, blank=True)
-    paid = models.BooleanField(default=False)
-    employee_initials = models.TextField(max_length="5")
