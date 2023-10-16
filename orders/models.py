@@ -8,21 +8,29 @@ class Vendor(models.Model):
 
 
 class CustomerStatus(models.Model):
+    class Meta:
+        verbose_name_plural = "customer statuses"
+
     NON_SHAREHOLDER = "NON_SHAREHOLDER"
     SHAREHOLDER = "SHAREHOLDER"
     SHAREHOLDER_RESALE = "SHAREHOLDER_RESALE"
     EMPLOYEE = "EMPLOYEE"
 
-    STATUS = [
+    STATUS_CHOICES = [
         (NON_SHAREHOLDER, "Non-shareholder"),
         (SHAREHOLDER, "Shareholder"),
         (SHAREHOLDER_RESALE, "Shareholder Resale"),
         (EMPLOYEE, "Employee"),
     ]
-    status = models.CharField(choices=STATUS, max_length=64, unique=True)
+    status = models.CharField(choices=STATUS_CHOICES, max_length=64, unique=True)
     margin = models.DecimalField(
-        validators=[MinValueValidator(0.0), MaxValueValidator(100.0)]
+        decimal_places=2,
+        max_digits=6,
+        validators=[MinValueValidator(0.0), MaxValueValidator(100.0)],
     )
+
+    def __str__(self):
+        return f"{dict(self.STATUS_CHOICES)[str(self.status)]}, {self.margin}%"
 
 
 class Customer(models.Model):
@@ -61,7 +69,11 @@ class Order(models.Model):
         validators=[MinValueValidator(1)], blank=True, null=True
     )
     book_price = models.DecimalField(
-        validators=[MinValueValidator(0.0)], blank=True, null=True
+        decimal_places=2,
+        max_digits=6,
+        validators=[MinValueValidator(0.0)],
+        blank=True,
+        null=True,
     )
     customer = models.ForeignKey(
         Customer, on_delete=models.PROTECT, blank=True, null=True
