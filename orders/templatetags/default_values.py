@@ -1,0 +1,5 @@
+NO_TEXT = "________"
+NO_PRICE = "__.__"
+NO_QUANTITY = "__"
+NO_STATUS = "Incomplete"
+NO_DATE = "No"

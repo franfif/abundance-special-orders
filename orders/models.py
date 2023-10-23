@@ -7,6 +7,9 @@ class Vendor(models.Model):
     name = models.CharField(max_length=128)
     ordering_method = models.CharField(max_length=64, blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class CustomerStatus(models.Model):
     class Meta:
@@ -77,7 +80,7 @@ class Order(models.Model):
         blank=True,
         null=True,
     )
-    has_bottle_deposit = models.BooleanField(null=True, blank=True)
+    has_bottle_deposit = models.BooleanField(default=False)
     number_bottle_deposit = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(1)], blank=True, null=True
     )
@@ -97,3 +100,15 @@ class Order(models.Model):
     date_received = models.DateField(null=True, blank=True)
     date_called = models.DateField(null=True, blank=True)
     date_picked_up = models.DateField(null=True, blank=True)
+
+    def is_complete(self):
+        return all(
+            [
+                self.vendor is not None,
+                self.product_number is not None,
+                self.quantity is not None,
+                self.book_price is not None,
+                not self.has_bottle_deposit or self.number_bottle_deposit is not None,
+                self.customer is not None,
+            ]
+        )

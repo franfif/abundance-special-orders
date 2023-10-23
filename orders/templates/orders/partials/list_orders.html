@@ -1,0 +1,7 @@
+{% if orders|length > 0 %}
+{% for order in orders %}
+{% include 'orders/partials/order_snippet.html' %}
+{% endfor %}
+{% else %}
+<h2 class="text-center mt-5 mb-3">There are no orders yet.</h2>
+{% endif %}

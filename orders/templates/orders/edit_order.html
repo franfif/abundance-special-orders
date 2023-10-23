@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ order_form.as_p }}
+    {{ customer_form.as_p }}
+    <button type="submit">Save Order</button>
+</form>
+{% include 'orders/partials/list_orders.html' %}
+
+{% endblock %}

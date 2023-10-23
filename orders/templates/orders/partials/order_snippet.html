@@ -1,0 +1,38 @@
+{% load orders_extras %}
+
+<div class="card border-primary bg-ticket my-2">
+    <div class="card-header d-flex">
+    </div>
+    <div class="card-body">
+        <div>Date: {{ order.date_created }}, {{ order|status }}</div>
+        <div>{{ order|quantity }} units of {{ order.description }}</div>
+        <div>{{ order|vendor }} - {{ order|product_number }}</div>
+        <div>${{ order|book_price }} => ${{ order|total_price }} ({{ order|paid }})</div>
+        <div>{{ order|customer_name }}, {{ order|customer_status }}</div>
+        <div>{{ order|customer_company }}</div>
+        <div>{{ order|customer_phone_number }}</div>
+        <div>Ordered: {{ order.date_ordered|date }}</div>
+        <div>Received: {{ order.date_received|date }}</div>
+        <div>Called: {{ order.date_called|date }}</div>
+        <div>Picked-up: {{ order.date_picked_up|date }}</div>
+        <div>Employee initials: {{ order.employee_initials }}</div>
+        <div>Memo: {{ order.memo }}</div>
+
+    </div>
+
+</div>
+
+
+<!--has_bottle_deposit = models.BooleanField(null=True, blank=True)-->
+<!--number_bottle_deposit = models.PositiveSmallIntegerField(-->
+<!--validators=[MinValueValidator(1)], blank=True, null=True-->
+<!--)-->
+
+<!--customer = models.ForeignKey(-->
+<!--Customer, on_delete=models.PROTECT, blank=True, null=True-->
+<!--)-->
+
+<!--status = models.CharField(choices=ORDER_STATUS, max_length=64, null=True)-->
+<!--is_stand_by = models.BooleanField(default=False)-->
+<!--memo = models.TextField(max_length=500, null=True, blank=True)-->
+<!--employee_initials = models.CharField(max_length=5)-->
