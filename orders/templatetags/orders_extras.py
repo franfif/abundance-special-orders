@@ -55,16 +55,24 @@ def total_price(value):
         return default_values.NO_PRICE
 
 
+def default_name(first_name, last_name):
+    if first_name is None:
+        first_name = default_values.NO_TEXT
+    if last_name is None:
+        last_name = default_values.NO_TEXT
+    return f"{first_name}, {last_name}"
+
+
 @register.filter
 def customer_name(value):
-    if value.customer is not None:
-        return f"{value.customer.first_name}, {value.customer.last_name}"
-    return default_values.NO_TEXT
+    if value.customer is None:
+        return default_name(None, None)
+    return default_name(value.customer.first_name, value.customer.last_name)
 
 
 @register.filter
 def customer_status(value):
-    if value.customer is not None:
+    if value.customer is not None and value.customer.status is not None:
         return value.customer.status.get_status_display()
     return default_values.NO_TEXT
 
