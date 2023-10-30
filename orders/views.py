@@ -2,6 +2,7 @@ from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 
 from . import models, forms
+from customers.forms import CustomerForm
 
 
 def home(request):
@@ -12,10 +13,10 @@ def home(request):
 def create_order(request):
     orders = models.Order.objects.all()
     order_form = forms.CreateOrderForm()
-    customer_form = forms.CustomerForm()
+    customer_form = CustomerForm()
     if request.method == "POST":
         order_form = forms.CreateOrderForm(request.POST)
-        customer_form = forms.CustomerForm(request.POST)
+        customer_form = CustomerForm(request.POST)
         if all([order_form.is_valid(), customer_form.is_valid()]):
             customer = customer_form.save()
             order = order_form.save(commit=False)
@@ -47,10 +48,10 @@ def edit_order(request, order_id):
         customer = get_object_or_404(models.Customer, id=order.customer.pk)
 
     order_form = forms.CreateOrderForm(instance=order)
-    customer_form = forms.CustomerForm(instance=customer)
+    customer_form = CustomerForm(instance=customer)
     if request.method == "POST":
         order_form = forms.CreateOrderForm(request.POST, instance=order)
-        customer_form = forms.CustomerForm(request.POST, instance=customer)
+        customer_form = CustomerForm(request.POST, instance=customer)
         if all([order_form.is_valid(), customer_form.is_valid()]):
             customer = customer_form.save()
             order = order_form.save(commit=False)

@@ -35,15 +35,3 @@ class EditOrderForm(forms.ModelForm):
             "date_called",
             "date_picked_up",
         ]
-
-
-class CustomerForm(forms.ModelForm):
-    class Meta:
-        model = models.Customer
-        fields = [
-            "first_name",
-            "last_name",
-            "company",
-            "phone_number",
-            "status",
-        ]

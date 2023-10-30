@@ -1,64 +1,9 @@
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
-from django.urls import reverse
+from django.core.validators import MinValueValidator
 
 
-class Vendor(models.Model):
-    DAYS_OF_WEEK = (
-        (0, "Monday"),
-        (1, "Tuesday"),
-        (2, "Wednesday"),
-        (3, "Thursday"),
-        (4, "Friday"),
-        (5, "Saturday"),
-        (6, "Sunday"),
-    )
-
-    name = models.CharField(max_length=128)
-    ordering_method = models.CharField(max_length=64, blank=True, null=True)
-    order_day = models.CharField(
-        max_length=1, choices=DAYS_OF_WEEK, blank=True, null=True
-    )
-    delivery_day = models.CharField(
-        max_length=1, choices=DAYS_OF_WEEK, blank=True, null=True
-    )
-
-    def __str__(self):
-        return self.name
-
-
-class CustomerStatus(models.Model):
-    class Meta:
-        verbose_name_plural = "customer statuses"
-
-    NON_SHAREHOLDER = "NON_SHAREHOLDER"
-    SHAREHOLDER = "SHAREHOLDER"
-    SHAREHOLDER_RESALE = "SHAREHOLDER_RESALE"
-    EMPLOYEE = "EMPLOYEE"
-
-    STATUS_CHOICES = [
-        (NON_SHAREHOLDER, "Non-shareholder"),
-        (SHAREHOLDER, "Shareholder"),
-        (SHAREHOLDER_RESALE, "Shareholder Resale"),
-        (EMPLOYEE, "Employee"),
-    ]
-    status = models.CharField(choices=STATUS_CHOICES, max_length=64, unique=True)
-    margin = models.DecimalField(
-        decimal_places=2,
-        max_digits=6,
-        validators=[MinValueValidator(0.0), MaxValueValidator(100.0)],
-    )
-
-    def __str__(self):
-        return f"{dict(self.STATUS_CHOICES)[str(self.status)]}, {self.margin}%"
-
-
-class Customer(models.Model):
-    first_name = models.CharField(max_length=128)
-    last_name = models.CharField(max_length=128)
-    company = models.CharField(max_length=128, null=True, blank=True)
-    phone_number = models.CharField(max_length=128)
-    status = models.ForeignKey(CustomerStatus, on_delete=models.PROTECT)
+from customers.models import Customer
+from vendors.models import Vendor
 
 
 class Order(models.Model):
