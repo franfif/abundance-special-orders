@@ -1,0 +1,16 @@
+{% load orders_extras %}
+
+{% if edit %}
+<tr> {{ form.as_td }}</tr>
+{% else %}
+<tr>
+    <td>{{ vendor.name }}</td>
+    <td>{{ vendor.get_order_day_display }}</td>
+    <td>{{ vendor.get_delivery_day_display }}</td>
+    <td>{{ vendor.ordering_method }}</td>
+    <td>
+        Edit
+        <input name="edit" type="checkbox"/>
+    </td>
+</tr>
+{% endif %}

@@ -1,0 +1,15 @@
+{% if vendors|length > 0 %}
+<table>
+    <tr>
+        <th>Vendor</th>
+        <th>Order by</th>
+        <th>Delivery on</th>
+        <th>Order method</th>
+    </tr>
+    {% for vendor in vendors %}
+    {% include 'vendors/partials/vendor_snippet.html' %}
+    {% endfor %}
+</table>
+{% else %}
+<h2 class="text-center mt-5 mb-3">There are no vendors yet.</h2>
+{% endif %}

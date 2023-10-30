@@ -1,0 +1,7 @@
+<h2>Add a new vendor:</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ vendor_form.as_p }}
+    <button type="submit" name="save">Save</button>
+</form>
+
