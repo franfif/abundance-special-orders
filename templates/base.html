@@ -1,10 +1,12 @@
 {% load static %}
+{% load unicorn %}
 
 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Special Order - Abundance Food Co-op</title>
+    {% unicorn_scripts %}
 </head>
 <body>
 <nav class="navbar sticky-top navbar-expand-md navbar-light bg-light">
@@ -32,6 +34,7 @@
     <div class="container">
         {% block content %}{% endblock %}
     </div>
+    {% unicorn 'hello-world' %}
 </main>
 <footer class="mt-auto px-auto">
     <div class="text-center bg-light py-4 px-0 mt-4">
@@ -45,5 +48,6 @@
         </span>
     </div>
 </footer>
+{% csrf_token %}
 </body>
 </html>
