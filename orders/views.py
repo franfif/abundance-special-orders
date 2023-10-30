@@ -1,11 +1,13 @@
-from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 
 from . import models, forms
 from customers.forms import CustomerForm
 
 
 def home(request):
+    for order in models.Order.objects.exclude(date_deleted=None):
+        order.permanently_delete()
     orders = models.Order.objects.all()
     return render(request, "orders/home.html", context={"orders": orders})
 
@@ -85,3 +87,20 @@ def edit_order(request, order_id):
             "orders": orders,
         },
     )
+
+
+def trash(request):
+    orders = models.Order.objects.exclude(date_deleted=None)
+    return render(request, "orders/trash.html", context={"orders": orders})
+
+
+def delete_order(request, order_id):
+    order = get_object_or_404(models.Order, id=order_id)
+    if request.method == "POST":
+        order.send_to_trash()
+        messages.success(
+            request,
+            f"The order has been successfully sent to trash. It will be definitely deleted in 30 days.",
+        )
+        return redirect("home")
+    return redirect("home")

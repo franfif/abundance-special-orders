@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 
+from datetime import date, timedelta
 
 from customers.models import Customer
 from vendors.models import Vendor
@@ -62,6 +63,8 @@ class Order(models.Model):
     date_called = models.DateField(null=True, blank=True)
     date_picked_up = models.DateField(null=True, blank=True)
 
+    date_deleted = models.DateField(null=True, blank=True)
+
     def is_complete(self):
         return all(
             [
@@ -73,3 +76,13 @@ class Order(models.Model):
                 self.customer is not None,
             ]
         )
+
+    def send_to_trash(self):
+        self.date_deleted = date.today()
+
+    def permanently_delete(self):
+        # Permanently delete an order after 30 days
+        if self.date_deleted and (
+            date.today() - self.date_deleted > timedelta(days=30)
+        ):
+            self.delete()
