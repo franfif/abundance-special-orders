@@ -29,8 +29,10 @@ class CustomerStatus(models.Model):
 
 
 class Customer(models.Model):
-    first_name = models.CharField(max_length=128)
-    last_name = models.CharField(max_length=128)
+    first_name = models.CharField(max_length=128, null=True, blank=True)
+    last_name = models.CharField(max_length=128, null=True, blank=True)
     company = models.CharField(max_length=128, null=True, blank=True)
-    phone_number = models.CharField(max_length=128)
-    status = models.ForeignKey(CustomerStatus, on_delete=models.PROTECT)
+    phone_number = models.CharField(max_length=128, null=True, blank=True)
+    status = models.ForeignKey(
+        CustomerStatus, on_delete=models.PROTECT, null=True, blank=True
+    )
