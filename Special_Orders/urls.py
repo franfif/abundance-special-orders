@@ -6,5 +6,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("orders.urls")),
     path("vendors/", include("vendors.urls")),
-    path("unicorn/", include("django_unicorn.urls")),
+
+    path("select2/", include("django_select2.urls")),
 ]
