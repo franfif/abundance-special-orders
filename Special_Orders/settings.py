@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "customers",
     "vendors",
     "orders",
+    "django_select2",
 ]
 
 MIDDLEWARE = [

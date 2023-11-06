@@ -7,5 +7,6 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("create_order/", views.create_order, name="create_order"),
     path("<int:order_id>/edit_order", views.edit_order, name="edit_order"),
+    path("new_order/", views.OrderCreateView.as_view(), name="create-order"),
     path("trash/", views.trash, name="trash"),
 ]

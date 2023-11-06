@@ -1,5 +1,5 @@
-{% if orders|length > 0 %}
-{% for order in orders %}
+{% if order_list|length > 0 %}
+{% for order in order_list %}
 {% include 'orders/partials/order_snippet.html' %}
 {% endfor %}
 {% else %}

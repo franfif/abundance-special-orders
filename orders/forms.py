@@ -1,6 +1,14 @@
 from django import forms
+from django_select2 import forms as s2forms
 
 from . import models
+
+
+class CustomerWidget(s2forms.ModelSelect2Widget):
+    search_fields = [
+        "first_name__icontains",
+        "last_name__icontains",
+    ]
 
 
 class CreateOrderForm(forms.ModelForm):
@@ -12,10 +20,15 @@ class CreateOrderForm(forms.ModelForm):
             "product_number",
             "quantity",
             "book_price",
+            "customer",
             "paid",
             "memo",
             "employee_initials",
         ]
+        # fields = "__all__"
+        widgets = {
+            "customer": CustomerWidget,
+        }
 
 
 class EditOrderForm(forms.ModelForm):

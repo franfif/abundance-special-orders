@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.views import generic
 
 from . import models, forms
 from customers.forms import CustomerForm
@@ -10,6 +11,19 @@ def home(request):
         order.permanently_delete()
     orders = models.Order.objects.all()
     return render(request, "orders/home.html", context={"orders": orders})
+
+
+class OrderCreateView(generic.CreateView):
+    model = models.Order
+    form_class = forms.CreateOrderForm
+    success_url = "/"
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context["order_list"] = models.Order.objects.all()
+        return context
 
 
 def create_order(request):
