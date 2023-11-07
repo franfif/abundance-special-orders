@@ -17,7 +17,9 @@
         <div>Picked-up: {{ order.date_picked_up|date }}</div>
         <div>Employee initials: {{ order.employee_initials }}</div>
         <div>Memo: {{ order.memo }}</div>
-
+        <div>
+            <a href="{% url 'orders:edit-order' order.id %}">Edit</a>
+        </div>
     </div>
 
 </div>

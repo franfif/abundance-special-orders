@@ -4,12 +4,14 @@
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-
+    {{ form.new_customer_form.as_p }}
     <button type="submit" name="save">Save</button>
     <button type="submit" name="another">Save and add another</button>
 </form>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {{ form.media.js }}
+
 {% include 'orders/partials/list_orders.html' %}
 
 {% endblock %}
