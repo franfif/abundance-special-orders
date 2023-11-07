@@ -13,7 +13,12 @@ class OrderListView(generic.ListView):
 class OrderCreateView(generic.CreateView):
     model = models.Order
     form_class = forms.CreateOrderForm
-    success_url = "/"
+
+    def get_success_url(self):
+        # Save and create "another" order
+        if "another" in self.request.POST:
+            return reverse("orders:create-order")
+        return reverse("orders:home")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
