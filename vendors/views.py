@@ -21,5 +21,5 @@ def list_vendors(request):
     )
 
 
-def create_vendor(request):
-    vendors = Vendor.objects.all()
+# def create_vendor(request):
+#     vendors = Vendor.objects.all()
