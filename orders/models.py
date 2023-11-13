@@ -86,3 +86,9 @@ class Order(models.Model):
             date.today() - self.date_deleted > timedelta(days=30)
         ):
             self.delete()
+
+    def total_price(self):
+        try:
+            return self.customer.add_margin(self.book_price * self.quantity)
+        except TypeError:
+            return None
