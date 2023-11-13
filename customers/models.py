@@ -39,3 +39,6 @@ class Customer(models.Model):
 
     def __str__(self):
         return f"{self.last_name}, {self.first_name}"
+
+    def add_margin(self, book_price):
+        return book_price / (100.0 - float(self.status.margin)) * 100
