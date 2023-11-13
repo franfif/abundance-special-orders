@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+from decimal import *
+
 
 class CustomerStatus(models.Model):
     class Meta:
@@ -41,4 +43,4 @@ class Customer(models.Model):
         return f"{self.last_name}, {self.first_name}"
 
     def add_margin(self, book_price):
-        return book_price / (100.0 - float(self.status.margin)) * 100
+        return book_price / (Decimal(100) - self.status.margin) * 100

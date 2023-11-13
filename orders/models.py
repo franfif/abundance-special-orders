@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator
 
 from datetime import date, timedelta
+from decimal import *
 
 from customers.models import Customer
 from vendors.models import Vendor
@@ -89,6 +90,10 @@ class Order(models.Model):
 
     def total_price(self):
         try:
-            return self.customer.add_margin(self.book_price * self.quantity)
+            return Decimal(
+                self.customer.add_margin(self.book_price * self.quantity)
+            ).quantize(Decimal("0.01"))
         except TypeError:
+            return None
+        except AttributeError:
             return None
