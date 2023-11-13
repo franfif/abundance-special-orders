@@ -49,9 +49,10 @@ def book_price(value):
 
 @register.filter
 def total_price(value):
-    try:
-        return value.book_price * value.quantity
-    except TypeError:
+    total = value.total_price()
+    if total is not None:
+        return total
+    else:
         return default_values.NO_PRICE
 
 
