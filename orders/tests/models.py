@@ -19,7 +19,7 @@ def test_customer_model():
 
     order.vendor = Vendor.objects.create(name="UN")
     order.product_number = "123"
-    order.quantity = 1
+    order.quantity = 2
     order.book_price = 10
     order.customer = Customer.objects.create(
         first_name="Charles",
@@ -31,4 +31,4 @@ def test_customer_model():
 
     assert order.is_complete()
 
-    assert order.total_price() == 10 / 0.8
+    assert order.total_price() == 10 * 2 / 0.8
