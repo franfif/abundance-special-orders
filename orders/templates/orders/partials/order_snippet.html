@@ -1,25 +1,55 @@
 {% load orders_extras %}
 
 <div class="card border-primary bg-ticket my-2">
-    <div class="card-header d-flex">
+    <div class="card-header">
+        <div>{{ order|quantity }} units of {{ order.description }}</div>
+        <div>{{ order.date_created }}, {{ order|status }}</div>
     </div>
     <div class="card-body">
-        <div>Date: {{ order.date_created }}, {{ order|status }}</div>
-        <div>{{ order|quantity }} units of {{ order.description }}</div>
-        <div>{{ order|vendor }} - {{ order|product_number }}</div>
-        <div>${{ order|book_price }} => ${{ order|total_price }} ({{ order|paid }})</div>
-        <div>{{ order|customer_name }}, {{ order|customer_status }}</div>
-        <div>{{ order|customer_company }}</div>
-        <div>{{ order|customer_phone_number }}</div>
-        <div>Ordered: {{ order.date_ordered|date }}</div>
-        <div>Received: {{ order.date_received|date }}</div>
-        <div>Called: {{ order.date_called|date }}</div>
-        <div>Picked-up: {{ order.date_picked_up|date }}</div>
-        <div>Employee initials: {{ order.employee_initials }}</div>
-        <div>Memo: {{ order.memo }}</div>
-        <div>
-            <a href="{% url 'orders:edit-order' order.id %}">Edit</a>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item px-0">
+                <div>{{ order|vendor }} - {{ order|product_number }}</div>
+                <div>${{ order|book_price }} => ${{ order|total_price }} ({{ order|paid }})</div>
+            </li>
+            <li class="list-group-item px-0">
+                <div>{{ order|customer_name }}, {{ order|customer_status }}</div>
+                <div>{{ order|customer_company }}</div>
+                <div>{{ order|customer_phone_number }}</div>
+            </li>
+
+        </ul>
+        <div class="collapse" id="collapseExample-{{order.id}}">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item p-0"></li>
+                <li class="list-group-item px-0 ">
+                    <div>Ordered: {{ order.date_ordered|date }}</div>
+                    <div>Received: {{ order.date_received|date }}</div>
+                    <div>Called: {{ order.date_called|date }}</div>
+                    <div>Picked-up: {{ order.date_picked_up|date }}</div>
+                </li>
+                <li class="list-group-item px-0 ">
+                    <div>Employee initials: {{ order.employee_initials }}</div>
+                    <div>Memo: {{ order.memo }}</div>
+                </li>
+            </ul>
+
+            {% if order.status != "DELETED" %}
+            <div>
+                <a href="{% url 'orders:edit-order' order.id %}">Edit</a>
+            </div>
+            {% else %}
+            <form action="{% url 'orders:restore-order' pk=order.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" name="restore">Restore</button>
+            </form>
+
+            {% endif %}
         </div>
+        <button class="btn btn-sm btn-light" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseExample-{{order.id}}"
+                aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
+            More info...
+        </button>
     </div>
 
 </div>
