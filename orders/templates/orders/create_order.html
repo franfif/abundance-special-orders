@@ -3,9 +3,11 @@
 
 <form method="post">
     {% csrf_token %}
+    bla
     {{ order_form.as_p }}
     {{ customer_form.as_p }}
-    <button type="submit">Save Order</button>
+    <button type="submit" name="save">Save</button>
+    <button type="submit" name="another">Save and add another</button>
 </form>
 {% include 'orders/partials/list_orders.html' %}
 
