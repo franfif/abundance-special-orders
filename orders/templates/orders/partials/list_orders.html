@@ -1,7 +1,11 @@
 {% if order_list|length > 0 %}
-{% for order in order_list %}
-{% include 'orders/partials/order_snippet.html' %}
-{% endfor %}
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+    {% for order in order_list %}
+    <div class="col">
+        {% include 'orders/partials/order_snippet.html' %}
+    </div>
+    {% endfor %}
+</div>
 {% else %}
 <h2 class="text-center mt-5 mb-3">There are no orders yet.</h2>
 {% endif %}
