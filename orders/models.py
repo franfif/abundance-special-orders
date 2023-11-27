@@ -17,6 +17,7 @@ class Order(models.Model):
     CALLED = "CALLED"
     PICKED_UP = "PICKED_UP"
     CANCELED = "CANCELED"
+    DELETED = "DELETED"
 
     ORDER_STATUS = [
         (INCOMPLETE, "Incomplete"),
@@ -27,6 +28,7 @@ class Order(models.Model):
         (CALLED, "Called"),
         (PICKED_UP, "Picked-Up"),
         (CANCELED, "Canceled"),
+        (DELETED, "Deleted"),
     ]
 
     description = models.CharField(max_length=128)
@@ -78,8 +80,37 @@ class Order(models.Model):
             ]
         )
 
+    def update_status(self):
+        if self.status == self.DELETED and self.date_deleted is None:
+            self.status = None
+        # Make sure all orders have a status
+        if not self.is_complete() or self.status is None:
+            self.status = self.INCOMPLETE
+
+        # Order has a date-related status
+        if self.date_deleted is not None:
+            self.status = self.DELETED
+        elif self.date_picked_up is not None:
+            self.status = self.PICKED_UP
+        elif self.date_called is not None:
+            self.status = self.CALLED
+        elif self.date_received is not None:
+            self.status = self.RECEIVED
+        elif self.date_ordered is not None:
+            self.status = self.ORDERED
+        # Order is completed during this edit
+        elif self.status == self.INCOMPLETE and self.is_complete():
+            self.status = self.PENDING
+
+        self.save()
+
     def send_to_trash(self):
         self.date_deleted = date.today()
+        self.update_status()
+
+    def restore(self):
+        self.date_deleted = None
+        self.update_status()
 
     def permanently_delete(self):
         # Permanently delete an order after 30 days
