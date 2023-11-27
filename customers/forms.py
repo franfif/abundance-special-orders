@@ -13,3 +13,6 @@ class CustomerForm(forms.ModelForm):
             "phone_number",
             "status",
         ]
+        labels = {
+            "phone_number": "Phone #",
+        }

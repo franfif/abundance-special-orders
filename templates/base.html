@@ -1,52 +1,74 @@
+<!DOCTYPE html>
 {% load static %}
+{{ form.media.css }}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 
-<html lang="en">
+<html lang="en" class="h-100">
 <head>
     <meta charset="UTF-8">
     <title>Special Order - Abundance Food Co-op</title>
-    {{ form.media.css }}
-    <style>
-        input, select {width: 50%}
-    </style>
-</head>
-<body>
-<nav class="navbar sticky-top navbar-expand-md navbar-light bg-light">
-    <a class="navbar-brand" href="#">
-        <img src="{% static 'media/Abundance_Logo.png' %}" width="200" class="d-inline-block align-top"
-             alt="">
-        Special Orders
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link" href="{% url 'orders:home' %}">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'orders:create-order' %}">New Order</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Incomplete Orders</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'vendors:list-vendors' %}">Vendors</a></li>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 
-        </ul>
+</head>
+<body class="h-100">
+
+<div class="cover-container d-flex w-100 h-100 mx-auto flex-column">
+    <nav class="container-fluid navbar sticky-top navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'media/Abundance_Logo.png' %}" width="200" class="d-inline-block align-middle ms-2"
+                 alt="">
+            Special Orders
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'orders:home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'orders:create-order' %}">New Order</a></li>
+                <li class="nav-item"><a class="nav-link"
+                                        href="{% url 'orders:filtered-orders' status='incomplete' %}">Incomplete
+                    Orders</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'orders:filtered-orders' status='deleted' %}">Deleted
+                    Orders</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'vendors:list-vendors' %}">Vendors</a></li>
+
+            </ul>
+        </div>
+    </nav>
+    <div class="mb-auto">
+        <div>
+            {# Display django.contrib.messages as Bootstrap alerts #}
+            {% bootstrap_messages %}
+        </div>
     </div>
-</nav>
-<main role="main" class="">
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
-</main>
-<footer class="mt-auto px-auto">
-    <div class="text-center bg-light py-4 px-0 mt-4">
+    <main role="main" class="inner cover">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+    <footer class="mt-auto">
+        <div class="text-center bg-light py-4 px-0 mt-4">
         <span>
             Developed by
             <a href="https://github.com/franfif/"
                target="_blank" rel="noopener noreferrer">
                 Francis Barrow
             </a>
-            - 2023
+            - <a href="https://abundance.coop/"
+                 target="_blank" rel="noopener noreferrer">
+            Abundance Food Co-op
+            </a> 2023
         </span>
-    </div>
-</footer>
+        </div>
+    </footer>
+</div>
 {% csrf_token %}
+
 </body>
 </html>

@@ -26,12 +26,22 @@ class CreateOrderForm(forms.ModelForm):
             "quantity",
             "book_price",
             "paid",
+            "has_bottle_deposit",
+            "number_bottle_deposit",
             "memo",
             "employee_initials",
             "customer",
+            "is_stand_by",
         ]
         widgets = {
             "customer": CustomerWidget,
+        }
+        labels = {
+            "product_number": "Product #",
+            "has_bottle_deposit": "Bottle Deposit",
+            "number_bottle_deposit": "BD",
+            "is_stand_by": "Stand By",
+            "phone_number": "Phone #",
         }
 
     def clean(self):
@@ -42,8 +52,12 @@ class CreateOrderForm(forms.ModelForm):
                 "last_name": self.data.get("last_name"),
                 "company": self.data.get("company"),
                 "phone_number": self.data.get("phone_number"),
-                "status": CustomerStatus.objects.get(id=self.data.get("status")),
             }
+            if self.data.get("status"):
+                new_customer_data["status"] = CustomerStatus.objects.get(
+                    id=self.data.get("status")
+                )
+
         cleaned_data = super().clean()
         customer = cleaned_data.get("customer")
 
