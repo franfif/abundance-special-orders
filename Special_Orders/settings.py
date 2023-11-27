@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "vendors",
     "orders",
     "django_select2",
+    "bootstrap5",
 ]
 
 MIDDLEWARE = [
