@@ -44,6 +44,11 @@ class CreateOrderForm(forms.ModelForm):
             "phone_number": "Phone #",
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Set the custom label for the ForeignKey field
+        self.fields['vendor'].empty_label = 'Vendor'
+
     def clean(self):
         new_customer_data = None
         if not self.data.get("customer"):
