@@ -10,6 +10,10 @@
             <li class="list-group-item px-0">
                 <div>{{ order|vendor }} - {{ order|product_number }}</div>
                 <div>${{ order|book_price }} => ${{ order|total_price }} ({{ order|paid }})</div>
+                <div class="collapse-{{order.id}}">
+                    <div>Bottle Deposit: {{ order.has_bottle_deposit }}</div>
+                    <div>Number of Bottles: {{ order.number_bottle_deposit }}</div>
+                </div>
             </li>
             <li class="list-group-item px-0">
                 <div>{{ order|customer_name }}, {{ order|customer_status }}</div>
@@ -18,7 +22,7 @@
             </li>
 
         </ul>
-        <div class="collapse" id="collapseExample-{{order.id}}">
+        <div class="collapse collapse-{{order.id}}">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item p-0"></li>
                 <li class="list-group-item px-0 ">
@@ -45,10 +49,10 @@
 
             {% endif %}
         </div>
-        <button class="btn btn-sm btn-light" type="button" data-bs-toggle="collapse"
-                data-bs-target="#collapseExample-{{order.id}}"
+        <button class="btn btn-sm btn-light btn-order-more-info" type="button" data-bs-toggle="collapse"
+                data-bs-target=".collapse-{{order.id}}"
                 aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
-            More info...
+            More Info
         </button>
     </div>
 
