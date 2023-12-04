@@ -2,3 +2,7 @@
 #id_memo {
     height: 60px;
 }
+
+.form-select {
+    line-height: 1;
+}
