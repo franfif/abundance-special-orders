@@ -2,8 +2,11 @@
 
 <div class="card border-primary bg-ticket my-2">
     <div class="card-header">
+        <div class="row ">
+            <span class="col-auto me-auto badge bg-light text-dark">{{ order.date_created }}</span>
+            <span class="col-auto badge bg-info text-dark">{{ order|status }}</span>
+        </div>
         <div>{{ order|quantity }} units of {{ order.description }}</div>
-        <div>{{ order.date_created }}, {{ order|status }}</div>
     </div>
     <div class="card-body">
         <ul class="list-group list-group-flush">
