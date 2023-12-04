@@ -40,7 +40,16 @@ class Customer(models.Model):
     )
 
     def __str__(self):
-        return f"{self.last_name}, {self.first_name}"
+        return f"{self.last_name}, {self.first_name}, {self.phone_number_formatted()}"
 
     def add_margin(self, book_price):
         return book_price / (Decimal(100) - self.status.margin) * 100
+
+    def phone_number_formatted(self):
+        if self.phone_number:
+            if len(self.phone_number) == 10:
+                return f"({self.phone_number[:3]}) {self.phone_number[3:6]}-{self.phone_number[6:]}"
+            if len(self.phone_number) == 7:
+                return f"(585) {self.phone_number[:3]}-{self.phone_number[3:]}"
+            return self.phone_number
+        return None
