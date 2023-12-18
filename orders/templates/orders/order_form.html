@@ -25,7 +25,7 @@
                 <div class="col">Total Price</div>
             </div>
             <div class="row ps-3 mb-1">
-                <div class="col form-check form-switch">
+                <div class="col mb-2 form-check form-switch">
                     <input class="form-check-input" type="checkbox" role="switch" id="has_bottle_deposit">
                     <label class="form-check-label" for="has_bottle_deposit">Bottle Deposit?</label>
                 </div>
@@ -34,21 +34,6 @@
                     field_class="col"
                     placeholder="How many bottles?" %}
                 </div>
-
-            </div>
-            {% bootstrap_field form.memo size="small" form_group_class="mb-1" show_label=False rows="3" %}
-            <div class="row">
-                {% bootstrap_field form.is_stand_by size="small" form_group_class="mb-1 col row" label_class="col"
-                field_class="col" %}
-                {% bootstrap_field form.paid size="small" form_group_class="mb-1 col row" label_class="col"
-                field_class="col" %}
-            </div>
-            <div class="row">
-                {% bootstrap_field form.employee_initials size="small" form_group_class="mb-1 col-auto" show_label=False
-                %}
-                <button class="col-auto btn btn-primary btn-sm m-1" type="submit" name="save">Save</button>
-                <button class="col-auto btn btn-primary btn-sm m-1" type="submit" name="another">Save and add another
-                </button>
             </div>
         </div>
         <div class="col form-customer">
@@ -60,32 +45,49 @@
                         type="button">New Customer
                 </button>
             </div>
-            <div id="existing-customer-form" class="mb-1">
+            <div id="existing-customer-form" class="my-1">
                 {% bootstrap_field form.customer layout="horizontal" form_group_class="col" field_class="col"
-                label_class="col-auto"%}
+                show_label=False %}
             </div>
             <div id="new-customer-form" class="visually-hidden">
 
                 <div class="row mb-1">
                     {% bootstrap_field form.new_customer_form.last_name show_label=False size="small"
-                    form_group_class="col row"
-                    field_class="col" %}
+                    form_group_class="col row" field_class="col" %}
                     {% bootstrap_field form.new_customer_form.first_name show_label=False size="small"
-                    form_group_class="col row"
-                    field_class="col" %}
+                    form_group_class="col row" field_class="col" %}
                 </div>
                 <div class="row mb-1">
                     {% bootstrap_field form.new_customer_form.company show_label=False size="small"
-                    form_group_class="col row"
-                    field_class="col" %}
+                    form_group_class="col row" field_class="col" %}
                     {% bootstrap_field form.new_customer_form.phone_number show_label=False size="small"
-                    form_group_class="col row"
-                    field_class="col" %}
+                    form_group_class="col row" field_class="col" %}
                 </div>
                 <div class="row mb-1">
-                    {% bootstrap_field form.new_customer_form.status size="small" form_group_class="col row"
-                    field_class="col" %}
+                    {% bootstrap_field form.new_customer_form.status show_label=False
+                    size="small" form_group_class="col row" field_class="col" %}
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {% bootstrap_field form.memo size="small" form_group_class="mb-1" show_label=False rows="3" %}
+        </div>
+        <div class="col">
+            <div class="row">
+                {% bootstrap_field form.is_stand_by size="small" form_group_class="mb-1 col row" label_class="col"
+                field_class="col" %}
+                {% bootstrap_field form.paid size="small" form_group_class="mb-1 col row" label_class="col"
+                field_class="col" %}
+            </div>
+            <div class="row">
+                {% bootstrap_field form.employee_initials size="small" form_group_class="mb-1 col-auto" show_label=False
+                %}
+                <button class="col-auto btn btn-primary btn-sm mx-1 mb-1" type="submit" name="save">Save</button>
+                <button class="col-auto btn btn-primary btn-sm mx-1 mb-1" type="submit" name="another">Save and add
+                    another
+                </button>
             </div>
         </div>
     </div>
