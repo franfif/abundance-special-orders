@@ -48,7 +48,6 @@ class CreateOrderForm(forms.ModelForm):
             "product_number": "Product #",
             "has_bottle_deposit": "Bottle Deposit",
             "is_stand_by": "Stand By",
-            "customer": "Search for a customer by entering their first or last name, or phone number: "
         }
 
     def __init__(self, *args, **kwargs):
