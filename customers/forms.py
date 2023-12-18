@@ -16,3 +16,8 @@ class CustomerForm(forms.ModelForm):
         labels = {
             "phone_number": "Phone #",
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Set the custom label for the ForeignKey field
+        self.fields['status'].empty_label = 'Status'
