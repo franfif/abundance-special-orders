@@ -6,3 +6,19 @@
 .form-select {
     line-height: 1;
 }
+
+main {
+    font-size: .875rem;
+}
+
+#id_vendor, #id_status {
+    font-size: .875rem;
+    padding: .25rem .5rem;
+    min-height: calc(1.5em + .5rem + 2px);
+    border-radius: .2rem;
+    color: #6C757D;
+}
+
+.select2, .select2-results {
+    font-size: .875rem;
+}
