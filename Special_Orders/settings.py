@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "orders",
     "django_select2",
     "bootstrap5",
+    'bootstrap_datepicker_plus',
 ]
 
 MIDDLEWARE = [
