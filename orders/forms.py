@@ -1,5 +1,6 @@
 from django import forms
 from django_select2 import forms as s2forms
+from bootstrap_datepicker_plus.widgets import DatePickerInput
 
 from .models import Order
 from customers.models import Customer, CustomerStatus
@@ -40,14 +41,36 @@ class CreateOrderForm(forms.ModelForm):
             "employee_initials",
             "customer",
             "is_stand_by",
+            "date_ordered",
+            "date_received",
+            "date_called",
+            "date_picked_up",
         ]
+
+        date_picker_options = {
+            "format": "MM/DD/YYYY",
+            "extraFormats": ["MM/DD/YY"],
+            "showClose": True,
+            "showClear": True,
+            "showTodayButton": True,
+            "widgetPositioning": {
+                "vertical": "bottom",
+            },
+        }
+
         widgets = {
             "customer": CustomerWidget,
+            "date_ordered": DatePickerInput(options=date_picker_options),
+            "date_received": DatePickerInput(options=date_picker_options),
+            "date_called": DatePickerInput(options=date_picker_options),
+            "date_picked_up": DatePickerInput(options=date_picker_options),
         }
+
         labels = {
             "product_number": "Product #",
             "has_bottle_deposit": "Bottle Deposit",
             "is_stand_by": "Stand By",
+            "date_picked_up": "Date picked-up",
         }
 
     def __init__(self, *args, **kwargs):
