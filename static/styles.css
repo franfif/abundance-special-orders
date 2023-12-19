@@ -22,3 +22,15 @@ main {
 .select2, .select2-results {
     font-size: .875rem;
 }
+
+.input-group-addon {
+    height: 31px;
+}
+
+.date-created {
+    font-size: .875rem;
+    height: 31px;
+    border: 1px solid #ced4da;
+    padding: .25rem .5rem;
+    border-radius: .25rem;
+}
