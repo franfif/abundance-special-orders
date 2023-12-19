@@ -1,0 +1,24 @@
+{% load bootstrap5 %}
+
+<div class="row mb-1">
+
+    <div class="mb-1 row">
+        <label class="col-4">Date created</label>
+        <div class="col-auto ">
+            <div class=" date-created">
+                {{ order.date_created|date:"SHORT_DATE_FORMAT" }}
+            </div>
+        </div>
+    </div>
+
+    {% bootstrap_field form.date_ordered size="small" form_group_class="mb-1" layout="horizontal"
+    label_class="col-4" field_class="col-auto" placeholder="MM/DD/YYYY" %}
+    {% bootstrap_field form.date_received size="small" form_group_class="mb-1" layout="horizontal"
+    label_class="col-4" field_class="col-auto" placeholder="MM/DD/YYYY" %}
+    {% bootstrap_field form.date_called size="small" form_group_class="mb-1" layout="horizontal" label_class="col-4"
+    field_class="col-auto" placeholder="MM/DD/YYYY" %}
+    {% bootstrap_field form.date_picked_up size="small" form_group_class="mb-1" layout="horizontal"
+    label_class="col-4" field_class="col-auto" placeholder="MM/DD/YYYY" %}
+</div>
+
+
