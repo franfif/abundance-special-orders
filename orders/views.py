@@ -29,6 +29,7 @@ class OrderCreateView(generic.CreateView):
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
         context["order_list"] = models.Order.objects.all()
+        context["action"] = "create"
         return context
 
     def form_valid(self, form):
@@ -40,7 +41,6 @@ class OrderCreateView(generic.CreateView):
 class OrderUpdateView(generic.UpdateView):
     model = models.Order
     form_class = forms.CreateOrderForm
-    template_name_suffix = "_update_form"
 
     def get_success_url(self):
         return reverse("orders:home")
@@ -50,6 +50,7 @@ class OrderUpdateView(generic.UpdateView):
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the orders
         context["order_list"] = models.Order.objects.all()
+        context["action"] = "update"
         return context
 
     def form_valid(self, form):

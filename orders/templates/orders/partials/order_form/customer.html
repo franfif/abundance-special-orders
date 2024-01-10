@@ -1,0 +1,36 @@
+{% load bootstrap5 %}
+{% load orders_extras %}
+
+<div class="col form-customer">
+    <div>
+        <button class="btn btn-primary btn-sm my-1 me-1" id="btn-existing-customer" type="button">Existing
+            Customer
+        </button>
+        <button class="btn btn-secondary btn-sm my-1 ms-1" id="btn-new-customer"
+                type="button">New Customer
+        </button>
+    </div>
+    <div id="existing-customer-form" class="my-1">
+        {% bootstrap_field form.customer layout="horizontal" form_group_class="col" field_class="col"
+        show_label=False %}
+    </div>
+    <div id="new-customer-form" class="visually-hidden">
+
+        <div class="row mb-1">
+            {% bootstrap_field form.new_customer_form.last_name show_label=False size="small"
+            form_group_class="col row" field_class="col" %}
+            {% bootstrap_field form.new_customer_form.first_name show_label=False size="small"
+            form_group_class="col row" field_class="col" %}
+        </div>
+        <div class="row mb-1">
+            {% bootstrap_field form.new_customer_form.company show_label=False size="small"
+            form_group_class="col row" field_class="col" %}
+            {% bootstrap_field form.new_customer_form.phone_number show_label=False size="small"
+            form_group_class="col row" field_class="col" %}
+        </div>
+        <div class="row mb-1">
+            {% bootstrap_field form.new_customer_form.status show_label=False
+            size="small" form_group_class="col row" field_class="col" %}
+        </div>
+    </div>
+</div>

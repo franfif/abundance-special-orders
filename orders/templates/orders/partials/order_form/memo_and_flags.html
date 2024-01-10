@@ -1,0 +1,25 @@
+{% load bootstrap5 %}
+{% load orders_extras %}
+
+<div class="col">
+    {% bootstrap_field form.memo size="small" form_group_class="mb-1" show_label=False rows="3" %}
+</div>
+<div class="col">
+    <div class="row">
+        {% bootstrap_field form.is_stand_by size="small" form_group_class="mb-1 col row" label_class="col"
+        field_class="col" %}
+        {% bootstrap_field form.paid size="small" form_group_class="mb-1 col row" label_class="col"
+        field_class="col" %}
+    </div>
+    <div class="row">
+        {% bootstrap_field form.employee_initials size="small" form_group_class="mb-1 col-auto" show_label=False
+        %}
+        {% include 'orders/partials/buttons/save.html' %}
+        {% if action == 'update' %}
+        {% include 'orders/partials/buttons/delete.html' %}
+        {% elif action == 'create' %}
+        {% include 'orders/partials/buttons/save_add_another.html' %}
+        {% endif %}
+    </div>
+</div>
+

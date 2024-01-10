@@ -3,9 +3,20 @@
 
 <form method="post">
     {% csrf_token %}
-    {% include 'orders/partials/order_create_form_fields.html' %}
-</form>
+    <div class="row">
+        {% include 'orders/partials/order_form/description.html' %}
+        {% include 'orders/partials/order_form/customer.html' %}
+    </div>
+    {% if action == 'update' %}
+    <div class="row">
+        {% include 'orders/partials/order_form/dates.html' %}
+    </div>
+    {% endif %}
+    <div class="row">
+        {% include 'orders/partials/order_form/memo_and_flags.html' %}
+    </div>
 
+</form>
 {% include 'orders/partials/list_orders.html' %}
 
 {% endblock %}
