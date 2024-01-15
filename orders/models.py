@@ -77,6 +77,7 @@ class Order(models.Model):
                 self.book_price is not None,
                 not self.has_bottle_deposit or self.number_bottle_deposit is not None,
                 self.customer is not None,
+                self.total_price() is not None,
             ]
         )
 
@@ -84,7 +85,7 @@ class Order(models.Model):
         if self.status == self.DELETED and self.date_deleted is None:
             self.status = None
         # Make sure all orders have a status
-        if not self.is_complete() or self.status is None:
+        if self.status is None:
             self.status = self.INCOMPLETE
 
         # Order has a date-related status
@@ -101,6 +102,9 @@ class Order(models.Model):
         # Order is completed during this edit
         elif self.status == self.INCOMPLETE and self.is_complete():
             self.status = self.PENDING
+
+        if not self.is_complete():
+            self.status = self.INCOMPLETE
 
         self.save()
 
