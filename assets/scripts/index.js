@@ -18,9 +18,10 @@ const btn_existing_customer = document.getElementById('btn-existing-customer');
 const new_customer_form = document.getElementById('new-customer-form');
 const existing_customer_form = document.getElementById('existing-customer-form');
 
-// Customer does not exist - Replace the customer search with the customer form
+// Create a new customer - Replace the customer search with the customer form
 if (btn_new_customer) {
     btn_new_customer.addEventListener('click', (event) => {
+        $('#id_customer').val(null).trigger('change');
         new_customer_form.classList.remove('visually-hidden');
         existing_customer_form.classList.add('visually-hidden');
         btn_existing_customer.classList.add('btn-secondary');
@@ -29,7 +30,7 @@ if (btn_new_customer) {
         btn_new_customer.classList.remove('btn-secondary');
     });
 }
-// Customer exists - Replace the customer form with the customer search
+// Search for a customer - Replace the new customer form with the customer search
 if (btn_existing_customer) {
     btn_existing_customer.addEventListener('click', (event) => {
         existing_customer_form.classList.remove('visually-hidden');
