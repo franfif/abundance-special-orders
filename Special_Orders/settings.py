@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "django_select2",
     "bootstrap5",
     "bootstrap_datepicker_plus",
+    "fontawesomefree",
 ]
 
 MIDDLEWARE = [

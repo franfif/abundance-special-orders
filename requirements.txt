@@ -11,6 +11,7 @@ django-bootstrap-v5==1.0.11
 django-redis==5.4.0
 django-select2==8.1.2
 django-unicorn==0.57.0
+fontawesomefree==6.5.1
 iniconfig==2.0.0
 orjson==3.9.10
 packaging==23.2
