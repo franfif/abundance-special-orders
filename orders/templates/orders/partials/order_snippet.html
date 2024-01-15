@@ -5,8 +5,21 @@
         <div class="row ">
             <span class="col-auto me-auto badge bg-light text-dark">{{ order.date_created }}</span>
             <span class="col-auto badge bg-info text-dark">{{ order|status }}</span>
+            <span class="col-auto">
+                 {% if order.status != "DELETED" %}
+                <div>
+                    <a href="{% url 'orders:edit-order' order.id %}"><i class="fa-solid fa-pen"></i></a>
+                </div>
+                {% else %}
+                <form action="{% url 'orders:restore-order' pk=order.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="restore"><i class="fa-solid fa-trash-arrow-up"></i></button>
+                </form>
+                {% endif %}
+            </span>
         </div>
         <div>{{ order|quantity }} units of {{ order.description }}</div>
+
     </div>
     <div class="card-body">
         <ul class="list-group list-group-flush">
@@ -39,18 +52,6 @@
                     <div>Memo: {{ order.memo }}</div>
                 </li>
             </ul>
-
-            {% if order.status != "DELETED" %}
-            <div>
-                <a href="{% url 'orders:edit-order' order.id %}">Edit</a>
-            </div>
-            {% else %}
-            <form action="{% url 'orders:restore-order' pk=order.id %}" method="post">
-                {% csrf_token %}
-                <button type="submit" name="restore">Restore</button>
-            </form>
-
-            {% endif %}
         </div>
         <button class="btn btn-sm btn-light btn-order-more-info" type="button" data-bs-toggle="collapse"
                 data-bs-target=".collapse-{{order.id}}"
