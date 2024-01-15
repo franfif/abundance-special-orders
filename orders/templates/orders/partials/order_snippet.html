@@ -3,19 +3,28 @@
 <div class="card border-primary bg-ticket my-2">
     <div class="card-header">
         <div class="row ">
-            <span class="col-auto me-auto badge bg-light text-dark">{{ order.date_created }}</span>
-            <span class="col-auto badge bg-info text-dark">{{ order|status }}</span>
             <span class="col-auto">
-                 {% if order.status != "DELETED" %}
-                <div>
-                    <a href="{% url 'orders:edit-order' order.id %}"><i class="fa-solid fa-pen"></i></a>
-                </div>
-                {% else %}
-                <form action="{% url 'orders:restore-order' pk=order.id %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" name="restore"><i class="fa-solid fa-trash-arrow-up"></i></button>
-                </form>
-                {% endif %}
+                <span class="col-auto me-auto badge bg-light text-dark">{{ order.date_created }}</span>
+                <span class="col-auto badge bg-info text-dark">{{ order|status }}</span>
+            </span>
+            <span class="col-auto ms-auto ">
+                <span class="col-auto">
+                     {% if order.status != "DELETED" %}
+                    <div>
+                        <a class="btn-orders" href="{% url 'orders:edit-order' order.id %}">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                    </div>
+                    {% else %}
+
+                    <form action="{% url 'orders:restore-order' pk=order.id %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn-orders" type="submit" name="restore">
+                            <i class="fa-solid fa-trash-arrow-up"></i>
+                        </button>
+                    </form>
+                    {% endif %}
+                </span>
             </span>
         </div>
         <div>{{ order|quantity }} units of {{ order.description }}</div>
@@ -26,7 +35,7 @@
             <li class="list-group-item px-0">
                 <div>{{ order|vendor }} - {{ order|product_number }}</div>
                 <div>${{ order|book_price }} => ${{ order|total_price }} ({{ order|paid }})</div>
-                <div class="collapse-{{order.id}}">
+                <div class="collapse collapse-{{order.id}}">
                     <div>Bottle Deposit: {{ order.has_bottle_deposit }}</div>
                     <div>Number of Bottles: {{ order.number_bottle_deposit }}</div>
                 </div>
