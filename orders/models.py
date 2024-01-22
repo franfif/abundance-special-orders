@@ -83,15 +83,25 @@ class Order(models.Model):
 
     def update_status(self):
         if self.status == self.DELETED and self.date_deleted is None:
-            self.status = None
+            self.status = self.INCOMPLETE
         # Make sure all orders have a status
         if self.status is None:
             self.status = self.INCOMPLETE
 
-        # Order has a date-related status
+        # Order is deleted
         if self.date_deleted is not None:
             self.status = self.DELETED
-        elif self.date_picked_up is not None:
+            self.save()
+            return
+
+        # Order is incomplete
+        if not self.is_complete():
+            self.status = self.INCOMPLETE
+            self.save()
+            return
+
+        # Order has a date-related status
+        if self.date_picked_up is not None:
             self.status = self.PICKED_UP
         elif self.date_called is not None:
             self.status = self.CALLED
@@ -102,9 +112,6 @@ class Order(models.Model):
         # Order is completed during this edit
         elif self.status == self.INCOMPLETE and self.is_complete():
             self.status = self.PENDING
-
-        if not self.is_complete():
-            self.status = self.INCOMPLETE
 
         self.save()
 
