@@ -75,7 +75,7 @@ class OrderUpdateView(generic.UpdateView):
 
 def trash(request):
     orders = models.Order.objects.exclude(date_deleted=None)
-    return render(request, "orders/trash.html", context={"orders": orders})
+    return render(request, "orders/order_list.html", context={"orders": orders})
 
 
 def view_send_to_trash(request, pk):
