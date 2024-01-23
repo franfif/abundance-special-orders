@@ -1,25 +1,36 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import reverse
+from django.views import generic
 
 from .models import Vendor
 from .forms import VendorForm
 
 
-def list_vendors(request):
-    vendors = Vendor.objects.all()
-    vendor_form = VendorForm()
-    if request.method == "POST":
-        vendor_form = VendorForm(request.POST)
-        if vendor_form.is_valid():
-            vendor_form.save()
-    return render(
-        request,
-        "vendors/home.html",
-        context={
-            "vendors": vendors,
-            "vendor_form": vendor_form,
-        },
-    )
+class VendorListCreateView(generic.CreateView):
+    model = Vendor
+    form_class = VendorForm
+
+    def get_success_url(self):
+        return reverse("vendors:list-vendors")
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the vendors
+        context["vendor_list"] = Vendor.objects.all()
+        return context
 
 
-# def create_vendor(request):
-#     vendors = Vendor.objects.all()
+class VendorUpdateView(generic.UpdateView):
+    model = Vendor
+    form_class = VendorForm
+
+    def get_success_url(self):
+        return reverse("vendors:list-vendors")
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the orders
+        context["vendor_list"] = Vendor.objects.all()
+        context["action"] = "update"
+        return context
