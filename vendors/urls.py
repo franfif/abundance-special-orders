@@ -4,7 +4,7 @@ from . import views
 
 app_name = "vendors"
 urlpatterns = [
-    path("", views.list_vendors, name="list-vendors"),
-    # path("<int:vendor_id>/edit_vendor", views.edit_vendor, name="edit-vendor"),
+    path("", views.VendorListCreateView.as_view(), name="list-vendors"),
+    path("<int:pk>/edit_vendor", views.VendorUpdateView.as_view(), name="edit-vendor"),
     # path("trash/", views.trash, name="trash"),
 ]
