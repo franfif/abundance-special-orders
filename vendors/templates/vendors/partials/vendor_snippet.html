@@ -1,16 +1,29 @@
-{% load orders_extras %}
+<div class="card border-primary bg-ticket my-2">
+    <div class="card-header">
+        <div class="row ">
+            <span class="col-auto">
+                <span class="col-auto me-auto">{{ vendor.name }}</span>
+            </span>
+            <span class="col-auto ms-auto ">
+                <span class="col-auto">
+                    <div>
+                        <a class="btn-orders" href="{% url 'vendors:edit-vendor' vendor.id %}">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                    </div>
+                </span>
+            </span>
+        </div>
 
-{% if edit %}
-<tr> {{ form.as_td }}</tr>
-{% else %}
-<tr>
-    <td>{{ vendor.name }}</td>
-    <td>{{ vendor.get_order_day_display }}</td>
-    <td>{{ vendor.get_delivery_day_display }}</td>
-    <td>{{ vendor.ordering_method }}</td>
-    <td>
-        Edit
-        <input name="edit" type="checkbox"/>
-    </td>
-</tr>
-{% endif %}
+    </div>
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item px-0">
+                <div>Order method: {{ vendor.ordering_method }}</div>
+                <div>Order by: {{ vendor.get_order_day_display }}</div>
+                <div>Delivery on: {{ vendor.get_delivery_day_display }}</div>
+            </li>
+        </ul>
+    </div>
+</div>
+
