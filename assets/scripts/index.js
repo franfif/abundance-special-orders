@@ -61,8 +61,10 @@ for (const btn of btns_order_more_info) {
 const bottle_deposit_switch = document.getElementById('has_bottle_deposit');
 const bottle_deposit_quantity = document.getElementById('bottle-deposit-quantity');
 
-bottle_deposit_switch.addEventListener('change', (event) => {
-    bottle_deposit_quantity.classList.toggle('visually-hidden');
-});
+if (bottle_deposit_switch) {
+    bottle_deposit_switch.addEventListener('change', (event) => {
+        bottle_deposit_quantity.classList.toggle('visually-hidden');
+    });
+}
 
 
