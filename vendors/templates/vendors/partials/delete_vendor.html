@@ -1,0 +1,38 @@
+<!-- Trigger/Open the Modal -->
+<button class="btn-orders ms-1" type="button"
+        data-bs-toggle="modal" data-bs-target="#delete-vendor-{{ vendor.id }}">
+    <i class="fa-solid fa-trash"></i></button>
+
+<!-- The Modal -->
+<div class="modal fade"
+     id="delete-vendor-{{ vendor.id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="staticBackdrop{{ vendor.id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdrop{{ vendor.id }}">Delete Vendor</h5>
+                <button type="button" class="close btn-orders" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="p-2" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                {% if vendor.order_set.count == 0 %}
+                <p>Are you sure you want to delete the vendor {{ vendor.name }}?</p>
+                {% elif vendor.order_set.count == 1 %}
+                <p>You are not allowed to delete this vendor, as an order is using it.</p>
+                {% elif vendor.order_set.count > 1 %}
+                <p>You are not allowed to delete this vendor, as {{ vendor.order_set.count }} orders are using it.</p>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                {% if vendor.order_set.count == 0 %}
+                <form action="{% url 'vendors:delete-vendor' vendor.id %}" method="post">
+                    {% csrf_token %}
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
