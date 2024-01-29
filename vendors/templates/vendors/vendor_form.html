@@ -29,12 +29,13 @@
                                 placeholder="phone #, email..." %}
                             </div>
                             <div>
-                                {% bootstrap_field form.order_day layout="horizontal" form_group_class="col-auto mb-1"
+                                {% bootstrap_field form.order_day size="small" layout="horizontal"
+                                form_group_class="col-auto mb-1"
                                 field_class="col-auto" label_class="col-auto"
                                 placeholder="Order Day" empty_label="ded" %}
                             </div>
                             <div class="row">
-                                {% bootstrap_field form.delivery_day layout="horizontal"
+                                {% bootstrap_field form.delivery_day size="small" layout="horizontal"
                                 form_group_class="mb-1 col-auto"
                                 field_class="col-auto" label_class="col-auto" placeholder="Delivery Day" %}
                                 <button
