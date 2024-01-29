@@ -6,11 +6,9 @@
             </span>
             <span class="col-auto ms-auto ">
                 <span class="col-auto">
-                    <div>
                         <a class="btn-orders" href="{% url 'vendors:edit-vendor' vendor.id %}">
-                            <i class="fa-solid fa-pen"></i>
-                        </a>
-                    </div>
+                            <i class="fa-solid fa-pen"></i></a>
+                        {% include 'vendors/partials/delete_vendor.html' %}
                 </span>
             </span>
         </div>
@@ -18,7 +16,7 @@
     </div>
     <div class="card-body">
         <ul class="list-group list-group-flush">
-            <li class="list-group-item px-0">
+            <li class="list-group-item px-0 d-grid gap-2">
                 <div>Order method: {{ vendor.ordering_method }}</div>
                 <div>Order by: {{ vendor.get_order_day_display }}</div>
                 <div>Delivery on: {{ vendor.get_delivery_day_display }}</div>
