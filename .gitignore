@@ -2,8 +2,14 @@
 *.pyc
 venv
 env
+*.DS_Store
 
 .idea
-db.sqlite3
 
 node_modules
+
+# Django project
+db.sqlite3
+.env
+settings_dev.py
+
