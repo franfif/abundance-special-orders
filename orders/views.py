@@ -81,11 +81,6 @@ class OrderUpdateView(generic.UpdateView):
         return super().form_valid(form)
 
 
-def trash(request):
-    orders = models.Order.objects.exclude(date_deleted=None)
-    return render(request, "orders/order_list.html", context={"orders": orders})
-
-
 def view_send_to_trash(request, pk):
     order = get_object_or_404(models.Order, id=pk)
     if request.method == "POST":
