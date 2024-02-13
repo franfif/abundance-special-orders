@@ -1,7 +1,10 @@
 **/__pycache__
 *.pyc
 venv
+.venv
 env
+_OLD_ENV
+
 *.DS_Store
 
 .idea
