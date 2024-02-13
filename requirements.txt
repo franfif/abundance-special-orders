@@ -8,6 +8,7 @@ Django==4.2.6
 django-appconf==1.0.5
 django-bootstrap-datepicker-plus==5.0.5
 django-bootstrap-v5==1.0.11
+django-filter==23.5
 django-redis==5.4.0
 django-select2==8.1.2
 django-unicorn==0.57.0

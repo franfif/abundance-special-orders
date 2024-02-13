@@ -2,11 +2,17 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.views import generic
 
+from django_filters.views import FilterView
+
 from . import models, forms
+from .filters import OrderFilter
 
 
-class OrderListView(generic.ListView):
+class OrderListView(FilterView):
     model = models.Order
+    filterset_class = OrderFilter
+    template_name = "order_filter.html"
+    context_object_name = "filter"
 
     def get_queryset(self):
         if "status" in self.kwargs:
