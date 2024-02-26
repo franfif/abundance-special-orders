@@ -1,5 +1,11 @@
 from django.db.models import Q
-from django_filters import FilterSet, ChoiceFilter, BooleanFilter, CharFilter
+from django_filters import (
+    FilterSet,
+    ChoiceFilter,
+    BooleanFilter,
+    CharFilter,
+    OrderingFilter,
+)
 from .models import Order
 from .widgets import BooleanRadioSelect
 
@@ -22,6 +28,20 @@ class OrderFilter(FilterWithAny):
     paid = BooleanFilter(widget=BooleanRadioSelect, label="Paid")
     customer_full_info = CharFilter(
         label="Customer (first, last and/or phone number)", method="search_customer"
+    )
+
+    ordering = OrderingFilter(
+        fields=(
+            ("customer__first_name", "customer first name"),
+            ("customer__last_name", "customer last name"),
+            ("vendor__name", "vendor"),
+            ("status", "status"),
+            ("date_created", "date created"),
+            ("date_ordered", "date ordered"),
+            ("date_received", "date received"),
+            ("date_called", "date called"),
+            ("date_picked_up", "date picked up"),
+        ),
     )
 
     def search_customer(self, queryset, name, value):
