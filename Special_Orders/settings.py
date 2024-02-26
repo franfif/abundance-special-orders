@@ -141,3 +141,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Allow multiline template tags
 base.tag_re = re.compile(base.tag_re.pattern, re.DOTALL)
+
+BOOTSTRAP5 = {
+    "success_css_class": "",
+}

@@ -3,7 +3,7 @@
 {% block content %}
 
 <form method="get">
-    <div class="row my-1">
+    <div class="row my-1 align-items-end">
         <div class="col row">
             {% bootstrap_field filter.form.vendor show_label=False size="small" layout="horizontal"
             form_group_class="col mb-1" field_class="col" label_class="col-auto" %}
@@ -12,16 +12,20 @@
             {% bootstrap_field filter.form.customer_full_info show_label=False size="small" layout="horizontal"
             form_group_class="mb-1 pe-0" field_class="col pe-0" label_class="col-auto" %}
         </div>
-        <div class="col row">
+        <div class="col row align-items-end">
             {% bootstrap_field filter.form.has_bottle_deposit show_label=True size="small" layout="horizontal"
-            form_group_class="col mb-1" field_class="col-auto" label_class="col-auto" %}
+            form_group_class="col row mb-1 mx-1 px-0 border rounded-1" field_class="col" label_class="col" %}
             {% bootstrap_field filter.form.paid show_label=True size="small" layout="horizontal"
-            form_group_class="col mb-1" field_class="col-auto" label_class="col-auto" %}
+            form_group_class="col row mb-1 mx-1 px-0 border rounded-1" field_class="col-auto"
+            label_class="col-auto" %}
             {% bootstrap_field filter.form.is_stand_by show_label=True size="small" layout="horizontal"
-            form_group_class="col mb-1" field_class="col-auto" label_class="col-auto" placeholder="dede" %}
+            form_group_class="col row mb-1 mx-1 px-0 border rounded-1" field_class="col-auto"
+            label_class="col-auto" placeholder="dede" %}
+            <div class="col mb-1">
+                <input class=" btn btn-primary btn-sm" type="submit" value="Apply filters"/>
+            </div>
         </div>
     </div>
-    <input type="submit"/>
 </form>
 
 {% include 'orders/partials/list_orders.html' with order_list=filter.qs %}
