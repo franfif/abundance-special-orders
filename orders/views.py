@@ -15,9 +15,19 @@ class OrderListView(FilterView):
     context_object_name = "filter"
 
     def get_queryset(self):
+        queryset = super().get_queryset()
+
         if "status" in self.kwargs:
-            return models.Order.objects.filter(status=self.kwargs["status"].upper())
-        return models.Order.objects.exclude(status=models.Order.DELETED)
+            queryset = queryset.filter(status=self.kwargs["status"].upper())
+        else:
+            queryset = queryset.exclude(status=models.Order.DELETED)
+
+        # Set default ordering
+        default_ordering = self.request.GET.get("ordering", None)
+        if not default_ordering:
+            # Default ordering if none is provided in the request
+            queryset = queryset.order_by("-date_created", "vendor__name")
+        return queryset
 
 
 class OrderCreateView(generic.CreateView):

@@ -31,16 +31,25 @@ class OrderFilter(FilterWithAny):
     )
 
     ordering = OrderingFilter(
-        fields=(
-            ("customer__first_name", "customer first name"),
-            ("customer__last_name", "customer last name"),
-            ("vendor__name", "vendor"),
-            ("status", "status"),
-            ("date_created", "date created"),
-            ("date_ordered", "date ordered"),
-            ("date_received", "date received"),
-            ("date_called", "date called"),
-            ("date_picked_up", "date picked up"),
+        choices=(
+            ("-date_created", "Date Created (newest first)"),
+            ("date_created", "Date Created (oldest first)"),
+            ("vendor__name", "Vendor (A-Z)"),
+            ("-vendor__name", "Vendor (Z-A)"),
+            ("status", "Status (A-Z)"),
+            ("-status", "Status (Z-A)"),
+            ("customer__first_name", "Customer First Name (A-Z)"),
+            ("-customer__first_name", "Customer First Name (Z-A)"),
+            ("customer__last_name", "Customer Last Name (A-Z)"),
+            ("-customer__last_name", "Customer Last Name (Z-A)"),
+            ("-date_ordered", "Date Ordered (newest first)"),
+            ("date_ordered", "Date Ordered (oldest first)"),
+            ("-date_received", "Date Received (newest first)"),
+            ("date_received", "Date Received (oldest first)"),
+            ("-date_called", "Date Called (newest first)"),
+            ("date_called", "Date Called (oldest first)"),
+            ("-date_picked_up", "Date Picked Up (newest first)"),
+            ("date_picked_up", "Date Picked Up (oldest first)"),
         ),
     )
 
