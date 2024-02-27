@@ -67,4 +67,53 @@ if (bottle_deposit_switch) {
     });
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    const previousStepButtons = document.querySelectorAll('.btn-previous-step');
+    previousStepButtons.forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            const orderId = this.dataset.orderId;
+            updatePreviousStep(orderId);
+        });
+    });
+});
+
+function updatePreviousStep(orderId) {
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    // Send AJAX request to update instance status
+    fetch(`/order_previous_step/${orderId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrftoken,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ /* any additional data you need to send */})
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Update the status on the page
+            // document.getElementById(`status_${instanceId}`).textContent = data.status;
+            console.log(`The order ${orderId} has been changed to the previous step.`);
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
 
