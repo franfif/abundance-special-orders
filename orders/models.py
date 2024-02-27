@@ -144,7 +144,7 @@ class Order(models.Model):
             self.status = self.ORDERED
         # Order is completed during this edit
         elif self.status == self.INCOMPLETE and self.is_complete():
-            self.status = self.PENDING
+            self.status = self.READY_TO_ORDER
 
         self.save()
 
