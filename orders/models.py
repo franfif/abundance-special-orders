@@ -81,7 +81,40 @@ class Order(models.Model):
             ]
         )
 
+    def previous_status(self):
+        match self.status:
+            case self.INCOMPLETE:
+                self.send_to_trash()
+            case self.READY_TO_ORDER:
+                self.send_to_trash()
+            case self.ORDERED:
+                self.date_ordered = None
+            case self.RECEIVED:
+                self.date_received = None
+            case self.CALLED:
+                self.date_called = None
+            case self.PICKED_UP:
+                self.date_picked_up = None
+        self.update_status()
+
+    def next_status(self):
+        match self.status:
+            case self.INCOMPLETE:
+                pass
+            case self.READY_TO_ORDER:
+                self.date_ordered = date.today()
+            case self.ORDERED:
+                self.date_received = date.today()
+            case self.RECEIVED:
+                self.date_called = date.today()
+            case self.CALLED:
+                self.date_picked_up = date.today()
+        self.update_status()
+
     def update_status(self):
+        if self.status == self.PENDING:
+            self.status = self.READY_TO_ORDER
+
         if self.status == self.DELETED and self.date_deleted is None:
             self.status = self.INCOMPLETE
         # Make sure all orders have a status
