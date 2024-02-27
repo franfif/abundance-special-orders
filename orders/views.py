@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.views import generic
+from django.http import JsonResponse
 
 from django_filters.views import FilterView
 
@@ -89,6 +90,16 @@ class OrderUpdateView(generic.UpdateView):
             return redirect("orders:home")
         order.update_status()
         return super().form_valid(form)
+
+
+def update_previous_step(request, order_id):
+    # Retrieve instance and update status
+    order = models.Order.objects.get(pk=order_id)
+    order.previous_status()
+    order.save()
+
+    # Return updated instance data
+    return JsonResponse({"status": order.status})
 
 
 def view_send_to_trash(request, pk):
