@@ -47,7 +47,7 @@ class OrderCreateView(generic.CreateView):
         # Add in a QuerySet of all the orders
         context["order_list"] = models.Order.objects.exclude(
             status=models.Order.DELETED
-        )
+        ).order_by("-date_created", "vendor__name")
         context["action"] = "create"
         return context
 
@@ -68,7 +68,9 @@ class OrderUpdateView(generic.UpdateView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the orders
-        context["order_list"] = models.Order.objects.all()
+        context["order_list"] = models.Order.objects.exclude(
+            status=models.Order.DELETED
+        ).order_by("-date_created", "vendor__name")
         context["action"] = "update"
         return context
 
