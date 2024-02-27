@@ -67,6 +67,13 @@
                 aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
             More Info
         </button>
+        <button class="btn btn-sm btn-light btn-previous-step" data-order-id="{{ order.id }}">
+            {{ order.status|previous_step }}
+        </button>
+        <button class="btn btn-sm btn-light btn-next-step">
+            {{ order.status|next_step }}
+        </button>
+
     </div>
 
 </div>
