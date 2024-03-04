@@ -11,8 +11,8 @@ urlpatterns = [
     # path("<int:pk>/trash_order/", views.send_to_trash, name="trash-order"),
     path("<pk>/restore_order/", views.view_restore, name="restore-order"),
     path(
-        "order_previous_step/<int:order_id>/",
-        views.update_previous_step,
-        name="update-previous-step",
+        "order_update_status/<int:order_id>/<action>/",
+        views.order_update_status,
+        name="order-update-status",
     ),
 ]
