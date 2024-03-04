@@ -112,9 +112,11 @@ class Order(models.Model):
         self.update_status()
 
     def update_status(self):
+        # Not using pending status anymore
         if self.status == self.PENDING:
             self.status = self.READY_TO_ORDER
 
+        # Revive a deleted item
         if self.status == self.DELETED and self.date_deleted is None:
             self.status = self.INCOMPLETE
         # Make sure all orders have a status
@@ -126,6 +128,8 @@ class Order(models.Model):
             self.status = self.DELETED
             self.save()
             return
+
+        # TODO: Add Stand-By status update here
 
         # Order is incomplete
         if not self.is_complete():
@@ -142,8 +146,8 @@ class Order(models.Model):
             self.status = self.RECEIVED
         elif self.date_ordered is not None:
             self.status = self.ORDERED
-        # Order is completed during this edit
-        elif self.status == self.INCOMPLETE and self.is_complete():
+        # Order is complete and does not have a date-related status
+        elif self.is_complete():
             self.status = self.READY_TO_ORDER
 
         self.save()
