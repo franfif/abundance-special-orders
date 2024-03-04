@@ -96,26 +96,27 @@ class OrderUpdateView(generic.UpdateView):
 
 
 def order_update_status(request, order_id, action):
-    # Retrieve instance and update status
-    order = get_object_or_404(models.Order, id=order_id)
-    if action == "previous_step":
-        order.previous_status()
-    elif action == "next_step":
-        order.next_status()
-    order.save()
+    if request.method == "PUT":
+        # Retrieve instance and update status
+        order = get_object_or_404(models.Order, id=order_id)
+        if action == "previous_step":
+            order.previous_status()
+        elif action == "next_step":
+            order.next_status()
+        order.save()
 
-    data = {
-        "id": order.id,
-        "status": order.get_status_display(),
-        "date_ordered": order.date_ordered,
-        "date_received": order.date_received,
-        "date_called": order.date_called,
-        "date_picked_up": order.date_picked_up,
-        "status_previous_step": previous_step(order.status),
-        "status_next_step": next_step(order.status),
-    }
+        data = {
+            "id": order.id,
+            "status": order.get_status_display(),
+            "date_ordered": order.date_ordered,
+            "date_received": order.date_received,
+            "date_called": order.date_called,
+            "date_picked_up": order.date_picked_up,
+            "status_previous_step": previous_step(order.status),
+            "status_next_step": next_step(order.status),
+        }
 
-    return JsonResponse(data, safe=False)
+        return JsonResponse(data)
 
 
 def view_send_to_trash(request, pk):
