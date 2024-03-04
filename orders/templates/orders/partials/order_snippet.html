@@ -4,8 +4,8 @@
     <div class="card-header">
         <div class="row ">
             <span class="col-auto">
-                <span class="col-auto me-auto badge bg-light text-dark">{{ order.date_created }}</span>
-                <span class="col-auto badge bg-info text-dark">{{ order|status }}</span>
+                <span id="date-created-{{ order.id }}" class="col-auto me-auto badge bg-light text-dark">{{ order.date_created }}</span>
+                <span id="status-{{ order.id }}" class="col-auto badge bg-info text-dark">{{ order|status }}</span>
             </span>
             <span class="col-auto ms-auto ">
                 <span class="col-auto">
@@ -51,10 +51,11 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item p-0"></li>
                 <li class="list-group-item px-0 ">
-                    <div>Ordered: {{ order.date_ordered|date }}</div>
-                    <div>Received: {{ order.date_received|date }}</div>
-                    <div>Called: {{ order.date_called|date }}</div>
-                    <div>Picked-up: {{ order.date_picked_up|date }}</div>
+                    <div>Ordered: <span id="date-ordered-{{ order.id }}">{{ order.date_ordered|date }}</span></div>
+                    <div>Received: <span id="date-received-{{ order.id }}">{{ order.date_received|date }}</span></div>
+                    <div>Called: <span id="date-called-{{ order.id }}">{{ order.date_called|date }}</span></div>
+                    <div>Picked-up: <span id="date-picked-up-{{ order.id }}">{{ order.date_picked_up|date }}</span>
+                    </div>
                 </li>
                 <li class="list-group-item px-0 ">
                     <div>Employee initials: {{ order.employee_initials }}</div>
@@ -68,10 +69,10 @@
             More Info
         </button>
         <button class="btn btn-sm btn-light btn-previous-step" data-order-id="{{ order.id }}">
-            {{ order.status|previous_step }}
+            <span id="previous-step-{{ order.id }}">{{ order.status|previous_step }}</span>
         </button>
-        <button class="btn btn-sm btn-light btn-next-step">
-            {{ order.status|next_step }}
+        <button class="btn btn-sm btn-light btn-next-step" data-order-id="{{ order.id }}">
+            <span id="next-step-{{ order.id }}">{{ order.status|next_step }}</span>
         </button>
 
     </div>
