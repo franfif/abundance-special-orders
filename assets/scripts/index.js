@@ -48,7 +48,6 @@ const btns_order_more_info = document.getElementsByClassName('btn-order-more-inf
 
 for (const btn of btns_order_more_info) {
     btn.addEventListener('click', (event) => {
-        console.log(btn.getAttribute('aria-expanded'))
         if (btn.getAttribute('aria-expanded') === 'true') {
             btn.textContent = "Hide";
         } else {
@@ -97,8 +96,8 @@ function updatePreviousStep(orderId) {
     const csrftoken = getCookie('csrftoken');
 
     // Send AJAX request to update instance status
-    fetch(`/order_previous_step/${orderId}/`, {
-        method: 'POST',
+    fetch(`/order_update_status/${orderId}/${action}/`, {
+        method: 'GET',
         headers: {
             'X-CSRFToken': csrftoken,
             'Content-Type': 'application/json'
