@@ -84,7 +84,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-function updatePreviousStep(orderId) {
+function updateOrderStatus(orderId, action) {
+    // TODO Move getCookie() to utils
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -110,14 +111,42 @@ function updatePreviousStep(orderId) {
             'X-CSRFToken': csrftoken,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ /* any additional data you need to send */})
     })
         .then(response => response.json())
         .then(data => {
-            // Update the status on the page
-            // document.getElementById(`status_${instanceId}`).textContent = data.status;
-            console.log(`The order ${orderId} has been changed to the previous step.`);
-            console.log(data);
+            // Ensure the correct order is updated
+            if (orderId === data.id.toString()) {
+
+                const status = $("#status-" + data.id)[0];
+                if (status) {
+                    status.textContent = data.status;
+                }
+                const dateOrdered = $("#date-ordered-" + data.id)[0];
+                if (dateOrdered) {
+                    dateOrdered.textContent = data.date_ordered;
+                }
+                const dateReceived = $("#date-received-" + data.id)[0];
+                if (dateReceived) {
+                    dateReceived.textContent = data.date_received;
+                }
+                const dateCalled = $("#date-called-" + data.id)[0];
+                if (dateCalled) {
+                    dateCalled.textContent = data.date_called;
+                }
+                const datePickedUp = $("#date-picked-up-" + data.id)[0];
+                if (datePickedUp) {
+                    datePickedUp.textContent = data.date_picked_up;
+                }
+                const previousStep = $("#previous-step-" + data.id)[0];
+                if (previousStep) {
+                    previousStep.textContent = data.status_previous_step;
+                }
+                const nextStep = $("#next-step-" + data.id)[0];
+                if (nextStep) {
+                    nextStep.textContent = data.status_next_step;
+                }
+            }
+
         })
         .catch(error => {
             console.error('Error:', error);
