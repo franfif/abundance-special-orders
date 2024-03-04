@@ -1,10 +1,12 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.views import generic
+from django.http import JsonResponse
 
 from django_filters.views import FilterView
 
 from . import models, forms
+from .templatetags.orders_extras import previous_step, next_step
 from .filters import OrderFilter
 
 
@@ -46,7 +48,7 @@ class OrderCreateView(generic.CreateView):
         # Add in a QuerySet of all the orders
         context["order_list"] = models.Order.objects.exclude(
             status=models.Order.DELETED
-        )
+        ).order_by("-date_created", "vendor__name")
         context["action"] = "create"
         return context
 
@@ -67,7 +69,9 @@ class OrderUpdateView(generic.UpdateView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the orders
-        context["order_list"] = models.Order.objects.all()
+        context["order_list"] = models.Order.objects.exclude(
+            status=models.Order.DELETED
+        ).order_by("-date_created", "vendor__name")
         context["action"] = "update"
         return context
 
@@ -89,6 +93,30 @@ class OrderUpdateView(generic.UpdateView):
             return redirect("orders:home")
         order.update_status()
         return super().form_valid(form)
+
+
+def order_update_status(request, order_id, action):
+    if request.method == "PUT":
+        # Retrieve instance and update status
+        order = get_object_or_404(models.Order, id=order_id)
+        if action == "previous_step":
+            order.previous_status()
+        elif action == "next_step":
+            order.next_status()
+        order.save()
+
+        data = {
+            "id": order.id,
+            "status": order.get_status_display(),
+            "date_ordered": order.date_ordered,
+            "date_received": order.date_received,
+            "date_called": order.date_called,
+            "date_picked_up": order.date_picked_up,
+            "status_previous_step": previous_step(order.status),
+            "status_next_step": next_step(order.status),
+        }
+
+        return JsonResponse(data)
 
 
 def view_send_to_trash(request, pk):

@@ -97,3 +97,41 @@ def date(value):
     if value is not None:
         return value
     return default_values.NO_DATE
+
+
+@register.filter
+def previous_step(status):
+    match status:
+        case "INCOMPLETE":
+            return "Delete order"
+        case "READY_TO_ORDER":
+            return "Delete Order"
+        case "ORDERED":
+            return "Reorder"
+        case "RECEIVED":
+            return "Not Received"
+        case "CALLED":
+            return "Not Called"
+        case "PICKED_UP":
+            return "Not Picked-Up"
+        case _:
+            return ""
+
+
+@register.filter
+def next_step(status):
+    match status:
+        case "INCOMPLETE":
+            return "Edit order"
+        case "READY_TO_ORDER":
+            return "Order Placed"
+        case "ORDERED":
+            return "Received"
+        case "RECEIVED":
+            return "Called"
+        case "CALLED":
+            return "Picked-Up"
+        case "PICKED_UP":
+            return ""
+        case _:
+            return ""

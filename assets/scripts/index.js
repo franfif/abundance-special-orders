@@ -48,7 +48,6 @@ const btns_order_more_info = document.getElementsByClassName('btn-order-more-inf
 
 for (const btn of btns_order_more_info) {
     btn.addEventListener('click', (event) => {
-        console.log(btn.getAttribute('aria-expanded'))
         if (btn.getAttribute('aria-expanded') === 'true') {
             btn.textContent = "Hide";
         } else {
@@ -67,4 +66,90 @@ if (bottle_deposit_switch) {
     });
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    const previousStepButtons = $('.btn-previous-step');
+    for (const button of previousStepButtons) {
+        button.addEventListener('click', function () {
+            const orderId = this.dataset.orderId;
+            updateOrderStatus(orderId, 'previous_step');
+        });
+    }
+
+    const nextStepButtons = $('.btn-next-step');
+    for (const button of nextStepButtons) {
+        button.addEventListener('click', function () {
+            const orderId = this.dataset.orderId;
+            updateOrderStatus(orderId, 'next_step');
+        });
+    }
+});
+
+function updateOrderStatus(orderId, action) {
+    // TODO Move getCookie() to utils
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    // Send AJAX request to update instance status
+    fetch(`/order_update_status/${orderId}/${action}/`, {
+        method: 'PUT',
+        headers: {
+            'X-CSRFToken': csrftoken,
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Ensure the correct order is updated
+            if (orderId === data.id.toString()) {
+
+                const status = $("#status-" + data.id)[0];
+                if (status) {
+                    status.textContent = data.status;
+                }
+                const dateOrdered = $("#date-ordered-" + data.id)[0];
+                if (dateOrdered) {
+                    dateOrdered.textContent = data.date_ordered;
+                }
+                const dateReceived = $("#date-received-" + data.id)[0];
+                if (dateReceived) {
+                    dateReceived.textContent = data.date_received;
+                }
+                const dateCalled = $("#date-called-" + data.id)[0];
+                if (dateCalled) {
+                    dateCalled.textContent = data.date_called;
+                }
+                const datePickedUp = $("#date-picked-up-" + data.id)[0];
+                if (datePickedUp) {
+                    datePickedUp.textContent = data.date_picked_up;
+                }
+                const previousStep = $("#previous-step-" + data.id)[0];
+                if (previousStep) {
+                    previousStep.textContent = data.status_previous_step;
+                }
+                const nextStep = $("#next-step-" + data.id)[0];
+                if (nextStep) {
+                    nextStep.textContent = data.status_next_step;
+                }
+            }
+
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
 

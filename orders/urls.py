@@ -10,4 +10,9 @@ urlpatterns = [
     path("<int:pk>/edit_order/", views.OrderUpdateView.as_view(), name="edit-order"),
     # path("<int:pk>/trash_order/", views.send_to_trash, name="trash-order"),
     path("<pk>/restore_order/", views.view_restore, name="restore-order"),
+    path(
+        "order_update_status/<int:order_id>/<action>/",
+        views.order_update_status,
+        name="order-update-status",
+    ),
 ]
