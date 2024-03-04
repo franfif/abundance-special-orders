@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.views import generic
 from django.http import JsonResponse
@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django_filters.views import FilterView
 
 from . import models, forms
+from .templatetags.orders_extras import previous_step, next_step
 from .filters import OrderFilter
 
 
@@ -94,14 +95,27 @@ class OrderUpdateView(generic.UpdateView):
         return super().form_valid(form)
 
 
-def update_previous_step(request, order_id):
+def order_update_status(request, order_id, action):
     # Retrieve instance and update status
-    order = models.Order.objects.get(pk=order_id)
-    order.previous_status()
+    order = get_object_or_404(models.Order, id=order_id)
+    if action == "previous_step":
+        order.previous_status()
+    elif action == "next_step":
+        order.next_status()
     order.save()
 
-    # Return updated instance data
-    return JsonResponse({"status": order.status})
+    data = {
+        "id": order.id,
+        "status": order.get_status_display(),
+        "date_ordered": order.date_ordered,
+        "date_received": order.date_received,
+        "date_called": order.date_called,
+        "date_picked_up": order.date_picked_up,
+        "status_previous_step": previous_step(order.status),
+        "status_next_step": next_step(order.status),
+    }
+
+    return JsonResponse(data, safe=False)
 
 
 def view_send_to_trash(request, pk):
