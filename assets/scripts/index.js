@@ -106,7 +106,7 @@ function updateOrderStatus(orderId, action) {
 
     // Send AJAX request to update instance status
     fetch(`/order_update_status/${orderId}/${action}/`, {
-        method: 'GET',
+        method: 'PUT',
         headers: {
             'X-CSRFToken': csrftoken,
             'Content-Type': 'application/json'
