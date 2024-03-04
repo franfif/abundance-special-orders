@@ -112,7 +112,7 @@ def previous_step(status):
             return "Not Received"
         case "CALLED":
             return "Not Called"
-        case "PIKED_UP":
+        case "PICKED_UP":
             return "Not Picked-Up"
         case _:
             return ""
@@ -131,7 +131,7 @@ def next_step(status):
             return "Called"
         case "CALLED":
             return "Picked-Up"
-        case "PIKED_UP":
+        case "PICKED_UP":
             return ""
         case _:
             return ""
