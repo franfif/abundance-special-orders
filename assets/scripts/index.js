@@ -67,13 +67,21 @@ if (bottle_deposit_switch) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    const previousStepButtons = document.querySelectorAll('.btn-previous-step');
-    previousStepButtons.forEach(btn => {
-        btn.addEventListener('click', function (e) {
+    const previousStepButtons = $('.btn-previous-step');
+    for (const button of previousStepButtons) {
+        button.addEventListener('click', function () {
             const orderId = this.dataset.orderId;
-            updatePreviousStep(orderId);
+            updateOrderStatus(orderId, 'previous_step');
         });
-    });
+    }
+
+    const nextStepButtons = $('.btn-next-step');
+    for (const button of nextStepButtons) {
+        button.addEventListener('click', function () {
+            const orderId = this.dataset.orderId;
+            updateOrderStatus(orderId, 'next_step');
+        });
+    }
 });
 
 function updatePreviousStep(orderId) {
