@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-auto">
+        <form method="post">
+            {% csrf_token %}
+            <div class="card border-primary bg-ticket my-2">
+                <div class="card-header pb-0">
+                    <div class="row ">
+                        {% if action == 'update' %}
+                        <span class="col-auto">Edit customer:</span>
+                        {% else %}
+                        <span class="col-auto">Add a new customer:</span>
+                        {% endif %}
+                    </div>
+
+                </div>
+                <div class="card-body py-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item px-0">
+                            {% include 'customers/partials/customer_form_fields.html' %}
+                            <div>
+                                <button
+                                        class="col-auto btn btn-primary btn-sm mx-1 mb-1" type="submit" name="save">
+                                    Save
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    {% include 'customers/partials/list_customers.html' %}
+</div>
+
+{% endblock %}
