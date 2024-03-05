@@ -1,0 +1,19 @@
+{% load bootstrap5 %}
+
+
+<div class="row mb-1">
+    {% bootstrap_field form.last_name show_label=False size="small"
+    form_group_class="col row" field_class="col" %}
+    {% bootstrap_field form.first_name show_label=False size="small"
+    form_group_class="col row" field_class="col" %}
+</div>
+<div class="row mb-1">
+    {% bootstrap_field form.company show_label=False size="small"
+    form_group_class="col row" field_class="col" %}
+    {% bootstrap_field form.phone_number show_label=False size="small"
+    form_group_class="col row" field_class="col" %}
+</div>
+<div class="row mb-1">
+    {% bootstrap_field form.status show_label=False
+    size="small" form_group_class="col row" field_class="col" %}
+</div>

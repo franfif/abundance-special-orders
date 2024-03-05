@@ -15,22 +15,6 @@
         show_label=False %}
     </div>
     <div id="new-customer-form" class="visually-hidden">
-
-        <div class="row mb-1">
-            {% bootstrap_field form.new_customer_form.last_name show_label=False size="small"
-            form_group_class="col row" field_class="col" %}
-            {% bootstrap_field form.new_customer_form.first_name show_label=False size="small"
-            form_group_class="col row" field_class="col" %}
-        </div>
-        <div class="row mb-1">
-            {% bootstrap_field form.new_customer_form.company show_label=False size="small"
-            form_group_class="col row" field_class="col" %}
-            {% bootstrap_field form.new_customer_form.phone_number show_label=False size="small"
-            form_group_class="col row" field_class="col" %}
-        </div>
-        <div class="row mb-1">
-            {% bootstrap_field form.new_customer_form.status show_label=False
-            size="small" form_group_class="col row" field_class="col" %}
-        </div>
+        {% include 'customers/partials/customer_form_fields.html' with form=form.new_customer_form %}
     </div>
 </div>
