@@ -18,14 +18,8 @@
                 </div>
                 <div class="card-body py-0">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item px-0">
-                            {% include 'customers/partials/customer_form_fields.html' %}
-                            <div>
-                                <button
-                                        class="col-auto btn btn-primary btn-sm mx-1 mb-1" type="submit" name="save">
-                                    Save
-                                </button>
-                            </div>
+                        <li class="list-group-item px-0 pb-1">
+                            {% include 'customers/partials/customer_form_fields.html' with save_button=True %}
                         </li>
                     </ul>
                 </div>
