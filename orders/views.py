@@ -2,6 +2,7 @@ from django.shortcuts import redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.views import generic
 from django.http import JsonResponse
+from django.db.models.functions import Lower
 
 from django_filters.views import FilterView
 
@@ -28,7 +29,7 @@ class OrderListView(FilterView):
         default_ordering = self.request.GET.get("ordering", None)
         if not default_ordering:
             # Default ordering if none is provided in the request
-            queryset = queryset.order_by("-date_created", "vendor__name")
+            queryset = queryset.order_by("-date_created", Lower("vendor__name"))
         return queryset
 
 
@@ -48,7 +49,7 @@ class OrderCreateView(generic.CreateView):
         # Add in a QuerySet of all the orders
         context["order_list"] = models.Order.objects.exclude(
             status=models.Order.DELETED
-        ).order_by("-date_created", "vendor__name")
+        ).order_by("-date_created", Lower("vendor__name"))
         context["action"] = "create"
         return context
 
@@ -71,7 +72,7 @@ class OrderUpdateView(generic.UpdateView):
         # Add in a QuerySet of all the orders
         context["order_list"] = models.Order.objects.exclude(
             status=models.Order.DELETED
-        ).order_by("-date_created", "vendor__name")
+        ).order_by("-date_created", Lower("vendor__name"))
         context["action"] = "update"
         return context
 
