@@ -1,20 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<!-- TEMPLATE TO DELETE? REPLACED BY customer_filter.html-->
 <div class="row">
     <div class="col-auto">
         <form method="post">
             {% csrf_token %}
-            <div class="card border-primary bg-ticket my-2">
-                <div class="card-header pb-0">
+            {% if action == 'update' %}
+            <div class="card border-warning bg-ticket my-2">
+                <div class="card-header bg-warning pb-2">
                     <div class="row ">
-                        {% if action == 'update' %}
                         <span class="col-auto">Edit customer:</span>
-                        {% else %}
-                        <span class="col-auto">Add a new customer:</span>
-                        {% endif %}
-                    </div>
 
+            {% else %}
+            <div class="card border-primary bg-ticket my-2">
+                <div class="card-header bg-primary text-white pb-2">
+                    <div class="row ">
+                        <span class="col-auto">Add a new customer:</span>
+            {% endif %}
+                    </div>
                 </div>
                 <div class="card-body py-0">
                     <ul class="list-group list-group-flush">
