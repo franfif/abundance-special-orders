@@ -1,0 +1,24 @@
+<div class="col-4">
+    <form method="post">
+        {% csrf_token %}
+        <div class="card border-primary bg-ticket my-2">
+            <div class="card-header bg-primary text-white pb-2">
+                <div class="row ">
+                    <span class="col">Add a new customer</span>
+                    <span id="btn-add-customer" class="col-auto" type="button" data-bs-toggle="collapse"
+                          data-bs-target=".collapse-add-customer"
+                          aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
+                        <i id="fa-btn-add-customer" class="fa-solid fa-circle-plus"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="card-body collapse collapse-add-customer py-0">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item px-0 pb-1">
+                        {% include 'customers/partials/customer_form_fields.html' with save_button=True %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>
