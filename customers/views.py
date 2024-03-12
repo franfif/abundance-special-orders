@@ -1,4 +1,4 @@
-from django.shortcuts import reverse
+from django.shortcuts import reverse, redirect
 from django.views import generic
 from django.db.models.functions import Lower
 
@@ -12,56 +12,55 @@ from .filters import CustomerFilter
 display_choice = "table"
 
 
-class CustomerListCreateView(FilterView):
+class CustomerView(generic.View):
     model = Customer
-    filterset_class = CustomerFilter
-    template_name = "customer_form.html"
-    context_object_name = "filter"
-    # form_class = CustomerForm
 
     def get_success_url(self):
-        return reverse("customers:list-customers")
+        customer_full_info = self.request.GET.get("customer_full_info", "")
+        status = self.request.GET.get("status", "")
+        print(f"customer full info: {customer_full_info}")
+        print(f"status: {status}")
+
+        success_url = reverse("customers:list-customers")
+        success_url += f"?customer_full_info={customer_full_info}&status={status}"
+        return success_url
+        # return reverse("customers:list-customers")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context["form"] = CustomerForm()
-        # Add in a QuerySet of all the customers
-        context["customer_list"] = Customer.objects.all().order_by(
-            Lower("last_name"), Lower("first_name")
+        # Add filtered queryset in context
+        context["filter"] = CustomerFilter(
+            self.request.GET,
+            queryset=self.get_queryset().order_by(
+                Lower("last_name"), Lower("first_name")
+            ),
         )
         return context
 
 
-class CustomerUpdateView(generic.UpdateView):
-    model = Customer
-    form_class = CustomerForm
+class CustomerListCreateView(CustomerView, generic.CreateView):
+    fields = "__all__"
+    template_name = "customers/customer_filter.html"
 
-    def get_success_url(self):
-        return reverse("customers:list-customers")
 
+class CustomerUpdateView(CustomerListCreateView, generic.UpdateView):
     def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
+        # Call the super CustomerListCreateView method
         context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the orders
-        context["customer_list"] = Customer.objects.all().order_by(
-            Lower("last_name"), Lower("first_name")
-        )
+        # Add action to context
         context["action"] = "update"
         return context
 
+    def post(self, request, *args, **kwargs):
+        print("request.POST")
+        print(request.POST)
+        if "cancel" in request.POST:
+            url = self.get_success_url()
+            return redirect(url)
+        else:
+            return super(CustomerUpdateView, self).post(request, *args, **kwargs)
 
-class CustomerDeleteView(generic.DeleteView):
-    model = Customer
 
-    def get_success_url(self):
-        return reverse("customers:list-customers")
-
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the customers
-        context["customer_list"] = Customer.objects.all().order_by(
-            Lower("last_name"), Lower("first_name")
-        )
-        return context
+class CustomerDeleteView(CustomerView, generic.DeleteView):
+    pass
