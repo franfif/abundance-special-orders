@@ -15,13 +15,20 @@
     {% for customer in customer_list %}
 
     <tr>
-        <td>{{ customer.last_name }}</td>
-        <td>{{ customer.first_name }}</td>
-        <td>{{ customer.company }}</td>
-        <td>{{ customer.phone_number }}</td>
-        <td>{{ customer.status }}</td>
+        <td>{{ customer.last_name|default_if_none:"" }}</td>
+        <td>{{ customer.first_name|default_if_none:"" }}</td>
+        <td>{{ customer.company|default_if_none:"" }}</td>
+        <td>{{ customer.phone_number|default_if_none:"" }}</td>
+        <td>{{ customer.status|default_if_none:"" }}</td>
         <td>
-            <a class="btn-orders" href="{% url 'customers:edit-customer' customer.id %}">
+            <a type="button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show customer's orders"
+               href="{% url 'orders:home' %}?customer_full_info={{ customer.last_name|default_if_none:'' }} {{ customer.first_name|default_if_none:'' }} {{ customer.phone_number|default_if_none:'' }} {{ customer.company|default_if_none:'' }}">
+                <i class="fa-solid fa-cart-shopping"></i>
+            </a>
+        </td>
+        <td>
+            <a class="btn-orders"
+               href="{% url 'customers:edit-customer' customer.id %}?customer_full_info={{ request.GET.customer_full_info }}&status={{ request.GET.status }}">
                 <i class="fa-solid fa-pen"></i>
             </a>
         </td>
