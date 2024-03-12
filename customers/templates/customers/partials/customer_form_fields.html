@@ -20,7 +20,7 @@
     {% if save_button %}
     <div class="col-auto">
         {% if action == 'update' %}
-        <button class="btn btn-warning btn-sm mb-1">Cancel</button>
+        <button class="btn btn-warning btn-sm mb-1" type="submit" name="cancel" value="cancel">Cancel</button>
         {% bootstrap_button "Save" button_type="submit" button_class="btn-primary btn-sm mb-1"
         size="sm" %}
         {% else %}
