@@ -2,14 +2,14 @@
     <form method="post">
         {% csrf_token %}
         <div class="card border-primary bg-ticket my-2">
-            <div class="card-header bg-primary text-white pb-2">
+            <div id="btn-add-customer" class="card-header bg-primary text-white pb-2 col-auto" type="button"
+                 data-bs-toggle="collapse"
+                 data-bs-target=".collapse-add-customer"
+                 aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
                 <div class="row ">
                     <span class="col">Add a new customer</span>
-                    <span id="btn-add-customer" class="col-auto" type="button" data-bs-toggle="collapse"
-                          data-bs-target=".collapse-add-customer"
-                          aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
-                        <i id="fa-btn-add-customer" class="fa-solid fa-circle-plus"></i>
-                    </span>
+
+                    <i id="fa-btn-add-customer" class="fa-solid fa-circle-plus col-auto my-auto"></i>
                 </div>
             </div>
             <div class="card-body collapse collapse-add-customer py-0">
