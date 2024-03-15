@@ -153,3 +153,22 @@ function updateOrderStatus(orderId, action) {
         });
 }
 
+const btn_add_customer = document.getElementById('btn-add-customer');
+console.log(btn_add_customer)
+btn_add_customer.addEventListener('click', (event) => {
+    const element = document.getElementById("fa-btn-add-customer");  // Get the DIV element
+
+    if (btn_add_customer.getAttribute('aria-expanded') === 'true') {
+        element.classList.remove("fa-circle-plus");
+        element.classList.add("fa-circle-minus");
+    } else {
+        element.classList.remove("fa-circle-minus");
+        element.classList.add("fa-circle-plus");
+    }
+});
+
+// Initialize tooltips
+const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+});

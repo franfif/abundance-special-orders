@@ -1,0 +1,20 @@
+<div class="col-4">
+    <form method="post">
+        {% csrf_token %}
+        <div class="card border-warning bg-ticket my-2">
+            <div class="card-header bg-warning pb-2">
+                <div class="row ">
+                    <span class="col-auto">Edit customer</span>
+                </div>
+            </div>
+            <div class="card-body py-0">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item px-0 pb-1">
+                        {% include 'customers/partials/customer_form_fields.html' with save_button=True %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </form>
+</div>

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% block content %}
+<div class="row">
+    {% if action == 'update' %}
+    {% include 'customers/partials/update_customer.html' %}
+    {% else %}
+    {% include 'customers/partials/add_customer.html' %}
+    {% endif %}
+
+    <div class="col">
+        <form method="get" class="row my-2">
+            <div class="col">
+                {% bootstrap_field filter.form.customer_full_info show_label=False size="small" layout="horizontal"
+                form_group_class="mb-1 pe-0" field_class=" pe-0" label_class="" %}
+            </div>
+            <div class="col-auto">
+                {% bootstrap_field filter.form.status show_label=False size="small" layout="horizontal"
+                form_group_class="col mb-1" field_class="col" label_class="col-auto" %}
+            </div>
+            <div class="col-auto mb-1 me-0 justify-content-end">
+                {% if action == 'update' %}
+                <a class="align-self-end btn btn-light btn-sm"
+                   href="{% url 'customers:edit-customer' customer.id %}">Clear filters</a>
+                {% else %}
+                <a class="align-self-end btn btn-light btn-sm"
+                   href="{% url 'customers:list-customers' %}">Clear filters</a>
+                {% endif %}
+                <input class="align-self-end btn btn-primary btn-sm" type="submit" value="Apply filters"/>
+            </div>
+        </form>
+    </div>
+</div>
+{% include 'customers/partials/list_customers.html' with customer_list=filter.qs %}
+
+{% endblock %}
