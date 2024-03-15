@@ -20,7 +20,9 @@ class OrderListView(FilterView):
     def get_queryset(self):
         queryset = super().get_queryset()
 
-        if "status" in self.kwargs:
+        if "customer_id" in self.kwargs:
+            queryset = queryset.filter(customer__id=self.kwargs["customer_id"])
+        elif "status" in self.kwargs:
             queryset = queryset.filter(status=self.kwargs["status"].upper())
         else:
             queryset = queryset.exclude(status=models.Order.DELETED)

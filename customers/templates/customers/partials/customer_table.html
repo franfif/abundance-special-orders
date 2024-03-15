@@ -22,7 +22,7 @@
         <td>{{ customer.status|default_if_none:"" }}</td>
         <td>
             <a type="button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show customer's orders"
-               href="{% url 'orders:home' %}?customer_full_info={{ customer.last_name|default_if_none:'' }} {{ customer.first_name|default_if_none:'' }} {{ customer.phone_number|default_if_none:'' }} {{ customer.company|default_if_none:'' }}">
+               href="{% url 'customers:customer-orders' customer.id %}">
                 <i class="fa-solid fa-cart-shopping"></i>
             </a>
         </td>
