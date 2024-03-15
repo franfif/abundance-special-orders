@@ -2,10 +2,7 @@ from django.shortcuts import reverse, redirect
 from django.views import generic
 from django.db.models.functions import Lower
 
-from django_filters.views import FilterView
-
 from .models import Customer
-from .forms import CustomerForm
 from .filters import CustomerFilter
 
 
