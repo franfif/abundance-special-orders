@@ -103,8 +103,16 @@ def order_update_status(request, order_id, action):
         # Retrieve instance and update status
         order = get_object_or_404(models.Order, id=order_id)
         if action == "previous_step":
+            if order.status == models.Order.INCOMPLETE:
+                order.send_to_trash()
+                # return JsonResponse({"status": "deleted"})
             order.previous_status()
         elif action == "next_step":
+            if order.status == models.Order.INCOMPLETE:
+                redirect_data = {
+                    "redirect": reverse("orders:edit-order", kwargs={"pk": order.id}),
+                }
+                return JsonResponse(redirect_data)
             order.next_status()
         order.save()
 

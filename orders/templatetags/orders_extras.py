@@ -115,7 +115,7 @@ def previous_step(status):
         case "PICKED_UP":
             return "Not Picked-Up"
         case _:
-            return ""
+            return None
 
 
 @register.filter
@@ -132,6 +132,6 @@ def next_step(status):
         case "CALLED":
             return "Picked-Up"
         case "PICKED_UP":
-            return ""
+            return None
         case _:
-            return ""
+            return None

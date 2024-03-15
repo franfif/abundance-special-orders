@@ -72,10 +72,12 @@
                 aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
             More Info
         </button>
-        <button class="btn btn-sm btn-light btn-previous-step" data-order-id="{{ order.id }}">
+        <button class="btn btn-sm btn-light btn-previous-step {% if not order.status|previous_step %} visually-hidden {% endif %}"
+                data-order-id="{{ order.id }}">
             <span id="previous-step-{{ order.id }}">{{ order.status|previous_step }}</span>
         </button>
-        <button class="btn btn-sm btn-light btn-next-step" data-order-id="{{ order.id }}">
+        <button class="btn btn-sm btn-light btn-next-step {% if not order.status|next_step %} visually-hidden {% endif %}"
+                data-order-id="{{ order.id }}">
             <span id="next-step-{{ order.id }}">{{ order.status|next_step }}</span>
         </button>
 

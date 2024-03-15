@@ -114,36 +114,50 @@ function updateOrderStatus(orderId, action) {
     })
         .then(response => response.json())
         .then(data => {
-            // Ensure the correct order is updated
-            if (orderId === data.id.toString()) {
+            if (data.redirect) {
+                window.location.href = data.redirect;
+            } else {
+                // Ensure the correct order is updated
+                if (orderId === data.id.toString()) {
 
-                const status = $("#status-" + data.id)[0];
-                if (status) {
-                    status.textContent = data.status;
-                }
-                const dateOrdered = $("#date-ordered-" + data.id)[0];
-                if (dateOrdered) {
-                    dateOrdered.textContent = data.date_ordered;
-                }
-                const dateReceived = $("#date-received-" + data.id)[0];
-                if (dateReceived) {
-                    dateReceived.textContent = data.date_received;
-                }
-                const dateCalled = $("#date-called-" + data.id)[0];
-                if (dateCalled) {
-                    dateCalled.textContent = data.date_called;
-                }
-                const datePickedUp = $("#date-picked-up-" + data.id)[0];
-                if (datePickedUp) {
-                    datePickedUp.textContent = data.date_picked_up;
-                }
-                const previousStep = $("#previous-step-" + data.id)[0];
-                if (previousStep) {
-                    previousStep.textContent = data.status_previous_step;
-                }
-                const nextStep = $("#next-step-" + data.id)[0];
-                if (nextStep) {
-                    nextStep.textContent = data.status_next_step;
+                    const status = $("#status-" + data.id)[0];
+                    if (status) {
+                        status.textContent = data.status;
+                    }
+                    const dateOrdered = $("#date-ordered-" + data.id)[0];
+                    if (dateOrdered) {
+                        dateOrdered.textContent = data.date_ordered;
+                    }
+                    const dateReceived = $("#date-received-" + data.id)[0];
+                    if (dateReceived) {
+                        dateReceived.textContent = data.date_received;
+                    }
+                    const dateCalled = $("#date-called-" + data.id)[0];
+                    if (dateCalled) {
+                        dateCalled.textContent = data.date_called;
+                    }
+                    const datePickedUp = $("#date-picked-up-" + data.id)[0];
+                    if (datePickedUp) {
+                        datePickedUp.textContent = data.date_picked_up;
+                    }
+                    const previousStep = $("#previous-step-" + data.id)[0];
+                    if (previousStep) {
+                        if (data.status_previous_step) {
+                            previousStep.textContent = data.status_previous_step;
+                            previousStep.parentNode.classList.remove("visually-hidden");
+                        } else {
+                            previousStep.parentNode.classList.add("visually-hidden");
+                        }
+                    }
+                    const nextStep = $("#next-step-" + data.id)[0];
+                    if (nextStep) {
+                        if (data.status_next_step) {
+                            nextStep.textContent = data.status_next_step;
+                            nextStep.parentNode.classList.remove("visually-hidden");
+                        } else {
+                            nextStep.parentNode.classList.add("visually-hidden");
+                        }
+                    }
                 }
             }
 
@@ -154,18 +168,19 @@ function updateOrderStatus(orderId, action) {
 }
 
 const btn_add_customer = document.getElementById('btn-add-customer');
-console.log(btn_add_customer)
-btn_add_customer.addEventListener('click', (event) => {
-    const element = document.getElementById("fa-btn-add-customer");  // Get the DIV element
+if (btn_add_customer) {
+    btn_add_customer.addEventListener('click', (event) => {
+        const element = document.getElementById("fa-btn-add-customer");  // Get the DIV element
 
-    if (btn_add_customer.getAttribute('aria-expanded') === 'true') {
-        element.classList.remove("fa-circle-plus");
-        element.classList.add("fa-circle-minus");
-    } else {
-        element.classList.remove("fa-circle-minus");
-        element.classList.add("fa-circle-plus");
-    }
-});
+        if (btn_add_customer.getAttribute('aria-expanded') === 'true') {
+            element.classList.remove("fa-circle-plus");
+            element.classList.add("fa-circle-minus");
+        } else {
+            element.classList.remove("fa-circle-minus");
+            element.classList.add("fa-circle-plus");
+        }
+    });
+}
 
 // Initialize tooltips
 const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
