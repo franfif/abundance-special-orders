@@ -57,6 +57,7 @@ class Order(models.Model):
 
     status = models.CharField(choices=ORDER_STATUS, max_length=64, null=True)
     is_stand_by = models.BooleanField(default=False)
+    is_cancelled = models.BooleanField(default=False)
     memo = models.TextField(max_length=500, null=True, blank=True)
     employee_initials = models.CharField(max_length=5)
 
@@ -117,11 +118,6 @@ class Order(models.Model):
             self.status = self.DELETED
             self.save()
             return
-
-        # TODO: Add Stand-By status update here
-        if self.is_stand_by:
-            # Stand by should not be a status, just a flag on the order displayed
-            pass
 
         # Not using pending status anymore
         # All pending orders are switched to ready to order

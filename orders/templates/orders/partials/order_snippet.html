@@ -1,13 +1,15 @@
 {% load orders_extras %}
 
-<div class="card my-2 {% if not order.is_stand_by %} border-primary {% endif %}">
+<div class="card my-2 {% if not order.is_stand_by and not order.is_cancelled %} border-primary {% endif %}">
     <div class="card-header">
         <div class="row ">
             <span class="col-auto">
                 <span id="date-created-{{ order.id }}" class="col-auto me-auto badge bg-light text-dark">{{ order.date_created }}</span>
                 <span id="status-{{ order.id }}"
                       class="col-auto badge text-dark bg-info">{{ order|status }}</span>
-                {% if order.is_stand_by %}
+                {% if order.is_cancelled %}
+                <span id="cancelled-{{ order.id }}" class="col-auto badge text-dark bg-warning">Cancelled</span>
+                {% elif order.is_stand_by %}
                 <span id="stand-by-{{ order.id }}" class="col-auto badge text-dark bg-warning">Stand-By</span>
                 {% endif %}
             </span>

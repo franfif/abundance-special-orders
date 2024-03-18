@@ -14,6 +14,7 @@ class OrderFilter(FilterWithAny):
         widget=BooleanRadioSelect, label="Bottle Deposit"
     )
     is_stand_by = BooleanFilter(widget=BooleanRadioSelect, label="Stand By")
+    is_cancelled = BooleanFilter(widget=BooleanRadioSelect, label="Cancelled")
     paid = BooleanFilter(widget=BooleanRadioSelect, label="Paid")
     customer_full_info = CharFilter(
         label="Customer (first, last and/or phone number)", method="search_customer"
@@ -60,4 +61,5 @@ class OrderFilter(FilterWithAny):
             "paid",
             "status",
             "is_stand_by",
+            "is_cancelled",
         }

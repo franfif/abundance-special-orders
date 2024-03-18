@@ -41,6 +41,7 @@ class CreateOrderForm(forms.ModelForm):
             "employee_initials",
             "customer",
             "is_stand_by",
+            "is_cancelled",
             "date_ordered",
             "date_received",
             "date_called",
@@ -70,6 +71,7 @@ class CreateOrderForm(forms.ModelForm):
             "product_number": "Product #",
             "has_bottle_deposit": "Bottle Deposit",
             "is_stand_by": "Stand By",
+            "is_cancelled": "Cancelled",
             "date_picked_up": "Date picked-up",
         }
 
