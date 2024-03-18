@@ -27,8 +27,9 @@
             {% bootstrap_field filter.form.ordering show_label=false size="small" layout="horizontal"
             form_group_class="col-auto row mb-1 mx-0 px-0" field_class="col-auto px-0" %}
 
-            <div class="row mb-1 me-0 justify-content-end">
-                <input class="col-auto align-self-end btn btn-primary btn-sm" type="submit" value="Apply filters"/>
+            <div class="row mb-1 mx-0 justify-content-end gap-2">
+                <a class="col btn btn-light btn-sm" href="{% url 'orders:home' %}">Clear filters</a>
+                <input class="col btn btn-primary btn-sm" type="submit" value="Apply filters"/>
             </div>
         </div>
     </div>
