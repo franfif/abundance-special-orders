@@ -1,1 +1,10 @@
-<button class="col-auto btn btn-danger btn-sm mx-1 mb-1" type="submit" name="delete">Delete</button>
+{% if order.date_ordered %}
+<button class="col-auto btn btn-secondary btn-sm mx-1 mb-1" type="submit"
+        name="delete" disabled>
+    Delete
+</button>
+{% else %}
+<button class="col-auto btn btn-danger btn-sm mx-1 mb-1" type="submit" name="delete">
+    Delete
+</button>
+{% endif %}
