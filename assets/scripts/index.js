@@ -84,6 +84,59 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+function update_order_snippet(orderId, data) {
+    // Ensure the correct order is updated
+    if (orderId === data.id.toString()) {
+
+        const status = $("#status-" + data.id)[0];
+        if (status) {
+            status.textContent = data.status;
+        }
+        const dateOrdered = $("#date-ordered-" + data.id)[0];
+        if (dateOrdered) {
+            dateOrdered.textContent = data.date_ordered;
+        }
+        const dateReceived = $("#date-received-" + data.id)[0];
+        if (dateReceived) {
+            dateReceived.textContent = data.date_received;
+        }
+        const dateCalled = $("#date-called-" + data.id)[0];
+        if (dateCalled) {
+            dateCalled.textContent = data.date_called;
+        }
+        const datePickedUp = $("#date-picked-up-" + data.id)[0];
+        if (datePickedUp) {
+            datePickedUp.textContent = data.date_picked_up;
+        }
+        const previousStep = $("#previous-step-" + data.id)[0];
+        if (previousStep) {
+            if (data.status_previous_step) {
+                console.log("previous step: " + data.status_previous_step)
+                previousStep.textContent = data.status_previous_step;
+                previousStep.parentNode.classList.remove("visually-hidden");
+                if (data.status_previous_step === "Delete Order") {
+                    previousStep.parentNode.setAttribute("data-bs-toggle", "modal");
+                    previousStep.parentNode.setAttribute("data-bs-target", "#delete-order-" + data.id);
+                } else {
+                    previousStep.parentNode.removeAttribute("data-bs-toggle");
+                    previousStep.parentNode.removeAttribute("data-bs-target");
+                }
+            } else {
+                previousStep.parentNode.classList.add("visually-hidden");
+            }
+        }
+        const nextStep = $("#next-step-" + data.id)[0];
+        if (nextStep) {
+            if (data.status_next_step) {
+                nextStep.textContent = data.status_next_step;
+                nextStep.parentNode.classList.remove("visually-hidden");
+            } else {
+                nextStep.parentNode.classList.add("visually-hidden");
+            }
+        }
+    }
+}
+
 function updateOrderStatus(orderId, action) {
     // TODO Move getCookie() to utils
     function getCookie(name) {
@@ -117,48 +170,7 @@ function updateOrderStatus(orderId, action) {
             if (data.redirect) {
                 window.location.href = data.redirect;
             } else {
-                // Ensure the correct order is updated
-                if (orderId === data.id.toString()) {
-
-                    const status = $("#status-" + data.id)[0];
-                    if (status) {
-                        status.textContent = data.status;
-                    }
-                    const dateOrdered = $("#date-ordered-" + data.id)[0];
-                    if (dateOrdered) {
-                        dateOrdered.textContent = data.date_ordered;
-                    }
-                    const dateReceived = $("#date-received-" + data.id)[0];
-                    if (dateReceived) {
-                        dateReceived.textContent = data.date_received;
-                    }
-                    const dateCalled = $("#date-called-" + data.id)[0];
-                    if (dateCalled) {
-                        dateCalled.textContent = data.date_called;
-                    }
-                    const datePickedUp = $("#date-picked-up-" + data.id)[0];
-                    if (datePickedUp) {
-                        datePickedUp.textContent = data.date_picked_up;
-                    }
-                    const previousStep = $("#previous-step-" + data.id)[0];
-                    if (previousStep) {
-                        if (data.status_previous_step) {
-                            previousStep.textContent = data.status_previous_step;
-                            previousStep.parentNode.classList.remove("visually-hidden");
-                        } else {
-                            previousStep.parentNode.classList.add("visually-hidden");
-                        }
-                    }
-                    const nextStep = $("#next-step-" + data.id)[0];
-                    if (nextStep) {
-                        if (data.status_next_step) {
-                            nextStep.textContent = data.status_next_step;
-                            nextStep.parentNode.classList.remove("visually-hidden");
-                        } else {
-                            nextStep.parentNode.classList.add("visually-hidden");
-                        }
-                    }
-                }
+                update_order_snippet(orderId, data);
             }
 
         })
