@@ -73,7 +73,9 @@
             More Info
         </button>
         <button class="btn btn-sm btn-light btn-previous-step {% if not order.status|previous_step %} visually-hidden {% endif %}"
-                data-order-id="{{ order.id }}">
+                data-order-id="{{ order.id }}"
+                data-bs-toggle="{% if order.status|previous_step == 'Delete Order' %}modal{% endif %}"
+                data-bs-target="#delete-order-{{ order.id }}">
             <span id="previous-step-{{ order.id }}">{{ order.status|previous_step }}</span>
         </button>
         <button class="btn btn-sm btn-light btn-next-step {% if not order.status|next_step %} visually-hidden {% endif %}"
@@ -86,16 +88,29 @@
 </div>
 
 
-<!--has_bottle_deposit = models.BooleanField(null=True, blank=True)-->
-<!--number_bottle_deposit = models.PositiveSmallIntegerField(-->
-<!--validators=[MinValueValidator(1)], blank=True, null=True-->
-<!--)-->
-
-<!--customer = models.ForeignKey(-->
-<!--Customer, on_delete=models.PROTECT, blank=True, null=True-->
-<!--)-->
-
-<!--status = models.CharField(choices=ORDER_STATUS, max_length=64, null=True)-->
-<!--is_stand_by = models.BooleanField(default=False)-->
-<!--memo = models.TextField(max_length=500, null=True, blank=True)-->
-<!--employee_initials = models.CharField(max_length=5)-->
+<!-- The Modal -->
+<div class="modal fade"
+     id="delete-order-{{ order.id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="staticBackdrop{{ order.id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdrop{{ order.id }}">Delete Order</h5>
+                <button type="button" class="close btn-orders" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="p-2" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Are you sure you want to ddedelete the order of {{ order.description }}?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form action="{% url 'orders:delete-order' order.id %}"
+                      method="post">
+                    {% csrf_token %}
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
