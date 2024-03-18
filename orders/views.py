@@ -102,10 +102,10 @@ def order_update_status(request, order_id, action):
     if request.method == "PUT":
         # Retrieve instance and update status
         order = get_object_or_404(models.Order, id=order_id)
-        if action == "previous_step":
-            if order.status == models.Order.INCOMPLETE:
-                order.send_to_trash()
-                # return JsonResponse({"status": "deleted"})
+        if action == "previous_step" and order.status not in [
+            models.Order.INCOMPLETE,
+            models.Order.READY_TO_ORDER,
+        ]:
             order.previous_status()
         elif action == "next_step":
             if order.status == models.Order.INCOMPLETE:
