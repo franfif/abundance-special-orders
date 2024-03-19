@@ -7,9 +7,9 @@
 <div class="col">
     <div class="row">
         {% bootstrap_field form.is_stand_by size="small" form_group_class="mb-1 col row" label_class="col"
-        field_class="col" %}
+        field_class="col memo_required_toast-btn" %}
         {% bootstrap_field form.is_cancelled size="small" form_group_class="mb-1 col row" label_class="col"
-        field_class="col" %}
+        field_class="col memo_required_toast-btn" %}
         {% bootstrap_field form.paid size="small" form_group_class="mb-1 col row" label_class="col"
         field_class="col" %}
     </div>
@@ -24,4 +24,16 @@
         {% endif %}
     </div>
 </div>
-
+<div class="toast-container position-absolute p-3 top-0 end-0"
+     id="toastPlacement" style="z-index: 2222">
+    <div id="memo-required-toast" class="toast align-items-center" role="alert"
+         aria-live="assertive" data-bs-delay="50000" aria-atomic="true">
+        <div class="toast-header bg-warning bg-opacity-75">
+            <strong class="me-auto">Memo Required</strong>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-warning bg-opacity-25">
+            Please explain why the order is on stand by or cancelled in the Memo section.
+        </div>
+    </div>
+</div>

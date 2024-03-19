@@ -199,3 +199,15 @@ const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-tog
 const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl);
 });
+
+// Display message when memo is required
+const memo_required_toast = $('#memo-required-toast')[0]
+const memo_required_toast_triggers = $('.memo_required_toast-btn')
+for (const trigger of memo_required_toast_triggers) {
+    trigger.addEventListener('change', (e) => {
+        if (e.target.checked) {
+            const toast = new bootstrap.Toast(memo_required_toast)
+            toast.show()
+        }
+    });
+}
