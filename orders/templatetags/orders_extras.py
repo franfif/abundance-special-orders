@@ -103,7 +103,7 @@ def date(value):
 def previous_step(status):
     match status:
         case "INCOMPLETE":
-            return "Delete order"
+            return "Delete Order"
         case "READY_TO_ORDER":
             return "Delete Order"
         case "ORDERED":
@@ -115,14 +115,14 @@ def previous_step(status):
         case "PICKED_UP":
             return "Not Picked-Up"
         case _:
-            return ""
+            return None
 
 
 @register.filter
 def next_step(status):
     match status:
         case "INCOMPLETE":
-            return "Edit order"
+            return "Edit Order"
         case "READY_TO_ORDER":
             return "Order Placed"
         case "ORDERED":
@@ -132,6 +132,6 @@ def next_step(status):
         case "CALLED":
             return "Picked-Up"
         case "PICKED_UP":
-            return ""
+            return None
         case _:
-            return ""
+            return None
