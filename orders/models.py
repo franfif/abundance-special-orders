@@ -57,6 +57,7 @@ class Order(models.Model):
 
     status = models.CharField(choices=ORDER_STATUS, max_length=64, null=True)
     is_stand_by = models.BooleanField(default=False)
+    is_cancelled = models.BooleanField(default=False)
     memo = models.TextField(max_length=500, null=True, blank=True)
     employee_initials = models.CharField(max_length=5)
 
@@ -112,24 +113,23 @@ class Order(models.Model):
         self.update_status()
 
     def update_status(self):
-        # Not using pending status anymore
-        if self.status == self.PENDING:
-            self.status = self.READY_TO_ORDER
-
-        # Revive a deleted item
-        if self.status == self.DELETED and self.date_deleted is None:
-            self.status = self.INCOMPLETE
-        # Make sure all orders have a status
-        if self.status is None:
-            self.status = self.INCOMPLETE
-
         # Order is deleted
         if self.date_deleted is not None:
             self.status = self.DELETED
             self.save()
             return
 
-        # TODO: Add Stand-By status update here
+        # Not using pending status anymore
+        # All pending orders are switched to ready to order
+        if self.status == self.PENDING:
+            self.status = self.READY_TO_ORDER
+
+        # Revive a deleted item with temporary status
+        if self.status == self.DELETED and self.date_deleted is None:
+            self.status = self.INCOMPLETE
+        # Make sure all orders have a status
+        if self.status is None:
+            self.status = self.INCOMPLETE
 
         # Order is incomplete
         if not self.is_complete():

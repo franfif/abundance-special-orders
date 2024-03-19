@@ -102,9 +102,17 @@ def order_update_status(request, order_id, action):
     if request.method == "PUT":
         # Retrieve instance and update status
         order = get_object_or_404(models.Order, id=order_id)
-        if action == "previous_step":
+        if action == "previous_step" and order.status not in [
+            models.Order.INCOMPLETE,
+            models.Order.READY_TO_ORDER,
+        ]:
             order.previous_status()
         elif action == "next_step":
+            if order.status == models.Order.INCOMPLETE:
+                redirect_data = {
+                    "redirect": reverse("orders:edit-order", kwargs={"pk": order.id}),
+                }
+                return JsonResponse(redirect_data)
             order.next_status()
         order.save()
 
@@ -122,7 +130,7 @@ def order_update_status(request, order_id, action):
         return JsonResponse(data)
 
 
-def view_send_to_trash(request, pk):
+def send_order_to_trash(request, pk):
     order = get_object_or_404(models.Order, id=pk)
     if request.method == "POST":
         order.send_to_trash()
@@ -134,7 +142,7 @@ def view_send_to_trash(request, pk):
     return redirect("orders:home")
 
 
-def view_restore(request, pk):
+def restore_order(request, pk):
     order = get_object_or_404(models.Order, id=pk)
     print(order.description)
     if request.method == "POST":
