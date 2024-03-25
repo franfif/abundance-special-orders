@@ -13,9 +13,7 @@ class CustomerFilter(FilterWithAny):
 
     def search_customer(self, queryset, name, value):
         # Clean the input value for phone number search
-        phone_number = "".join(
-            filter(str.isdigit, value)
-        )
+        phone_number = "".join(filter(str.isdigit, value))
         if phone_number == "":
             phone_number = "no_phone_search"
         for term in value.split():
