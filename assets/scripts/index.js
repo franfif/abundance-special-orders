@@ -1,17 +1,3 @@
-import {AsYouType} from 'libphonenumber-js'
-
-
-// Format phone number as the user types it
-const phoneInput = document.getElementById('id_phone_number');
-if (phoneInput) {
-    // Add an event listener to the input
-    phoneInput.addEventListener('input', (event) => {
-        const input = event.target;
-        const value = input.value;
-        input.value = new AsYouType('US').input(value);
-    });
-}
-
 // Display New Customer form
 const btn_new_customer = document.getElementById('btn-new-customer');
 const btn_existing_customer = document.getElementById('btn-existing-customer');

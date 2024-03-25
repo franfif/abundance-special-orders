@@ -39,6 +39,11 @@ class Customer(models.Model):
         CustomerStatus, on_delete=models.PROTECT, null=True, blank=True
     )
 
+    def save(self, *args, **kwargs):
+        if self.phone_number:
+            self.phone_number = "".join(filter(str.isdigit, self.phone_number))
+        super(Customer, self).save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.last_name}, {self.first_name}, {self.phone_number_formatted()}"
 

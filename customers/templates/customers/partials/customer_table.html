@@ -18,7 +18,7 @@
         <td>{{ customer.last_name|default_if_none:"" }}</td>
         <td>{{ customer.first_name|default_if_none:"" }}</td>
         <td>{{ customer.company|default_if_none:"" }}</td>
-        <td>{{ customer.phone_number|default_if_none:"" }}</td>
+        <td>{{ customer.phone_number_formatted|default_if_none:"" }}</td>
         <td>{{ customer.status|default_if_none:"" }}</td>
         <td>
             <a type="button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show customer's orders"
