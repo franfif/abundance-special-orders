@@ -14,5 +14,5 @@ node_modules
 # Django project
 db.sqlite3
 .env
-settings_dev.py
+production_settings.py
 
