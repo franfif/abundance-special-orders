@@ -1,0 +1,16 @@
+**/__pycache__
+*.pyc
+venv
+.env
+
+.idea
+.vscode
+/.vscode/
+
+*.DS_Store
+
+node_modules
+
+# Django project
+db.sqlite3
+production_settings.py
