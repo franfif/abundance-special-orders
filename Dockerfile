@@ -17,7 +17,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Run migrations to create the database schema.
-RUN python manage.py migrate
+# RUN python manage.py migrate
 
 # Shell command to be run when the container is started.
 # The command checks if an environment variable PORT is set.
