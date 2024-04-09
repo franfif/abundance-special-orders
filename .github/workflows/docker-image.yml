@@ -10,6 +10,16 @@ jobs:
       matrix:
         python-version: [ '3.10' ]
 
+    services:
+      db:
+        image: postgres
+        env:
+          POSTGRES_DB: ${{ secrets.DB_NAME}}
+          POSTGRES_USER: ${{ secrets.DB_USER}}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        ports:
+          - ${{ secrets.DB_PORT }}:${{ secrets.DB_PORT }}
+
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
