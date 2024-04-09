@@ -16,6 +16,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the application code into the container.
 COPY . .
 
+# Run migrations to create the database schema.
+RUN python manage.py migrate
+
 # Shell command to be run when the container is started.
 # The command checks if an environment variable PORT is set.
 # If it is set, it runs the Django development server on the specified port; otherwise, it defaults to port 8000.
