@@ -1,8 +1,9 @@
 # Base image
-FROM python:3
+FROM python:3.11-slim-bullseye
 
 # Ensure that Python doesn't buffer the standard output to display log messages in real-time.
 ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
 
 # Set the working directory inside the container to /app. All the following commands will be executed in this directory
 WORKDIR /app
@@ -11,6 +12,7 @@ WORKDIR /app
 COPY requirements.txt ./
 
 # Command to execute inside the container, to install all the dependencies for the project.
+RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the application code into the container.
