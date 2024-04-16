@@ -17,12 +17,8 @@ main {
     min-width: 140px;
 }
 
-.form-select, .form-control, .btn-sm, .filter-form-div {
+form, .form-select, .form-control, .select2, .select2-results, .btn-sm, .filter-form-div {
     font-size: .75rem;
-}
-
-.select2, .select2-results {
-    font-size: .875rem;
 }
 
 .input-group-addon {
