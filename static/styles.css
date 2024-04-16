@@ -41,6 +41,10 @@ main {
     box-shadow: none !important;
 }
 
+.btn-light:hover {
+    background-color: #ddd;
+}
+
 .btn-orders {
     background-color: transparent;
     border: 0;
