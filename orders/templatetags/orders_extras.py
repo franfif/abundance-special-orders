@@ -76,7 +76,7 @@ def default_name(first_name, last_name):
 @register.filter
 def customer_name(value):
     if value.customer is None:
-        return default_name(None, None)
+        return "No customer attached"
     return default_name(value.customer.first_name, value.customer.last_name)
 
 
@@ -84,21 +84,21 @@ def customer_name(value):
 def customer_status(value):
     if value.customer is not None and value.customer.status is not None:
         return value.customer.status.get_status_display()
-    return default_values.NO_TEXT
+    return ""
 
 
 @register.filter
 def customer_company(value):
     if value.customer is not None:
         return value.customer.company
-    return default_values.NO_TEXT
+    return ""
 
 
 @register.filter
 def customer_phone_number(value):
     if value.customer is not None:
         return value.customer.phone_number
-    return default_values.NO_TEXT
+    return ""
 
 
 @register.filter
@@ -112,9 +112,9 @@ def date(value):
 def previous_step(status):
     match status:
         case "INCOMPLETE":
-            return "Delete Order"
+            return "Delete"
         case "READY_TO_ORDER":
-            return "Delete Order"
+            return "Delete"
         case "ORDERED":
             return "Reorder"
         case "RECEIVED":
@@ -131,9 +131,9 @@ def previous_step(status):
 def next_step(status):
     match status:
         case "INCOMPLETE":
-            return "Edit Order"
+            return "Edit"
         case "READY_TO_ORDER":
-            return "Order Placed"
+            return "Placed"
         case "ORDERED":
             return "Received"
         case "RECEIVED":
