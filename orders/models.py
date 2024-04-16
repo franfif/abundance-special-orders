@@ -61,7 +61,7 @@ class Order(models.Model):
     memo = models.TextField(max_length=500, null=True, blank=True)
     employee_initials = models.CharField(max_length=5)
 
-    date_created = models.DateField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True)
     date_ordered = models.DateField(null=True, blank=True)
     date_received = models.DateField(null=True, blank=True)
     date_called = models.DateField(null=True, blank=True)
