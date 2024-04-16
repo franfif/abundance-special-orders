@@ -1,4 +1,3 @@
-from django.db.models import Q
 from django_filters import (
     BooleanFilter,
     CharFilter,
@@ -34,16 +33,6 @@ class OrderFilter(FilterWithAny):
         empty_label=None,
         null_label=None,
     )
-
-    def search_customer(self, queryset, name, value):
-        for term in value.split():
-            queryset = queryset.filter(
-                Q(customer__first_name__icontains=term)
-                | Q(customer__last_name__icontains=term)
-                | Q(customer__company__icontains=term)
-                | Q(customer__phone_number__icontains=term)
-            )
-        return queryset
 
     class Meta:
         model = Order
