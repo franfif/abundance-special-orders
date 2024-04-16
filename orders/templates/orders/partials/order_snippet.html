@@ -3,7 +3,7 @@
 <div class="card my-2 {% if not order.is_stand_by and not order.is_cancelled %} border-primary {% endif %}">
     <div class="card-header">
         <div class="row ">
-            <span class="order-date-status col-auto">
+            <div class="order-date-status col-auto">
                 <span id="date-created-{{ order.id }}" class="col-auto me-auto badge bg-light text-dark">{{ order.date_created|short_date }}</span>
                 <span id="status-{{ order.id }}"
                       class="col-auto badge text-dark bg-info">{{ order|status }}</span>
@@ -12,10 +12,10 @@
                 {% elif order.is_stand_by %}
                 <span id="stand-by-{{ order.id }}" class="col-auto badge text-dark bg-warning">Stand-By</span>
                 {% endif %}
-            </span>
-            <span class="order-edit-btn col-auto ms-auto">
-                <span class="col-auto">
-                     {% if order.status != "DELETED" %}
+            </div>
+            <div class="order-edit-btn col-auto ms-auto">
+                <div class="col-auto">
+                    {% if order.status != "DELETED" %}
                     <div>
                         <a class="btn-orders" href="{% url 'orders:edit-order' order.id %}">
                             <i class="fa-solid fa-pen"></i>
@@ -23,15 +23,15 @@
                     </div>
                     {% else %}
 
-                    <form action="{% url 'orders:restore-order' pk=order.id %}" method="post">
+                    <form action="{% url 'orders:restore-order' order.id %}" method="post">
                         {% csrf_token %}
                         <button class="btn-orders" type="submit" name="restore">
                             <i class="fa-solid fa-trash-arrow-up"></i>
                         </button>
                     </form>
                     {% endif %}
-                </span>
-            </span>
+                </div>
+            </div>
         </div>
         <div class="row">
             <span class="order-description col-auto">{{ order|quantity }} units of {{ order.description }}</span>
