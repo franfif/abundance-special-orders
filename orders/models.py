@@ -119,11 +119,6 @@ class Order(models.Model):
             self.save()
             return
 
-        # Not using pending status anymore
-        # All pending orders are switched to ready to order
-        if self.status == self.PENDING:
-            self.status = self.READY_TO_ORDER
-
         # Revive a deleted item with temporary status
         if self.status == self.DELETED and self.date_deleted is None:
             self.status = self.INCOMPLETE
