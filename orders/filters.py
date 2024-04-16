@@ -16,7 +16,7 @@ class OrderFilter(FilterWithAny):
     is_cancelled = BooleanFilter(widget=BooleanRadioSelect, label="Cancelled")
     paid = BooleanFilter(widget=BooleanRadioSelect, label="Paid")
     customer_full_info = CharFilter(
-        label="Customer (first, last and/or phone number)", method="search_customer"
+        label="Customer information", method="search_customer"
     )
 
     ordering = OrderingFilter(

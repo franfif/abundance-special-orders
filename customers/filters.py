@@ -6,7 +6,7 @@ from utils.filters import FilterWithAny
 
 class CustomerFilter(FilterWithAny):
     customer_full_info = CharFilter(
-        label="Customer (first, last and/or phone number)",
+        label="Customer information",
         method="search_customer",
     )
 
