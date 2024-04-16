@@ -13,17 +13,17 @@
         size="small" placeholder="0" %}
     </div>
     <div class="row mb-1">
-        {% bootstrap_field form.book_price size="small" form_group_class="col" show_label=False %}
-        <div class="col">Total Price</div>
-    </div>
-    <div class="row ps-3 mb-1">
-        <div class="col mb-2 form-check form-switch">
+        {% bootstrap_field form.book_price size="small" form_group_class="col-5" show_label=False %}
+        <div class="col-3 mb-2 form-check form-switch">
             <input class="form-check-input" type="checkbox" role="switch" id="has_bottle_deposit">
             <label class="form-check-label" for="has_bottle_deposit">Bottle Deposit?</label>
         </div>
-        <div id="bottle-deposit-quantity" class="col visually-hidden">
+        <div id="bottle-deposit-quantity" class="col-4 visually-hidden">
             {% bootstrap_field form.number_bottle_deposit size="small" form_group_class="col" show_label=False
             field_class="col" placeholder="How many bottles?" %}
         </div>
+    </div>
+    <div class="row ps-3 mb-1">
+
     </div>
 </div>
