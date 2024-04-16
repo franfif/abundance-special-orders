@@ -1,6 +1,7 @@
 from django import template
 
 from . import default_values
+from datetime import timezone
 
 register = template.Library()
 
@@ -17,6 +18,14 @@ def status(value):
     if value.status is not None:
         return value.get_status_display()
     return default_values.NO_STATUS
+
+
+@register.filter
+def short_date(value):
+    if value is not None:
+        local_order_date_created = value.astimezone(timezone.utc).astimezone()
+        return local_order_date_created.strftime("%a, %b %d %Y")
+    return default_values.NO_DATE
 
 
 @register.filter
