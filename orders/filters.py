@@ -24,23 +24,15 @@ class OrderFilter(FilterWithAny):
         choices=(
             ("-date_created", "Date Created (newest first)"),
             ("date_created", "Date Created (oldest first)"),
-            ("vendor__name", "Vendor (A-Z)"),
-            ("-vendor__name", "Vendor (Z-A)"),
-            ("status", "Status (A-Z)"),
-            ("-status", "Status (Z-A)"),
             ("customer__first_name", "Customer First Name (A-Z)"),
-            ("-customer__first_name", "Customer First Name (Z-A)"),
             ("customer__last_name", "Customer Last Name (A-Z)"),
-            ("-customer__last_name", "Customer Last Name (Z-A)"),
             ("-date_ordered", "Date Ordered (newest first)"),
-            ("date_ordered", "Date Ordered (oldest first)"),
             ("-date_received", "Date Received (newest first)"),
-            ("date_received", "Date Received (oldest first)"),
             ("-date_called", "Date Called (newest first)"),
-            ("date_called", "Date Called (oldest first)"),
             ("-date_picked_up", "Date Picked Up (newest first)"),
-            ("date_picked_up", "Date Picked Up (oldest first)"),
         ),
+        empty_label=None,
+        null_label=None,
     )
 
     def search_customer(self, queryset, name, value):

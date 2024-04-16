@@ -61,7 +61,7 @@ class Order(models.Model):
     memo = models.TextField(max_length=500, null=True, blank=True)
     employee_initials = models.CharField(max_length=5)
 
-    date_created = models.DateField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True)
     date_ordered = models.DateField(null=True, blank=True)
     date_received = models.DateField(null=True, blank=True)
     date_called = models.DateField(null=True, blank=True)
@@ -70,6 +70,10 @@ class Order(models.Model):
     date_deleted = models.DateField(null=True, blank=True)
 
     def is_complete(self):
+        """
+        Check if all required fields are filled.
+        Returns True if all required fields are filled, False otherwise.
+        """
         return all(
             [
                 self.vendor is not None,
@@ -83,6 +87,9 @@ class Order(models.Model):
         )
 
     def previous_status(self):
+        """
+        Go back to the previous status.
+        """
         match self.status:
             case self.INCOMPLETE:
                 self.send_to_trash()
@@ -99,6 +106,9 @@ class Order(models.Model):
         self.update_status()
 
     def next_status(self):
+        """
+        Go to the next status by adding a date to the order field.
+        """
         match self.status:
             case self.INCOMPLETE:
                 pass
@@ -113,16 +123,14 @@ class Order(models.Model):
         self.update_status()
 
     def update_status(self):
+        """
+        Update the status of the order based on the dates and the status.
+        """
         # Order is deleted
         if self.date_deleted is not None:
             self.status = self.DELETED
             self.save()
             return
-
-        # Not using pending status anymore
-        # All pending orders are switched to ready to order
-        if self.status == self.PENDING:
-            self.status = self.READY_TO_ORDER
 
         # Revive a deleted item with temporary status
         if self.status == self.DELETED and self.date_deleted is None:
@@ -161,13 +169,18 @@ class Order(models.Model):
         self.update_status()
 
     def permanently_delete(self):
-        # Permanently delete an order after 30 days
+        """
+        Permanently delete an order after 30 days
+        """
         if self.date_deleted and (
             date.today() - self.date_deleted > timedelta(days=30)
         ):
             self.delete()
 
     def total_price(self):
+        """
+        Calculate the total price of the order based on the customer's margin.
+        """
         try:
             return Decimal(
                 self.customer.add_margin(self.book_price * self.quantity)

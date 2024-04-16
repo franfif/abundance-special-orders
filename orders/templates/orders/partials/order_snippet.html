@@ -3,8 +3,8 @@
 <div class="card my-2 {% if not order.is_stand_by and not order.is_cancelled %} border-primary {% endif %}">
     <div class="card-header">
         <div class="row ">
-            <span class="col-auto">
-                <span id="date-created-{{ order.id }}" class="col-auto me-auto badge bg-light text-dark">{{ order.date_created }}</span>
+            <span class="order-date-status col-auto">
+                <span id="date-created-{{ order.id }}" class="col-auto me-auto badge bg-light text-dark">{{ order.date_created|short_date }}</span>
                 <span id="status-{{ order.id }}"
                       class="col-auto badge text-dark bg-info">{{ order|status }}</span>
                 {% if order.is_cancelled %}
@@ -13,7 +13,7 @@
                 <span id="stand-by-{{ order.id }}" class="col-auto badge text-dark bg-warning">Stand-By</span>
                 {% endif %}
             </span>
-            <span class="col-auto ms-auto ">
+            <span class="order-edit-btn col-auto ms-auto">
                 <span class="col-auto">
                      {% if order.status != "DELETED" %}
                     <div>
@@ -33,10 +33,12 @@
                 </span>
             </span>
         </div>
-        <div>{{ order|quantity }} units of {{ order.description }}</div>
+        <div class="row">
+            <span class="order-description col-auto">{{ order|quantity }} units of {{ order.description }}</span>
+        </div>
 
     </div>
-    <div class="card-body">
+    <div class="card-body order-body">
         <ul class="list-group list-group-flush">
             <li class="list-group-item px-0">
                 <div>{{ order|vendor }} - {{ order|product_number }}</div>
@@ -47,9 +49,12 @@
                 </div>
             </li>
             <li class="list-group-item px-0">
-                <div>{{ order|customer_name }}, {{ order|customer_status }}</div>
-                <div>{{ order|customer_company }}</div>
+                <div>{{ order|customer_name }}</div>
                 <div>{{ order|customer_phone_number }}</div>
+                <div class="collapse collapse-{{order.id}}">
+                    <div>{{ order|customer_company }}</div>
+                    <div>{{ order|customer_status }}</div>
+                </div>
             </li>
 
         </ul>
@@ -69,28 +74,37 @@
                 </li>
             </ul>
         </div>
-        <button class="btn btn-sm btn-light btn-order-more-info" type="button" data-bs-toggle="collapse"
-                data-bs-target=".collapse-{{order.id}}"
-                aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
-            More Info
-        </button>
-        <button class="btn btn-sm btn-light btn-previous-step {% if not order.status|previous_step %} visually-hidden {% endif %}"
-                data-order-id="{{ order.id }}"
-                data-bs-toggle="{% if order.status|previous_step == 'Delete Order' %}modal{% endif %}"
-                data-bs-target="#delete-order-{{ order.id }}">
-            <span id="previous-step-{{ order.id }}">{{ order.status|previous_step }}</span>
-        </button>
-        <button class="btn btn-sm btn-light btn-next-step {% if not order.status|next_step %} visually-hidden {% endif %}"
-                data-order-id="{{ order.id }}">
-            <span id="next-step-{{ order.id }}">{{ order.status|next_step }}</span>
-        </button>
+        <div class="row justify-content-between">
+            <button class="col-auto btn btn-sm btn-light btn-previous-step{% if not order.status|previous_step %} visually-hidden {% endif %}"
+                    data-order-id="{{ order.id }}"
+                    data-bs-toggle="{% if order.status|previous_step == 'Delete' %}modal{% endif %}"
+                    data-bs-target="#delete-order-{{ order.id }}">
+                <span><i class="fa-solid fa-chevron-left"></i></span>
+                <span id="previous-step-{{ order.id }}">{{ order.status|previous_step }}</span>
+            </button>
+            <button class="col-auto btn btn-sm btn-light btn-next-step{% if not order.status|next_step %} visually-hidden {% endif %}"
+                    data-order-id="{{ order.id }}">
+                <span id="next-step-{{ order.id }}">{{ order.status|next_step }}</span>
+                <span><i class="fa-solid fa-chevron-right"></i></span>
+            </button>
+        </div>
 
+        <div class="row">
+            <span class="btn-order-more-hide mx-auto">
+                <button class="btn-orders btn-order-more-info" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target=".collapse-{{order.id}}"
+                        aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
+                    <i class="fa-solid fa-circle-chevron-down"></i>
+                </button>
+            </span>
+        </div>
     </div>
 
 </div>
 
 
-<!-- The Modal -->
+<!-- Delete Modal -->
 <div class="modal fade"
      id="delete-order-{{ order.id }}" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="staticBackdrop{{ order.id }}" aria-hidden="true">
@@ -103,7 +117,7 @@
                 </button>
             </div>
             <div class="modal-body text-center">
-                <p>Are you sure you want to ddedelete the order of {{ order.description }}?</p>
+                <p>Are you sure you want to delete the order of {{ order.description }}?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

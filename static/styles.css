@@ -3,17 +3,13 @@
     height: 60px;
 }
 
-.form-select {
-    line-height: 1;
-}
-
 main {
     font-size: .875rem;
 }
 
 /* select fields in forms */
 .form-select {
-    font-size: .875rem;
+    line-height: 1;
     padding: .25rem .5rem;
     min-height: calc(1.5em + .5rem + 2px);
     border-radius: .2rem;
@@ -21,8 +17,8 @@ main {
     min-width: 140px;
 }
 
-.select2, .select2-results {
-    font-size: .875rem;
+form, .form-select, .form-control, .select2, .select2-results, .btn-sm, .filter-form-div {
+    font-size: .75rem;
 }
 
 .input-group-addon {
@@ -37,6 +33,14 @@ main {
     border-radius: .25rem;
 }
 
+.btn:focus {
+    box-shadow: none !important;
+}
+
+.btn-light:hover {
+    background-color: #ddd;
+}
+
 .btn-orders {
     background-color: transparent;
     border: 0;
@@ -47,4 +51,28 @@ main {
 
 .btn-orders:hover {
     color: #0B58CA;
+}
+
+.btn-order-more-info {
+    padding: 0;
+}
+
+.order-date-status {
+    padding: 0;
+}
+
+.order-edit-btn {
+    padding-right: 4px;
+}
+
+.order-description {
+    padding-left: .65em;
+}
+
+.order-body {
+    padding-bottom: 0;
+}
+
+.btn-order-more-hide {
+    width: 40px;
 }

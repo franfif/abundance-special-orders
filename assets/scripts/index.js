@@ -35,9 +35,11 @@ const btns_order_more_info = document.getElementsByClassName('btn-order-more-inf
 for (const btn of btns_order_more_info) {
     btn.addEventListener('click', (event) => {
         if (btn.getAttribute('aria-expanded') === 'true') {
-            btn.textContent = "Hide";
+            btn.children[0].classList.add("fa-circle-chevron-up");
+            btn.children[0].classList.remove("fa-circle-chevron-down");
         } else {
-            btn.textContent = "More Info";
+            btn.children[0].classList.add("fa-circle-chevron-down");
+            btn.children[0].classList.remove("fa-circle-chevron-up");
         }
     });
 }
@@ -97,10 +99,9 @@ function update_order_snippet(orderId, data) {
         const previousStep = $("#previous-step-" + data.id)[0];
         if (previousStep) {
             if (data.status_previous_step) {
-                console.log("previous step: " + data.status_previous_step)
                 previousStep.textContent = data.status_previous_step;
                 previousStep.parentNode.classList.remove("visually-hidden");
-                if (data.status_previous_step === "Delete Order") {
+                if (data.status_previous_step === "Delete") {
                     previousStep.parentNode.setAttribute("data-bs-toggle", "modal");
                     previousStep.parentNode.setAttribute("data-bs-target", "#delete-order-" + data.id);
                 } else {
