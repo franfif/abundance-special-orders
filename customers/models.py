@@ -27,7 +27,7 @@ class CustomerStatus(models.Model):
     )
 
     def __str__(self):
-        return f"{dict(self.STATUS_CHOICES)[str(self.status)]}, {self.margin}%"
+        return f"{dict(self.STATUS_CHOICES)[str(self.status)]}"
 
 
 class Customer(models.Model):
