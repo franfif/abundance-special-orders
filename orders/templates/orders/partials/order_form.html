@@ -1,0 +1,16 @@
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+        {% include 'orders/partials/order_form/description.html' %}
+        {% include 'orders/partials/order_form/customer.html' %}
+    </div>
+    {% if action == 'update' %}
+    <div class="row">
+        {% include 'orders/partials/order_form/dates.html' %}
+    </div>
+    {% endif %}
+    <div class="row">
+        {% include 'orders/partials/order_form/memo_and_flags.html' %}
+    </div>
+
+</form>
