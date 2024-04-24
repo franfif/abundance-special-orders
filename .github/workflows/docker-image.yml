@@ -65,6 +65,9 @@ jobs:
           platforms: linux/arm64/v8, linux/amd64
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/abundance:${{ env.sha_short }}
         env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+          DEBUG: ${{ secrets.DEBUG }}
           DB_NAME: ${{ secrets.DB_NAME}}
           DB_USER: ${{ secrets.DB_USER}}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
