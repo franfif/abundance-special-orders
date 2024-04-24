@@ -21,9 +21,10 @@ jobs:
       - name: Get the commit SHA
         shell: bash
         run: echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
-      - name: Build and push compose
+        #      - name: Build and push compose
         #        uses: docker/build-push-action@v5
-        uses: hoverkraft-tech/compose-action@v5
+      - name: Docker Compose Action
+        uses: hoverkraft-tech/compose-action@v2.0.0
         with:
           push: true
           compose-file: "docker-compose.yml"
