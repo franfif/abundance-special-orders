@@ -3,6 +3,7 @@
 venv
 .env
 .venv
+_OLD_ENV
 
 .idea
 .vscode
@@ -15,3 +16,4 @@ node_modules
 # Django project
 db.sqlite3
 production_settings.py
+settings_dev.py
