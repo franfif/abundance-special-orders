@@ -23,8 +23,9 @@ def status(value):
 @register.filter
 def short_date(value):
     if value is not None:
-        local_order_date_created = value.astimezone(timezone.utc).astimezone()
-        return local_order_date_created.strftime("%a, %b %d %Y")
+        return value.strftime("%a, %b %d %Y")
+        # local_order_date_created = value.astimezone(timezone.utc).astimezone()
+        # return local_order_date_created.strftime("%a, %b %d %Y")
     return default_values.NO_DATE
 
 
