@@ -1,5 +1,5 @@
 # Base image
-FROM python:3.11-slim-bullseye
+FROM python:3.11-slim-bullseye as build
 
 # Ensure that Python doesn't buffer the standard output to display log messages in real-time.
 ENV PYTHONUNBUFFERED 1
