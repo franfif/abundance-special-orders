@@ -17,3 +17,5 @@ node_modules
 db.sqlite3
 production_settings.py
 settings_dev.py
+
+update_app.sh
