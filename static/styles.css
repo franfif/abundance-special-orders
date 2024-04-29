@@ -7,6 +7,16 @@ main {
     font-size: .875rem;
 }
 
+.row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+}
+
+.order-card {
+    padding-right: calc(var(--bs-gutter-x) * .2);
+    padding-left: calc(var(--bs-gutter-x) * .2);
+}
+
 /* select fields in forms */
 .form-select {
     line-height: 1;
@@ -49,8 +59,20 @@ form, .form-select, .form-control, .select2, .select2-results, .btn-sm, .filter-
     padding: 0;
 }
 
+.btn-previous-step {
+    text-align: left;
+}
+
+.btn-next-step {
+    text-align: right;
+}
+
 .btn-orders:hover {
     color: #0B58CA;
+}
+
+.btn-order-bottom {
+    padding-bottom: .3rem;
 }
 
 .btn-order-more-info {
@@ -65,12 +87,17 @@ form, .form-select, .form-control, .select2, .select2-results, .btn-sm, .filter-
     padding-right: 4px;
 }
 
+.order-small-text {
+    font-size: .6rem;
+}
+
 .order-description {
-    padding-left: .65em;
+    padding-left: .5em;
 }
 
 .order-body {
     padding-bottom: 0;
+    padding-top: 0;
 }
 
 .btn-order-more-hide {

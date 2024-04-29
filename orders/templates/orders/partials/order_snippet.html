@@ -1,119 +1,119 @@
 {% load orders_extras %}
 
-<div class="card my-2 {% if not order.is_stand_by and not order.is_cancelled %} border-primary {% endif %}">
-    <div class="card-header">
-        <div class="row ">
-            <div class="order-header col-auto">
-                <span id="date-created-{{ order.id }}" class="col-auto me-auto badge bg-light text-dark">{{ order.date_created|short_date }}</span>
-                <span id="status-{{ order.id }}"
-                      class="col-auto badge text-dark bg-info">{{ order|status }}</span>
-                {% if order.is_cancelled %}
-                <span id="cancelled-{{ order.id }}" class="col-auto badge text-dark bg-warning">Cancelled</span>
-                {% elif order.is_stand_by %}
-                <span id="stand-by-{{ order.id }}" class="col-auto badge text-dark bg-warning">Stand-By</span>
-                {% endif %}
-            </div>
-            <div class="order-header-btn col-auto ms-auto">
-                <div class="col-auto">
-                    {% if order.status != "DELETED" %}
-                    <div>
-                        <a class="btn-orders" href="{% url 'orders:edit-order' order.id %}">
-                            <i class="fa-solid fa-pen"></i>
-                        </a>
-                    </div>
-                    {% else %}
-
-                    <form action="{% url 'orders:restore-order' order.id %}" method="post">
-                        {% csrf_token %}
-                        <button class="btn-orders" type="submit" name="restore">
-                            <i class="fa-solid fa-trash-arrow-up"></i>
-                        </button>
-                    </form>
+<div class="col order-card">
+    <div class="card my-2 {% if not order.is_stand_by and not order.is_cancelled %} border-primary {% endif %}">
+        <div class="card-header">
+            <div class="row ">
+                <div class="order-header col-auto">
+                    <span id="date-created-{{ order.id }}" class="col-auto me-auto badge bg-light text-dark">{{ order.date_created|short_date }}</span>
+                    <span id="status-{{ order.id }}"
+                          class="col-auto badge text-dark bg-info">{{ order|status }}</span>
+                    {% if order.is_cancelled %}
+                    <span id="cancelled-{{ order.id }}" class="col-auto badge text-dark bg-warning">Cancelled</span>
+                    {% elif order.is_stand_by %}
+                    <span id="stand-by-{{ order.id }}" class="col-auto badge text-dark bg-warning">Stand-By</span>
                     {% endif %}
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="order-header col-auto">
-                <span class="order-description col-auto">{{ order|quantity }} units of {{ order.description }}</span>
-            </div>
-            <div class="order-header-btn col-auto ms-auto">
-                <div class="col-auto">
-                    <div>
-                        <a class="btn-orders" href="{% url 'orders:copy-order' order.id %}">
-                            <i class="fa-solid fa-copy"></i>
-                        </a>
+                <div class="order-header-btn col-auto ms-auto">
+                    <div class="col-auto">
+                        {% if order.status != "DELETED" %}
+                        <div>
+                            <a class="btn-orders" href="{% url 'orders:edit-order' order.id %}">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                        </div>
+                        {% else %}
+
+                        <form action="{% url 'orders:restore-order' order.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn-orders" type="submit" name="restore">
+                                <i class="fa-solid fa-trash-arrow-up"></i>
+                            </button>
+                        </form>
+                        {% endif %}
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="order-header order-description col">
+                    <span class="col-auto">{{ order|quantity }}
+                        <span class="order-small-text"> units of </span>
+                        {{ order.description }}</span>
+                </div>
+                <div class="order-header-btn col-auto ms-auto">
+                    <div class="col-auto">
+                        <div>
+                            <a class="btn-orders" href="{% url 'orders:copy-order' order.id %}">
+                                <i class="fa-solid fa-copy"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-
-    </div>
-    <div class="card-body order-body">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item px-0">
-                <div>{{ order|vendor }} - {{ order|product_number }}</div>
-                <div>${{ order|book_price }} => ${{ order|total_price }} ({{ order|paid }})</div>
-                <div class="collapse collapse-{{order.id}}">
-                    <div>Bottle Deposit: {{ order.has_bottle_deposit }}</div>
-                    <div>Number of Bottles: {{ order.number_bottle_deposit }}</div>
-                </div>
-            </li>
-            <li class="list-group-item px-0">
-                <div>{{ order|customer_name }}</div>
-                <div>{{ order.customer.phone_number_formatted|default_if_none:"" }}</div>
-                <div class="collapse collapse-{{order.id}}">
-                    <div>{{ order|customer_company }}</div>
-                    <div>{{ order|customer_status }}</div>
-                </div>
-            </li>
-
-        </ul>
-        <div class="collapse collapse-{{order.id}}">
+        <div class="card-body order-body">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item p-0"></li>
-                <li class="list-group-item px-0 ">
-                    <div>Ordered: <span id="date-ordered-{{ order.id }}">{{ order.date_ordered|date }}</span></div>
-                    <div>Received: <span id="date-received-{{ order.id }}">{{ order.date_received|date }}</span></div>
-                    <div>Called: <span id="date-called-{{ order.id }}">{{ order.date_called|date }}</span></div>
-                    <div>Picked-up: <span id="date-picked-up-{{ order.id }}">{{ order.date_picked_up|date }}</span>
+                <li class="list-group-item px-0">
+                    <div>{{ order|vendor }} - {{ order|product_number }}</div>
+                    <div>${{ order|book_price }} => ${{ order|total_price }} ({{ order|paid }})</div>
+                    <div class="collapse collapse-{{order.id}}">
+                        <div>Bottle Deposit: {{ order.has_bottle_deposit }}</div>
+                        <div>Number of Bottles: {{ order.number_bottle_deposit }}</div>
                     </div>
                 </li>
-                <li class="list-group-item px-0 ">
-                    <div>Employee initials: {{ order.employee_initials }}</div>
-                    <div>Memo: {{ order.memo }}</div>
+                <li class="list-group-item px-0">
+                    <div>{{ order|customer_name }}</div>
+                    <div>{{ order.customer.phone_number_formatted|default_if_none:"" }}</div>
+                    <div class="collapse collapse-{{order.id}}">
+                        <div>{{ order|customer_company }}</div>
+                        <div>{{ order|customer_status }}</div>
+                    </div>
                 </li>
-            </ul>
-        </div>
-        <div class="row justify-content-between">
-            <button class="col-auto btn btn-sm btn-light btn-previous-step{% if not order.status|previous_step %} visually-hidden {% endif %}"
-                    data-order-id="{{ order.id }}"
-                    data-bs-toggle="{% if order.status|previous_step == 'Delete' %}modal{% endif %}"
-                    data-bs-target="#delete-order-{{ order.id }}">
-                <span><i class="fa-solid fa-chevron-left"></i></span>
-                <span id="previous-step-{{ order.id }}">{{ order.status|previous_step }}</span>
-            </button>
-            <button class="col-auto btn btn-sm btn-light btn-next-step{% if not order.status|next_step %} visually-hidden {% endif %}"
-                    data-order-id="{{ order.id }}">
-                <span id="next-step-{{ order.id }}">{{ order.status|next_step }}</span>
-                <span><i class="fa-solid fa-chevron-right"></i></span>
-            </button>
-        </div>
 
-        <div class="row">
-            <span class="btn-order-more-hide mx-auto">
-                <button class="btn-orders btn-order-more-info" type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target=".collapse-{{order.id}}"
-                        aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
-                    <i class="fa-solid fa-circle-chevron-down"></i>
+            </ul>
+            <div class="collapse collapse-{{order.id}}">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item p-0"></li>
+                    <li class="list-group-item px-0 ">
+                        <div>Ordered: <span id="date-ordered-{{ order.id }}">{{ order.date_ordered|date }}</span></div>
+                        <div>Received: <span id="date-received-{{ order.id }}">{{ order.date_received|date }}</span>
+                        </div>
+                        <div>Called: <span id="date-called-{{ order.id }}">{{ order.date_called|date }}</span></div>
+                        <div>Picked-up: <span id="date-picked-up-{{ order.id }}">{{ order.date_picked_up|date }}</span>
+                        </div>
+                    </li>
+                    <li class="list-group-item px-0 ">
+                        <div>Employee initials: {{ order.employee_initials }}</div>
+                        <div>Memo: {{ order.memo }}</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="row justify-content-between btn-order-bottom">
+                <button class="col btn btn-sm btn-light btn-previous-step{% if not order.status|previous_step %} visually-hidden {% endif %}"
+                        data-order-id="{{ order.id }}"
+                        data-bs-toggle="{% if order.status|previous_step == 'Delete' %}modal{% endif %}"
+                        data-bs-target="#delete-order-{{ order.id }}">
+                    <span><i class="fa-solid fa-chevron-left"></i></span>
+                    <span id="previous-step-{{ order.id }}">{{ order.status|previous_step|default_if_none:"" }}</span>
                 </button>
-            </span>
+                <span class="btn-order-more-hide mx-auto">
+                    <button class="align-text-top btn-orders btn-order-more-info" type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target=".collapse-{{order.id}}"
+                            aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
+                        <i class="fa-solid fa-circle-chevron-down"></i>
+                    </button>
+                </span>
+                <button class="col btn btn-sm btn-light btn-next-step{% if not order.status|next_step %} disabled {% endif %}"
+                        data-order-id="{{ order.id }}">
+                    <span id="next-step-{{ order.id }}">{{ order.status|next_step|default_if_none:"" }}</span>
+                    <span><i class="fa-solid fa-chevron-right"></i></span>
+                </button>
+            </div>
         </div>
     </div>
-
 </div>
-
 
 <!-- Delete Modal -->
 <div class="modal fade"

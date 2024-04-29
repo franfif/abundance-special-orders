@@ -1,9 +1,7 @@
 {% if order_list|length > 0 %}
 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
     {% for order in order_list %}
-    <div class="col">
-        {% include 'orders/partials/order_snippet.html' %}
-    </div>
+    {% include 'orders/partials/order_snippet.html' %}
     {% endfor %}
 </div>
 {% else %}
