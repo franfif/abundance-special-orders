@@ -3,7 +3,7 @@
 <div class="card my-2 {% if not order.is_stand_by and not order.is_cancelled %} border-primary {% endif %}">
     <div class="card-header">
         <div class="row ">
-            <div class="order-date-status col-auto">
+            <div class="order-header col-auto">
                 <span id="date-created-{{ order.id }}" class="col-auto me-auto badge bg-light text-dark">{{ order.date_created|short_date }}</span>
                 <span id="status-{{ order.id }}"
                       class="col-auto badge text-dark bg-info">{{ order|status }}</span>
@@ -13,7 +13,7 @@
                 <span id="stand-by-{{ order.id }}" class="col-auto badge text-dark bg-warning">Stand-By</span>
                 {% endif %}
             </div>
-            <div class="order-edit-btn col-auto ms-auto">
+            <div class="order-header-btn col-auto ms-auto">
                 <div class="col-auto">
                     {% if order.status != "DELETED" %}
                     <div>

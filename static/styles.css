@@ -57,11 +57,11 @@ form, .form-select, .form-control, .select2, .select2-results, .btn-sm, .filter-
     padding: 0;
 }
 
-.order-date-status {
+.order-header {
     padding: 0;
 }
 
-.order-edit-btn {
+.order-header-btn {
     padding-right: 4px;
 }
 
