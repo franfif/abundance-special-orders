@@ -38,6 +38,7 @@ class Customer(models.Model):
     status = models.ForeignKey(
         CustomerStatus, on_delete=models.PROTECT, null=True, blank=True
     )
+    email = models.EmailField(max_length=128, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if self.phone_number:
