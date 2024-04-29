@@ -13,6 +13,7 @@ class CustomerWidget(s2forms.ModelSelect2Widget):
         "first_name__icontains",
         "last_name__icontains",
         "phone_number__icontains",
+        "email__icontains",
     ]
 
     def build_attrs(self, base_attrs, extra_attrs=None):
@@ -86,6 +87,7 @@ class CreateOrderForm(forms.ModelForm):
             "last_name": self.data.get("last_name"),
             "company": self.data.get("company"),
             "phone_number": self.data.get("phone_number"),
+            "email": self.data.get("email"),
         }
         if self.data.get("status"):
             new_customer_data["status"] = CustomerStatus.objects.get(

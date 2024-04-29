@@ -11,6 +11,7 @@ class CustomerForm(forms.ModelForm):
             "last_name",
             "company",
             "phone_number",
+            "email",
             "status",
         ]
         labels = {
@@ -20,4 +21,4 @@ class CustomerForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Set the custom label for the ForeignKey field
-        self.fields['status'].empty_label = 'Status'
+        self.fields["status"].empty_label = "Status"
