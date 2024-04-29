@@ -39,6 +39,23 @@ class OrderCreateView(generic.CreateView):
     model = models.Order
     form_class = forms.CreateOrderForm
 
+    def get_initial(self):
+        try:
+            original_order = get_object_or_404(models.Order, id=self.kwargs["pk"])
+            initial = {
+                "description": original_order.description,
+                "vendor": original_order.vendor,
+                "product_number": original_order.product_number,
+                "quantity": original_order.quantity,
+                "has_bottle_deposit": original_order.has_bottle_deposit,
+                "number_bottle_deposit": original_order.number_bottle_deposit,
+                "memo": original_order.memo,
+                "customer": original_order.customer,
+            }
+            return initial
+        except KeyError:
+            return {}
+
     def get_success_url(self):
         # Save and create "another" order
         if "another" in self.request.POST:
