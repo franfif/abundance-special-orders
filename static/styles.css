@@ -103,3 +103,8 @@ form, .form-select, .form-control, .select2, .select2-results, .btn-sm, .filter-
 .btn-order-more-hide {
     width: 40px;
 }
+
+.customer-form-field {
+    padding-left: calc(var(--bs-gutter-x) * .2);
+    padding-right: calc(var(--bs-gutter-x) * .2)
+}

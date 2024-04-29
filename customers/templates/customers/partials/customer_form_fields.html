@@ -2,20 +2,22 @@
 
 
 <div class="row mb-1">
-    {% bootstrap_field form.last_name show_label=False size="small"
-    form_group_class="col row" field_class="col" %}
     {% bootstrap_field form.first_name show_label=False size="small"
-    form_group_class="col row" field_class="col" %}
+    form_group_class="col row" field_class="col customer-form-field" %}
+    {% bootstrap_field form.last_name show_label=False size="small"
+    form_group_class="col row" field_class="col customer-form-field" %}
 </div>
 <div class="row mb-1">
-    {% bootstrap_field form.company show_label=False size="small"
-    form_group_class="col row" field_class="col" %}
     {% bootstrap_field form.phone_number show_label=False size="small"
-    form_group_class="col row" field_class="col" %}
+    form_group_class="col row" field_class="col customer-form-field" %}
+    {% bootstrap_field form.email show_label=False size="small"
+    form_group_class="col row" field_class="col customer-form-field" %}
 </div>
 <div class="row mb-1">
     {% bootstrap_field form.status show_label=False
-    size="small" form_group_class="col row" field_class="col" %}
+    size="small" form_group_class="col row" field_class="col customer-form-field" %}
+    {% bootstrap_field form.company show_label=False size="small"
+    form_group_class="col row" field_class="col customer-form-field" %}
 
     {% if save_button %}
     <div class="col-auto">
