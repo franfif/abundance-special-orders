@@ -34,7 +34,18 @@
             </div>
         </div>
         <div class="row">
-            <span class="order-description col-auto">{{ order|quantity }} units of {{ order.description }}</span>
+            <div class="order-header col-auto">
+                <span class="order-description col-auto">{{ order|quantity }} units of {{ order.description }}</span>
+            </div>
+            <div class="order-header-btn col-auto ms-auto">
+                <div class="col-auto">
+                    <div>
+                        <a class="btn-orders" href="{% url 'orders:copy-order' order.id %}">
+                            <i class="fa-solid fa-copy"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
