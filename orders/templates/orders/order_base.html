@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!--  Button to display filter form  -->
+<button id="btn-show-filters">Filters</button>
+<div id="order-filters" class="order-filters visually-hidden">
+    {% include 'orders/partials/order_filter.html' %}
+</div>
+
+<!--  Button to display new order form -->
+<button id="btn-add-new-order">Add New Order</button>
+<div id="new-order-form" class="order-form visually-hidden">
+    {% include 'orders/partials/order_form.html' %}
+</div>
+all orders
+{{filter.queryset}}
+filtered orders
+{{filter.qs}}
+<!--  Include list of orders-->
+{% include 'orders/partials/list_orders.html' with order_list=filter.qs %}
+
+{% endblock %}
