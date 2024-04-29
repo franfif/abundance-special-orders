@@ -71,7 +71,7 @@ def default_name(first_name, last_name):
         first_name = default_values.NO_TEXT
     if last_name is None:
         last_name = default_values.NO_TEXT
-    return f"{first_name}, {last_name}"
+    return f"{first_name} {last_name}"
 
 
 @register.filter
