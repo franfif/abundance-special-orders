@@ -2,7 +2,7 @@
 {% load bootstrap5 %}
 {% block content %}
 
-<form method="get">
+<form class="filter order-filter" method="get">
     <div class="filter-form-div row my-1 align-items-end">
         <div class="col row">
             {% bootstrap_field filter.form.vendor show_label=False size="small" layout="horizontal"

@@ -1,3 +1,5 @@
+import dirty from 'jquery.dirty';
+
 // Display New Customer form
 const btn_new_customer = document.getElementById('btn-new-customer');
 const btn_existing_customer = document.getElementById('btn-existing-customer');
@@ -54,6 +56,7 @@ if (bottle_deposit_switch) {
     });
 }
 
+// Add previous step and next step buttons to order snippets
 document.addEventListener('DOMContentLoaded', function () {
     const previousStepButtons = $('.btn-previous-step');
     for (const button of previousStepButtons) {
@@ -198,3 +201,8 @@ for (const trigger of memo_required_toast_triggers) {
         }
     });
 }
+
+// Display alert message when user leaves the page with unsaved changes
+$("form.form").dirty({
+    preventLeaving: true,
+});
