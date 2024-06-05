@@ -1,6 +1,8 @@
 from django.db.models import Q
 from django_filters import FilterSet, ChoiceFilter, OrderingFilter
 
+from django.core.exceptions import FieldError
+
 
 class FilterWithAny(FilterSet):
     def __init__(self, *args, **kwargs):
@@ -19,10 +21,21 @@ class FilterWithAny(FilterSet):
         if phone_number == "":
             phone_number = "no_phone_search"
         for term in value.split():
-            queryset = queryset.filter(
-                Q(first_name__icontains=term)
-                | Q(last_name__icontains=term)
-                | Q(company__icontains=term)
-                | Q(phone_number__contains=phone_number)
-            )
+            try:
+                queryset = queryset.filter(
+                    Q(first_name__icontains=term)
+                    | Q(last_name__icontains=term)
+                    | Q(company__icontains=term)
+                    | Q(email__icontains=term)
+                    | Q(phone_number__contains=phone_number)
+                )
+            # If the field is not found, try to search in the related model
+            except FieldError:
+                queryset = queryset.filter(
+                    Q(customer__first_name__icontains=term)
+                    | Q(customer__last_name__icontains=term)
+                    | Q(customer__company__icontains=term)
+                    | Q(customer__email__icontains=term)
+                    | Q(customer__phone_number__contains=phone_number)
+                )
         return queryset
