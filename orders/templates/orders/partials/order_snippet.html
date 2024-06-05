@@ -1,6 +1,13 @@
 {% load orders_extras %}
 
-<div class="col order-card">
+<div id="order-card-{{ order.id}}" class="col order-card"
+     data-vendor="{{ order.vendor.id }}"
+     data-status="{{ order.status }}"
+     data-customer="{{ order.customer.id }}"
+     data-has_bottle_deposit="{{ order.has_bottle_deposit }}"
+     data-paid="{{ order.paid }}"
+     data-is_stand_by="{{ order.is_stand_by }}"
+     data-is_cancelled="{{ order.is_cancelled }}">
     <div class="card my-2 {% if not order.is_stand_by and not order.is_cancelled %} border-primary {% endif %}">
         <div class="card-header">
             <div class="row ">
