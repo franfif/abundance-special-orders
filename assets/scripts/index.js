@@ -47,14 +47,29 @@ for (const btn of btns_order_more_info) {
 }
 
 // Display Bottle Deposit quantity input
-const bottle_deposit_switch = document.getElementById('has_bottle_deposit');
+const bottle_deposit_switch = document.getElementById('id_has_bottle_deposit');
 const bottle_deposit_quantity = document.getElementById('bottle-deposit-quantity');
 
+function show_hide_bottle_deposit_quantity() {
+    if (bottle_deposit_switch && bottle_deposit_quantity) {
+        if (bottle_deposit_switch.checked) {
+            bottle_deposit_quantity.classList.remove('invisible');
+        } else {
+            bottle_deposit_quantity.classList.add('invisible');
+        }
+    }
+}
+
+// Initially show or hide bottle deposit quantity input
+show_hide_bottle_deposit_quantity();
+
+// Add event listener to show or hide bottle deposit quantity input
 if (bottle_deposit_switch) {
     bottle_deposit_switch.addEventListener('change', (event) => {
-        bottle_deposit_quantity.classList.toggle('visually-hidden');
+        show_hide_bottle_deposit_quantity();
     });
 }
+
 
 // Add previous step and next step buttons to order snippets
 document.addEventListener('DOMContentLoaded', function () {

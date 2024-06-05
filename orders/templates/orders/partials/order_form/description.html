@@ -9,21 +9,23 @@
     <div class="row mb-1">
         {% bootstrap_field form.product_number show_label=False form_group_class="col row" label_class="col"
         field_class="col" size="small" %}
-        {% bootstrap_field form.quantity form_group_class="col row" label_class="col" field_class="col"
-        size="small" placeholder="0" %}
+        {% bootstrap_field form.quantity form_group_class="col row align-items-center" label_class="col text-end"
+        field_class="col" size="small" placeholder="0" %}
     </div>
     <div class="row mb-1">
-        {% bootstrap_field form.book_price size="small" form_group_class="col-5" show_label=False %}
-        <div class="col-3 mb-2 form-check form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="has_bottle_deposit">
-            <label class="form-check-label" for="has_bottle_deposit">Bottle Deposit?</label>
+        {% bootstrap_field form.book_price show_label=False form_group_class="col-auto row me-auto" label_class="col"
+        field_class="col" size="small" %}
+        <div class="col-auto row align-items-center">
+            <div class="col-auto form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="id_has_bottle_deposit"
+                       name="has_bottle_deposit"
+                       {% if form.has_bottle_deposit.value %}checked{% endif %}>
+                <label class="form-check-label" for="id_has_bottle_deposit">Bottle Deposit?</label>
+            </div>
+            <div id="bottle-deposit-quantity" class="col-auto invisible">
+                {% bootstrap_field form.number_bottle_deposit size="small" form_group_class="col" show_label=False
+                field_class="col" placeholder="How many bottles?" %}
+            </div>
         </div>
-        <div id="bottle-deposit-quantity" class="col-4 visually-hidden">
-            {% bootstrap_field form.number_bottle_deposit size="small" form_group_class="col" show_label=False
-            field_class="col" placeholder="How many bottles?" %}
-        </div>
-    </div>
-    <div class="row ps-3 mb-1">
-
     </div>
 </div>
