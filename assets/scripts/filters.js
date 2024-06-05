@@ -14,6 +14,9 @@ for (const field of form_fields) {
     });
 }
 
+// Initial filter
+filterOrders()
+
 
 // Update filter_values with the current values of the form fields
 function update_filter_values(field) {
