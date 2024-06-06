@@ -70,12 +70,12 @@
                     </div>
                 </li>
                 <li class="list-group-item px-0">
-                    <div>{{ order|customer_name }}</div>
-                    <div>{{ order.customer.phone_number_formatted|default_if_none:"" }}</div>
-                    <div>{{ order.customer.email|default_if_none:"" }}</div>
+                    <div class="customer-name">{{ order|customer_name }}</div>
+                    <div class="customer-phone">{{ order.customer.phone_number_formatted|default_if_none:"" }}</div>
+                    <div class="customer-email">{{ order.customer.email|default_if_none:"" }}</div>
                     <div class="collapse collapse-{{order.id}}">
-                        <div>{{ order|customer_company }}</div>
-                        <div>{{ order|customer_status }}</div>
+                        <div class="customer-company">{{ order|customer_company }}</div>
+                        <div class="customer-status">{{ order|customer_status }}</div>
                     </div>
                 </li>
 
