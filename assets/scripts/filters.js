@@ -2,6 +2,13 @@ const order_cards = $('.order-card')
 const form_fields = $('.form-select, .filter input')
 const filter_values = {}
 
+const form = $('.order-filter')[0]
+form.addEventListener('keydown', (event) => {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+    }
+});
+
 
 for (const field of form_fields) {
     // Initialize filter_values with the current values of the form fields
