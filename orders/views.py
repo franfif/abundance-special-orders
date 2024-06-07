@@ -52,7 +52,9 @@ class OrderListView(FilterView):
         elif "status" in self.kwargs:
             queryset = queryset.filter(status=self.kwargs["status"].upper())
         else:
-            queryset = queryset.exclude(status=models.Order.DELETED)
+            queryset = queryset.filter(
+                ~Q(status=models.Order.DELETED) & ~Q(is_cancelled=True)
+            )
 
         # Set default ordering
         default_ordering = self.request.GET.get("ordering", None)
