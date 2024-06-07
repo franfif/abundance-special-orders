@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, reverse, get_object_or_404
+from django.db.models import Q
 from django.contrib import messages
+from django.template.loader import render_to_string
 from django.views import generic
 from django.http import JsonResponse
 from django.db.models.functions import Lower
@@ -9,6 +11,31 @@ from django_filters.views import FilterView
 from . import models, forms
 from .templatetags.orders_extras import previous_step, next_step
 from .filters import OrderFilter
+
+
+def filter_orders(request):
+    # Create an instance of OrderFilter with the GET parameters
+    order_filter = OrderFilter(
+        request.GET, queryset=models.Order.objects.exclude(status=models.Order.DELETED)
+    )
+
+    # Get the filtered queryset
+    filtered_orders = order_filter.qs
+
+    # Set default ordering
+    default_ordering = request.GET.get("ordering", None)
+    if not default_ordering:
+        # Default ordering if none is provided in the request
+        filtered_orders = filtered_orders.order_by(
+            "-date_created", Lower("vendor__name")
+        )
+
+    # Render items to a string
+    orders_html = render_to_string(
+        "orders/partials/list_orders.html", {"order_list": filtered_orders}
+    )
+    # Convert the list to JSON and return it as a response
+    return JsonResponse({"orders_html": orders_html})
 
 
 class OrderListView(FilterView):
