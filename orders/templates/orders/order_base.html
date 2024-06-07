@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% block content %}
+
+<!--  Button to display filter form  -->
+<button id="btn-show-filters" type="button" class="btn btn-light"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapse-filters"
+        aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
+    <i class="fa-solid fa-filter col-auto my-auto"></i>
+</button>
+
+<!--  Button to display order edit form -->
+<button id="btn-edit-order" type="button" class="btn btn-light"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapse-order-form"
+        aria-expanded="{% if action == 'update' %}true{% else %}false{% endif %}" aria-controls="collapseExample"
+        onclick="this.blur();">
+    <i class="fa-solid fa-circle-plus col-auto my-auto"></i>
+    {% if action == 'update' %}
+    Update Order
+    {% else %}
+    Add New Order
+    {% endif %}
+</button>
+
+<!--  Order Form-->
+<div id="collapse-order-form"
+     class="order-form collapse collapse-order-form {% if action == 'update' %}show{% endif %}">
+    {% include 'orders/partials/order_form.html' %}
+</div>
+
+<!--  Filters  -->
+<div id="collapse-filters" class="order-filters collapse collapse-filters">
+    {% include 'orders/partials/order_filter.html' %}
+</div>
+
+<!--  Include list of orders-->
+<div class="order-list">
+    {% include 'orders/partials/list_orders.html' with order_list=filter.qs %}
+</div>
+
+{% endblock %}

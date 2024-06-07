@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
 {% load bootstrap5 %}
-{% block content %}
 
 <form class="filter order-filter" method="get">
     <div class="filter-form-div row my-1 align-items-end">
@@ -34,8 +32,3 @@
         </div>
     </div>
 </form>
-<div class="order-list">
-    {% include 'orders/partials/list_orders.html' with order_list=filter.qs %}
-</div>
-
-{% endblock %}
