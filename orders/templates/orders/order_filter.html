@@ -34,7 +34,8 @@
         </div>
     </div>
 </form>
-
-{% include 'orders/partials/list_orders.html' with order_list=filter.qs %}
+<div class="order-list">
+    {% include 'orders/partials/list_orders.html' with order_list=filter.qs %}
+</div>
 
 {% endblock %}
