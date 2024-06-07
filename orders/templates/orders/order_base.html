@@ -16,11 +16,11 @@
         data-bs-target="#collapse-order-form"
         aria-expanded="{% if action == 'update' %}true{% else %}false{% endif %}" aria-controls="collapseExample"
         onclick="this.blur();">
-    <i class="fa-solid fa-circle-plus col-auto my-auto"></i>
     {% if action == 'update' %}
+    <i class="fa-solid fa-cart-arrow-down col-auto my-auto"></i>
     Update Order
     {% else %}
-    Add New Order
+    <i class="fa-solid fa-cart-plus col-auto my-auto"></i> Add New Order
     {% endif %}
 </button>
 
