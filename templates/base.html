@@ -35,10 +35,8 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a class="nav-link" href="{% url 'orders:home' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'orders:create-order' %}">New Order</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'orders:filtered-orders' status='deleted' %}">Deleted
-                    Orders</a>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'orders:filtered-orders' status='deleted' %}">
+                    Deleted Orders</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'customers:list-customers' %}">Customers</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'vendors:list-vendors' %}">Vendors</a></li>
             </ul>
