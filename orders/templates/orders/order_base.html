@@ -3,7 +3,7 @@
 {% block content %}
 
 <!--  Button to display filter form  -->
-<button id="btn-show-filters" type="button" class="btn btn-sm filter-btn"
+<button id="btn-show-filters" type="button" class="btn btn-sm mt-2 filter-btn"
         data-bs-toggle="collapse"
         data-bs-target="#collapse-filters"
         aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
@@ -12,7 +12,7 @@
 
 <!--  Button to display order form -->
 <button id="btn-order-form" type="button"
-        class="btn btn-sm {% if action == 'update' %}btn-warning{% else %}btn-primary{% endif %}"
+        class="btn btn-sm mt-2 {% if action == 'update' %}btn-warning{% else %}btn-primary{% endif %}"
         data-bs-toggle="collapse"
         data-bs-target="#collapse-order-form"
         aria-expanded="{% if action == 'update' %}true{% else %}false{% endif %}" aria-controls="collapseExample"
