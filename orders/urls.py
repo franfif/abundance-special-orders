@@ -4,11 +4,15 @@ from . import views
 
 app_name = "orders"
 urlpatterns = [
-    path("", views.OrderListView.as_view(), name="home"),
-    path("new_order/", views.OrderCreateView.as_view(), name="create-order"),
+    path("", views.OrderListCreateView.as_view(), name="home"),
+    path("orders/filter/", views.filter_orders, name="filter-orders"),
     path("<int:pk>/edit_order/", views.OrderUpdateView.as_view(), name="edit-order"),
-    path("<int:pk>/copy_order/", views.OrderCreateView.as_view(), name="copy-order"),
-    path("orders/<status>/", views.OrderListView.as_view(), name="filtered-orders"),
+    path(
+        "<int:pk>/copy_order/", views.OrderListCreateView.as_view(), name="copy-order"
+    ),
+    path(
+        "orders/<status>/", views.OrderListCreateView.as_view(), name="filtered-orders"
+    ),
     path("<int:pk>/delete_order/", views.send_order_to_trash, name="delete-order"),
     path("<int:pk>/restore_order/", views.restore_order, name="restore-order"),
     path(

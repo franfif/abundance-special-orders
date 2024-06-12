@@ -1,7 +1,7 @@
 from django.urls import path
 
 from . import views
-from orders.views import OrderListView
+from orders.views import OrderListCreateView
 
 app_name = "customers"
 urlpatterns = [
@@ -16,5 +16,9 @@ urlpatterns = [
         views.CustomerDeleteView.as_view(),
         name="delete-customer",
     ),
-    path("<int:customer_id>/orders/", OrderListView.as_view(), name="customer-orders"),
+    path(
+        "<int:customer_id>/orders/",
+        OrderListCreateView.as_view(),
+        name="customer-orders",
+    ),
 ]

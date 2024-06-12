@@ -17,6 +17,37 @@ main {
     padding-left: calc(var(--bs-gutter-x) * .2);
 }
 
+.filter-card {
+    background-color: rgba(144, 198, 63, 0.1);
+    border: 1px solid #91C73E;
+}
+
+.filter-btn {
+    background-color: #91C73E;
+    border-color: #91C73E;
+    color: #fff;
+}
+
+.filter-btn:hover {
+    background-color: #047A3E;
+    border-color: #047A3E;
+    color: #fff;
+}
+
+.filter-group {
+    border: 1px solid #91C73E;
+}
+
+.form-card-create {
+    background-color: rgba(13, 110, 253, 0.1);
+    border-color: #0D6EFD;
+}
+
+.form-card-update {
+    background-color: rgba(255, 192, 8, 0.1);
+    border-color: #FFC008;
+}
+
 /* select fields in forms */
 .form-select {
     line-height: 1;

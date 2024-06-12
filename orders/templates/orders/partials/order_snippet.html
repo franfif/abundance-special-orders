@@ -1,6 +1,13 @@
 {% load orders_extras %}
 
-<div class="col order-card">
+<div id="order-card-{{ order.id}}" class="col order-card"
+     data-vendor="{{ order.vendor.id }}"
+     data-status="{{ order.status }}"
+     data-customer="{{ order.customer.id }}"
+     data-has_bottle_deposit="{{ order.has_bottle_deposit }}"
+     data-paid="{{ order.paid }}"
+     data-is_stand_by="{{ order.is_stand_by }}"
+     data-is_cancelled="{{ order.is_cancelled }}">
     <div class="card my-2 {% if not order.is_stand_by and not order.is_cancelled %} border-primary {% endif %}">
         <div class="card-header">
             <div class="row ">
@@ -63,12 +70,12 @@
                     </div>
                 </li>
                 <li class="list-group-item px-0">
-                    <div>{{ order|customer_name }}</div>
-                    <div>{{ order.customer.phone_number_formatted|default_if_none:"" }}</div>
-                    <div>{{ order.customer.email|default_if_none:"" }}</div>
+                    <div class="customer-name">{{ order|customer_name }}</div>
+                    <div class="customer-phone">{{ order.customer.phone_number_formatted|default_if_none:"" }}</div>
+                    <div class="customer-email">{{ order.customer.email|default_if_none:"" }}</div>
                     <div class="collapse collapse-{{order.id}}">
-                        <div>{{ order|customer_company }}</div>
-                        <div>{{ order|customer_status }}</div>
+                        <div class="customer-company">{{ order|customer_company }}</div>
+                        <div class="customer-status">{{ order|customer_status }}</div>
                     </div>
                 </li>
 

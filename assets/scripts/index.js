@@ -47,14 +47,29 @@ for (const btn of btns_order_more_info) {
 }
 
 // Display Bottle Deposit quantity input
-const bottle_deposit_switch = document.getElementById('has_bottle_deposit');
+const bottle_deposit_switch = document.getElementById('id_has_bottle_deposit');
 const bottle_deposit_quantity = document.getElementById('bottle-deposit-quantity');
 
+function show_hide_bottle_deposit_quantity() {
+    if (bottle_deposit_switch && bottle_deposit_quantity) {
+        if (bottle_deposit_switch.checked) {
+            bottle_deposit_quantity.classList.remove('invisible');
+        } else {
+            bottle_deposit_quantity.classList.add('invisible');
+        }
+    }
+}
+
+// Initially show or hide bottle deposit quantity input
+show_hide_bottle_deposit_quantity();
+
+// Add event listener to show or hide bottle deposit quantity input
 if (bottle_deposit_switch) {
     bottle_deposit_switch.addEventListener('change', (event) => {
-        bottle_deposit_quantity.classList.toggle('visually-hidden');
+        show_hide_bottle_deposit_quantity();
     });
 }
+
 
 // Add previous step and next step buttons to order snippets
 document.addEventListener('DOMContentLoaded', function () {
@@ -127,23 +142,10 @@ function update_order_snippet(orderId, data) {
     }
 }
 
+
+import {getCookie} from './utils';
+
 function updateOrderStatus(orderId, action) {
-    // TODO Move getCookie() to utils
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
 
     const csrftoken = getCookie('csrftoken');
 
@@ -206,3 +208,22 @@ for (const trigger of memo_required_toast_triggers) {
 $("form.form").dirty({
     preventLeaving: true,
 });
+
+
+// ### Display order form when "Add another" button is clicked
+// Save the state in sessionStorage
+const btn_add_another = document.getElementById('btn-add-another');
+if (btn_add_another) {
+    btn_add_another.addEventListener('click', (event) => {
+        sessionStorage.setItem("show_form", "show");
+    });
+}
+
+// Display order form if the state is saved in sessionStorage
+if (sessionStorage.getItem("show_form") === "show") {
+    const order_form = document.getElementById('collapse-order-form');
+    if (order_form) {
+        order_form.classList.add('show');
+    }
+    sessionStorage.setItem("show_form", "");
+}

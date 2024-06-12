@@ -10,24 +10,20 @@ from vendors.models import Vendor
 
 class Order(models.Model):
     INCOMPLETE = "INCOMPLETE"
-    PENDING = "PENDING"
     READY_TO_ORDER = "READY_TO_ORDER"
     ORDERED = "ORDERED"
     RECEIVED = "RECEIVED"
     CALLED = "CALLED"
     PICKED_UP = "PICKED_UP"
-    CANCELED = "CANCELED"
     DELETED = "DELETED"
 
     ORDER_STATUS = [
         (INCOMPLETE, "Incomplete"),
-        (PENDING, "Pending"),
         (READY_TO_ORDER, "Ready to order"),
         (ORDERED, "Ordered"),
         (RECEIVED, "Received"),
         (CALLED, "Called"),
         (PICKED_UP, "Picked-Up"),
-        (CANCELED, "Canceled"),
         (DELETED, "Deleted"),
     ]
 

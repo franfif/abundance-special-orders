@@ -13,7 +13,9 @@ class OrderFilter(FilterWithAny):
         widget=BooleanRadioSelect, label="Bottle Deposit"
     )
     is_stand_by = BooleanFilter(widget=BooleanRadioSelect, label="Stand By")
-    is_cancelled = BooleanFilter(widget=BooleanRadioSelect, label="Cancelled")
+    is_cancelled = BooleanFilter(
+        widget=BooleanRadioSelect, label="Cancelled", initial=False
+    )
     paid = BooleanFilter(widget=BooleanRadioSelect, label="Paid")
     customer_full_info = CharFilter(
         label="Customer information", method="search_customer"

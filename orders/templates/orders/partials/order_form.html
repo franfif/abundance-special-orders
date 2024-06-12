@@ -1,0 +1,17 @@
+<div class="card p-2 mt-2 {% if action == 'update' %}form-card-update{% else %}form-card-create{% endif %}">
+    <form class="form order-form" method="post">
+        {% csrf_token %}
+        <div class="row">
+            {% include 'orders/partials/order_form/description.html' %}
+            {% include 'orders/partials/order_form/customer.html' %}
+        </div>
+        {% if action == 'update' %}
+        <div class="row">
+            {% include 'orders/partials/order_form/dates.html' %}
+        </div>
+        {% endif %}
+        <div class="row">
+            {% include 'orders/partials/order_form/memo_and_flags.html' %}
+        </div>
+    </form>
+</div>
