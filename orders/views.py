@@ -132,7 +132,9 @@ def filter_orders(request):
 
     # Render items to a string
     orders_html = render_to_string(
-        "orders/partials/list_orders.html", {"order_list": filtered_orders}
+        "orders/partials/list_orders.html",
+        {"order_list": filtered_orders},
+        request=request,
     )
     # Convert the list to JSON and return it as a response
     return JsonResponse({"orders_html": orders_html})
