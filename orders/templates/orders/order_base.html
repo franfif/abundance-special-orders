@@ -10,8 +10,8 @@
     <i class="fa-solid fa-filter col-auto my-auto"></i>
 </button>
 
-<!--  Button to display order edit form -->
-<button id="btn-edit-order" type="button" class="btn btn-light"
+<!--  Button to display order form -->
+<button id="btn-order-form" type="button" class="btn btn-light"
         data-bs-toggle="collapse"
         data-bs-target="#collapse-order-form"
         aria-expanded="{% if action == 'update' %}true{% else %}false{% endif %}" aria-controls="collapseExample"
@@ -20,7 +20,8 @@
     <i class="fa-solid fa-cart-arrow-down col-auto my-auto"></i>
     Update Order
     {% else %}
-    <i class="fa-solid fa-cart-plus col-auto my-auto"></i> Add New Order
+    <i class="fa-solid fa-cart-plus col-auto my-auto"></i>
+    Add New Order
     {% endif %}
 </button>
 
