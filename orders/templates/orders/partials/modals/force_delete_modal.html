@@ -1,0 +1,27 @@
+<!-- Force Delete Modal -->
+<div class="modal fade"
+     id="force-delete-order-{{ order.id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="staticBackdrop{{ order.id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdrop{{ order.id }}">Permanently Delete Order</h5>
+                <button type="button" class="close btn-orders" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="p-2" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Are you sure you want to permanently delete the order of {{ order.description }}?</p>
+                <p>It will be lost forever. <i class="fa-solid fa-skull"></i></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form action="{% url 'orders:force-delete-order' order.id %}"
+                      method="post">
+                    {% csrf_token %}
+                    <input class="btn btn-danger" type="submit" value="Delete Forever">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
