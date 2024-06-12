@@ -20,4 +20,9 @@ urlpatterns = [
         views.order_update_status,
         name="order-update-status",
     ),
+    path(
+        "<int:pk>/force_delete_order/",
+        views.force_delete_order,
+        name="force-delete-order",
+    ),
 ]
