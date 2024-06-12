@@ -91,6 +91,7 @@ class OrderUpdateView(generic.UpdateView, OrderFilterView):
             "-date_created", Lower("vendor__name")
         )
         context["action"] = "update"
+        context["order"] = self.get_object()
         return context
 
     def form_valid(self, form):
