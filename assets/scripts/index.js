@@ -221,3 +221,22 @@ for (const trigger of memo_required_toast_triggers) {
 $("form.form").dirty({
     preventLeaving: true,
 });
+
+
+// ### Display order form when "Add another" button is clicked
+// Save the state in sessionStorage
+const btn_add_another = document.getElementById('btn-add-another');
+if (btn_add_another) {
+    btn_add_another.addEventListener('click', (event) => {
+        sessionStorage.setItem("show_form", "show");
+    });
+}
+
+// Display order form if the state is saved in sessionStorage
+if (sessionStorage.getItem("show_form") === "show") {
+    const order_form = document.getElementById('collapse-order-form');
+    if (order_form) {
+        order_form.classList.add('show');
+    }
+    sessionStorage.setItem("show_form", "");
+}
