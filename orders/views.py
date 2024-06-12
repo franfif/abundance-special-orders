@@ -59,9 +59,6 @@ class OrderListCreateView(generic.CreateView, OrderFilterView):
             return {}
 
     def get_success_url(self):
-        # Save and create "another" order
-        if "another" in self.request.POST:
-            return reverse("orders:create-order")
         return reverse("orders:home")
 
     def get_context_data(self, **kwargs):
