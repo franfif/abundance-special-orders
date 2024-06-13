@@ -1,5 +1,7 @@
 from django.shortcuts import reverse, redirect
+from django.template.loader import render_to_string
 from django.views import generic
+from django.http import JsonResponse
 from django.db.models.functions import Lower
 
 from .models import Customer
