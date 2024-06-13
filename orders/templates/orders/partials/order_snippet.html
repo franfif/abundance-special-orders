@@ -49,11 +49,21 @@
                 </div>
                 <div class="order-header-btn col-auto ms-auto">
                     <div class="col-auto">
+                        {% if order.status != "DELETED" %}
                         <div>
                             <a class="btn-orders" href="{% url 'orders:copy-order' order.id %}">
                                 <i class="fa-solid fa-copy"></i>
                             </a>
                         </div>
+                        {% else %}
+                        <button class="btn-orders"
+                                data-order-id="{{ order.id }}"
+                                data-bs-toggle="modal"
+                                data-bs-target="#force-delete-order-{{ order.id }}">
+                            <i class="fa-solid fa-skull-crossbones"></i>
+                        </button>
+                        {% include 'orders/partials/modals/force_delete_modal.html' %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -98,7 +108,7 @@
                 </ul>
             </div>
             <div class="row justify-content-between btn-order-bottom">
-                <button class="col btn btn-sm btn-light btn-previous-step{% if not order.status|previous_step %} visually-hidden {% endif %}"
+                <button class="col btn btn-sm btn-light btn-previous-step{% if not order.status|previous_step %} disabled {% endif %}"
                         data-order-id="{{ order.id }}"
                         data-bs-toggle="{% if order.status|previous_step == 'Delete' %}modal{% endif %}"
                         data-bs-target="#delete-order-{{ order.id }}">
@@ -123,29 +133,4 @@
     </div>
 </div>
 
-<!-- Delete Modal -->
-<div class="modal fade"
-     id="delete-order-{{ order.id }}" data-bs-backdrop="static" data-bs-keyboard="false"
-     tabindex="-1" aria-labelledby="staticBackdrop{{ order.id }}" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdrop{{ order.id }}">Delete Order</h5>
-                <button type="button" class="close btn-orders" data-bs-dismiss="modal" aria-label="Close">
-                    <span class="p-2" aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <p>Are you sure you want to delete the order of {{ order.description }}?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <form action="{% url 'orders:delete-order' order.id %}"
-                      method="post">
-                    {% csrf_token %}
-                    <input class="btn btn-danger" type="submit" value="Delete">
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+{% include 'orders/partials/modals/delete_modal.html' %}

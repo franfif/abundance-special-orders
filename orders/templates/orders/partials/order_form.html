@@ -15,3 +15,8 @@
         </div>
     </form>
 </div>
+
+<!-- Delete modal form must not be nested in order-form -->
+{% if action == 'update' %}
+{% include 'orders/partials/modals/delete_modal.html' %}
+{% endif %}

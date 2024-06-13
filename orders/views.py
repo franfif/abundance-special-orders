@@ -91,6 +91,7 @@ class OrderUpdateView(generic.UpdateView, OrderFilterView):
             "-date_created", Lower("vendor__name")
         )
         context["action"] = "update"
+        context["order"] = self.get_object()
         return context
 
     def form_valid(self, form):
@@ -195,3 +196,14 @@ def restore_order(request, pk):
         )
         return redirect("orders:filtered-orders", status="deleted")
     return redirect("orders:home")
+
+
+def force_delete_order(request, pk):
+    order = get_object_or_404(Order, id=pk)
+    if request.method == "POST":
+        order.delete()
+        messages.success(
+            request,
+            f"The order {order.description} has been successfully deleted.",
+        )
+    return redirect("orders:filtered-orders", status="deleted")
