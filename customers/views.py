@@ -61,3 +61,27 @@ class CustomerUpdateView(CustomerListCreateView, generic.UpdateView):
 
 class CustomerDeleteView(CustomerView, generic.DeleteView):
     pass
+
+
+def filter_customers(request):
+    customer_filter = CustomerFilter(request.GET, queryset=Customer.objects.all())
+
+    # Get the filtered queryset
+    filtered_customers = customer_filter.qs
+
+    # Set default ordering
+    default_ordering = request.GET.get("ordering", None)
+    if not default_ordering:
+        # Default ordering if none is provided in the request
+        filtered_customers = filtered_customers.order_by(
+            Lower("last_name"), Lower("first_name")
+        )
+
+    # Render items to a string
+    customers_html = render_to_string(
+        "customers/partials/list_customers.html",
+        {"customer_list": filtered_customers},
+        request=request,
+    )
+    # Convert the list to JSON and return it as a response
+    return JsonResponse({"customers_html": customers_html})

@@ -31,6 +31,8 @@
         </form>
     </div>
 </div>
-{% include 'customers/partials/list_customers.html' with customer_list=filter.qs %}
+<div class="customer-list">
+    {% include 'customers/partials/list_customers.html' with customer_list=filter.qs %}
+</div>
 
 {% endblock %}

@@ -12,6 +12,7 @@ from .views import (
 app_name = "customers"
 urlpatterns = [
     path("", CustomerListCreateView.as_view(), name="list-customers"),
+    path("filter/", filter_customers, name="filter-customers"),
     path(
         "<int:pk>/edit_customer/",
         CustomerUpdateView.as_view(),
