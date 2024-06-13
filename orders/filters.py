@@ -5,7 +5,7 @@ from django_filters import (
 )
 from utils.filters import FilterWithAny
 from .models import Order
-from .widgets import BooleanRadioSelect
+from utils.widgets import BooleanRadioSelect
 
 
 class OrderFilter(FilterWithAny):
