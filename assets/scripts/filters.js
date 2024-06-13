@@ -9,7 +9,7 @@ function update_order_list() {
     // Ajax request
     $.ajax({
         type: 'GET',
-        url: 'orders/filter/',
+        url: 'filter/',
         data: formData,
         success: function (response) {
             // Update the order list with the filtered orders

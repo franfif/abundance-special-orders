@@ -28,7 +28,7 @@ urlpatterns = [
         name="customer-orders",
     ),
     path(
-        "<int:customer_id>/orders/orders/filter/",
+        "<int:customer_id>/orders/filter/",
         orders.views.filter_orders,
         name="customer-filter-orders",
     ),
