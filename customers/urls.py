@@ -1,19 +1,25 @@
 from django.urls import path
 
-from . import views
 from orders.views import OrderListCreateView
+from .views import (
+    CustomerListCreateView,
+    CustomerUpdateView,
+    CustomerDeleteView,
+    CustomerOrderListView,
+    filter_customers,
+)
 
 app_name = "customers"
 urlpatterns = [
-    path("", views.CustomerListCreateView.as_view(), name="list-customers"),
+    path("", CustomerListCreateView.as_view(), name="list-customers"),
     path(
         "<int:pk>/edit_customer/",
-        views.CustomerUpdateView.as_view(),
+        CustomerUpdateView.as_view(),
         name="edit-customer",
     ),
     path(
         "<int:pk>/delete_customer/",
-        views.CustomerDeleteView.as_view(),
+        CustomerDeleteView.as_view(),
         name="delete-customer",
     ),
     path(
