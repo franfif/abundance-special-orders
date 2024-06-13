@@ -46,3 +46,9 @@ class OrderFilter(FilterWithAny):
             "is_stand_by",
             "is_cancelled",
         }
+
+
+# Filter orders for a given customer
+class CustomerOrderFilter(OrderFilter):
+    # Show cancelled orders by default
+    is_cancelled = BooleanFilter(widget=BooleanRadioSelect, label="Cancelled")

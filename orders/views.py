@@ -11,7 +11,7 @@ from django_filters.views import FilterView
 from .models import Order
 from .forms import CreateOrderForm
 from .templatetags.orders_extras import previous_step, next_step
-from .filters import OrderFilter
+from .filters import OrderFilter, CustomerOrderFilter
 
 
 class OrderFilterView(FilterView):
@@ -114,11 +114,19 @@ class OrderUpdateView(generic.UpdateView, OrderFilterView):
         return super().form_valid(form)
 
 
-def filter_orders(request):
+def filter_orders(request, **kwargs):
     # Create an instance of OrderFilter with the GET parameters
-    order_filter = OrderFilter(
-        request.GET, queryset=Order.objects.exclude(status=Order.DELETED)
-    )
+    if "customer_id" in kwargs:
+        # Show all orders by customer
+        customer_id = kwargs["customer_id"]
+        order_filter = CustomerOrderFilter(
+            request.GET, queryset=Order.objects.filter(customer=customer_id)
+        )
+    else:
+        # Show all orders except the deleted ones
+        order_filter = OrderFilter(
+            request.GET, queryset=Order.objects.exclude(status=Order.DELETED)
+        )
 
     # Get the filtered queryset
     filtered_orders = order_filter.qs
