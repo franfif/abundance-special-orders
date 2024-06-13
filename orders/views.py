@@ -114,6 +114,20 @@ class OrderUpdateView(generic.UpdateView, OrderFilterView):
         return super().form_valid(form)
 
 
+class CustomerOrderListView(OrderListCreateView):
+    filterset_class = CustomerOrderFilter
+
+    def get_queryset(self):
+        queryset = Order.objects.filter(customer=self.kwargs["customer_id"])
+
+        # Set default ordering
+        default_ordering = self.request.GET.get("ordering", None)
+        if not default_ordering:
+            # Default ordering if none is provided in the request
+            queryset = queryset.order_by("-date_created", Lower("vendor__name"))
+        return queryset
+
+
 def filter_orders(request, **kwargs):
     # Create an instance of OrderFilter with the GET parameters
     if "customer_id" in kwargs:

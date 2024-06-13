@@ -1,13 +1,12 @@
 from django.urls import path
 
-from orders.views import OrderListCreateView
 from .views import (
     CustomerListCreateView,
     CustomerUpdateView,
     CustomerDeleteView,
-    CustomerOrderListView,
     filter_customers,
 )
+import orders.views
 
 app_name = "customers"
 urlpatterns = [
@@ -25,7 +24,12 @@ urlpatterns = [
     ),
     path(
         "<int:customer_id>/orders/",
-        OrderListCreateView.as_view(),
+        orders.views.CustomerOrderListView.as_view(),
         name="customer-orders",
+    ),
+    path(
+        "<int:customer_id>/orders/orders/filter/",
+        orders.views.filter_orders,
+        name="customer-filter-orders",
     ),
 ]
