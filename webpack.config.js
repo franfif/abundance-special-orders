@@ -1,12 +1,10 @@
 const path = require('path');
 
 module.exports = {
-    entry: {
-        main: './assets/scripts/index.js', // Main entry file
-    },
+    entry: './assets/scripts/index.js',
 
     output: {
         'path': path.resolve(__dirname, 'static'),
-        'filename': '[name].bundle.js'
+        'filename': 'bundle.js'
     }
-}
+};
