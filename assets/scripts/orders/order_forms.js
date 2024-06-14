@@ -86,3 +86,14 @@ if (sessionStorage.getItem("show_form") === "show") {
     }
     sessionStorage.setItem("show_form", "");
 }
+
+// Add decimals to book price
+const book_price = document.getElementById('id_book_price');
+if (book_price) {
+    book_price.addEventListener('change', (event) => {
+        if (book_price.value >= 100 && book_price.value % 2 === 0) {
+            book_price.value /= 100;
+        }
+        book_price.value = parseFloat(book_price.value).toFixed(2);
+    });
+}
