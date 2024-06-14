@@ -160,7 +160,7 @@ def filter_orders(request, **kwargs):
         request=request,
     )
     # Convert the list to JSON and return it as a response
-    return JsonResponse({"orders_html": orders_html})
+    return JsonResponse({"item_list_html": orders_html})
 
 
 def order_update_status(request, order_id, action):

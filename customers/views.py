@@ -86,4 +86,4 @@ def filter_customers(request):
         request=request,
     )
     # Convert the list to JSON and return it as a response
-    return JsonResponse({"customers_html": customers_html})
+    return JsonResponse({"item_list_html": customers_html})
