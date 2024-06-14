@@ -58,6 +58,19 @@ main {
     min-width: 140px;
 }
 
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-container--default .select2-selection--single {
+    border: 1px solid #ced4da !important;
+    border-radius: .2rem !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: #6C757D !important;
+}
+
 form, .form-select, .form-control, .select2, .select2-results, .btn-sm, .filter-form-div {
     font-size: .75rem;
 }
