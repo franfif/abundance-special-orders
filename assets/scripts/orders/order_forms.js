@@ -32,7 +32,7 @@ if (btn_existing_customer) {
 
 
 // Display Bottle Deposit quantity input
-const bottle_deposit_switch = document.getElementById('id_has_bottle_deposit');
+const bottle_deposit_switch = document.getElementById('has_bottle_deposit_order_form');
 const bottle_deposit_quantity = document.getElementById('bottle-deposit-quantity');
 
 function show_hide_bottle_deposit_quantity() {

@@ -17,10 +17,10 @@
         field_class="col" size="small" %}
         <div class="col-auto row align-items-center">
             <div class="col-auto form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="id_has_bottle_deposit"
+                <input class="form-check-input" type="checkbox" role="switch" id="has_bottle_deposit_order_form"
                        name="has_bottle_deposit"
                        {% if form.has_bottle_deposit.value %}checked{% endif %}>
-                <label class="form-check-label" for="id_has_bottle_deposit">Bottle Deposit?</label>
+                <label class="form-check-label" for="has_bottle_deposit_order_form">Bottle Deposit?</label>
             </div>
             <div id="bottle-deposit-quantity" class="col-auto invisible">
                 {% bootstrap_field form.number_bottle_deposit size="small" form_group_class="col" show_label=False
