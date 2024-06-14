@@ -1,17 +1,17 @@
-const form_fields = $('.form-select, .filter input')
+const filter_form_fields = $('.filter .form-select, .filter input')
+const eventType = {'text': 'keyup', 'select-one': 'change', 'radio': 'change'};
 
-function update_order_list() {
+function updateList() {
     // Serialize the form data
-    const formData = $('.order-filter').serialize();
+    const formData = $('.filter').serialize();
 
-    // Ajax request
+    // Ajax request to get updated list and change page content
     $.ajax({
         type: 'GET',
-        url: 'orders/filter/',
+        url: 'filter/',
         data: formData,
-        success: function (response) {
-            // Update the order list with the filtered orders
-            $('.order-list').html(response.orders_html);
+        success: (response) => {
+            $('.item-list').html(response.item_list_html);
         },
         error: function (error) {
             console.error('Error:', error);
@@ -19,24 +19,15 @@ function update_order_list() {
     });
 }
 
-
-for (const field of form_fields) {
+function formFieldEvent(index, field) {
     // Prevent form submission when the Enter key is pressed
     field.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
         }
     });
-
-    if (field.type === 'text') {
-        // Update order list when text is typed into a text field
-        field.addEventListener('keyup', (event) => {
-            update_order_list()
-        });
-    } else {
-        // Update order list when the value of another form field changes
-        field.addEventListener('change', (event) => {
-            update_order_list()
-        });
-    }
+    // Add updateList function to form fields
+    field.addEventListener(eventType[field.type], updateList);
 }
+
+filter_form_fields.each(formFieldEvent)

@@ -11,7 +11,7 @@ from django_filters.views import FilterView
 from .models import Order
 from .forms import CreateOrderForm
 from .templatetags.orders_extras import previous_step, next_step
-from .filters import OrderFilter
+from .filters import OrderFilter, CustomerOrderFilter
 
 
 class OrderFilterView(FilterView):
@@ -114,11 +114,33 @@ class OrderUpdateView(generic.UpdateView, OrderFilterView):
         return super().form_valid(form)
 
 
-def filter_orders(request):
+class CustomerOrderListView(OrderListCreateView):
+    filterset_class = CustomerOrderFilter
+
+    def get_queryset(self):
+        queryset = Order.objects.filter(customer=self.kwargs["customer_id"])
+
+        # Set default ordering
+        default_ordering = self.request.GET.get("ordering", None)
+        if not default_ordering:
+            # Default ordering if none is provided in the request
+            queryset = queryset.order_by("-date_created", Lower("vendor__name"))
+        return queryset
+
+
+def filter_orders(request, **kwargs):
     # Create an instance of OrderFilter with the GET parameters
-    order_filter = OrderFilter(
-        request.GET, queryset=Order.objects.exclude(status=Order.DELETED)
-    )
+    if "customer_id" in kwargs:
+        # Show all orders by customer
+        customer_id = kwargs["customer_id"]
+        order_filter = CustomerOrderFilter(
+            request.GET, queryset=Order.objects.filter(customer=customer_id)
+        )
+    else:
+        # Show all orders except the deleted ones
+        order_filter = OrderFilter(
+            request.GET, queryset=Order.objects.exclude(status=Order.DELETED)
+        )
 
     # Get the filtered queryset
     filtered_orders = order_filter.qs
@@ -138,7 +160,7 @@ def filter_orders(request):
         request=request,
     )
     # Convert the list to JSON and return it as a response
-    return JsonResponse({"orders_html": orders_html})
+    return JsonResponse({"item_list_html": orders_html})
 
 
 def order_update_status(request, order_id, action):

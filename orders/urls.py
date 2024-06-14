@@ -5,7 +5,7 @@ from . import views
 app_name = "orders"
 urlpatterns = [
     path("", views.OrderListCreateView.as_view(), name="home"),
-    path("orders/filter/", views.filter_orders, name="filter-orders"),
+    path("filter/", views.filter_orders, name="filter-orders"),
     path("<int:pk>/edit_order/", views.OrderUpdateView.as_view(), name="edit-order"),
     path(
         "<int:pk>/copy_order/", views.OrderListCreateView.as_view(), name="copy-order"
