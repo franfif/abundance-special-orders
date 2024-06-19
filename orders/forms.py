@@ -2,7 +2,7 @@ from django import forms
 from django_select2 import forms as s2forms
 from bootstrap_datepicker_plus.widgets import DatePickerInput
 
-from .models import Order
+from .models import Order, Vendor
 from customers.models import Customer, CustomerStatus
 
 from customers.forms import CustomerForm
@@ -22,6 +22,9 @@ class CustomerWidget(s2forms.ModelSelect2Widget):
         attrs["data-placeholder"] = "Search a customer by their name or phone number"
         return attrs
 
+    def get_queryset(self):
+        return Customer.objects.order_by("last_name", "first_name")
+
 
 class VendorWidget(s2forms.ModelSelect2Widget):
     search_fields = [
@@ -33,6 +36,9 @@ class VendorWidget(s2forms.ModelSelect2Widget):
         attrs["data-minimum-input-length"] = 0
         attrs["data-placeholder"] = "Search a vendor by their name"
         return attrs
+
+    def get_queryset(self):
+        return Vendor.objects.order_by("name")
 
 
 class CreateOrderForm(forms.ModelForm):
