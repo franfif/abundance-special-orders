@@ -38,7 +38,7 @@ class VendorWidget(s2forms.ModelSelect2Widget):
         return attrs
 
     def get_queryset(self):
-        return Vendor.objects.order_by("name")
+        return Vendor.objects.order_by("rank", "name")
 
 
 class CreateOrderForm(forms.ModelForm):
