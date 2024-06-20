@@ -1,5 +1,7 @@
 // ####### ORDER SNIPPETS ######
 
+import {getCookie} from "../utils";
+
 // More Info button content
 const btns_order_more_info = document.getElementsByClassName('btn-order-more-info')
 
