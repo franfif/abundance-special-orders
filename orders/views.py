@@ -181,18 +181,13 @@ def order_update_status(request, order_id, action):
             order.next_status()
         order.save()
 
-        data = {
-            "id": order.id,
-            "status": order.get_status_display(),
-            "date_ordered": order.date_ordered,
-            "date_received": order.date_received,
-            "date_called": order.date_called,
-            "date_picked_up": order.date_picked_up,
-            "status_previous_step": previous_step(order.status),
-            "status_next_step": next_step(order.status),
-        }
-
-        return JsonResponse(data)
+        # Render order to a string
+        order_html = render_to_string(
+            "orders/partials/order_snippet.html",
+            {"order": order},
+            request=request,
+        )
+        return JsonResponse({"order": order_html})
 
 
 def send_order_to_trash(request, pk):
