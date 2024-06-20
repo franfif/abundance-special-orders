@@ -57,5 +57,7 @@ class Customer(models.Model):
                 return f"({self.phone_number[:3]}) {self.phone_number[3:6]}-{self.phone_number[6:]}"
             if len(self.phone_number) == 7:
                 return f"(585) {self.phone_number[:3]}-{self.phone_number[3:]}"
+            if len(self.phone_number) > 10:
+                return f"({self.phone_number[:3]}) {self.phone_number[3:6]}-{self.phone_number[6:10]} ext {self.phone_number[10:]}"
             return self.phone_number
         return None
