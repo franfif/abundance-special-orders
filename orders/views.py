@@ -229,3 +229,13 @@ def force_delete_order(request, pk):
             f"The order {order.description} has been successfully deleted.",
         )
     return redirect("orders:filtered-orders", status="deleted")
+
+
+def unpaid_pickup(request, pk):
+    order = get_object_or_404(Order, id=pk)
+    if request.method == "POST":
+        if "paid" in request.POST:
+            order.paid = True
+        order.next_status()
+        order.save()
+    return redirect("orders:home")

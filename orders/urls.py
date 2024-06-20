@@ -25,4 +25,9 @@ urlpatterns = [
         views.force_delete_order,
         name="force-delete-order",
     ),
+    path(
+        "<int:pk>/unpaid_pickup/",
+        views.unpaid_pickup,
+        name="unpaid-pickup",
+    ),
 ]
