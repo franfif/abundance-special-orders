@@ -17,9 +17,9 @@ for (const btn of btns_order_more_info) {
     });
 }
 
-// Add previous step and next step buttons to order snippets
-document.addEventListener('DOMContentLoaded', function () {
+function addButtonEvents() {
     const previousStepButtons = $('.btn-previous-step');
+
     for (const button of previousStepButtons) {
         button.addEventListener('click', function () {
             const orderId = this.dataset.orderId;
@@ -30,63 +30,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const nextStepButtons = $('.btn-next-step');
     for (const button of nextStepButtons) {
         button.addEventListener('click', function () {
-            const orderId = this.dataset.orderId;
-            updateOrderStatus(orderId, 'next_step');
+            // Don't update an order to picked up if it is unpaid
+            if (this.dataset.nextStatus !== 'Picked-Up' || this.dataset.paid !== "False") {
+                const orderId = this.dataset.orderId;
+                updateOrderStatus(orderId, 'next_step');
+            }
         });
     }
-});
-
-function update_order_snippet(orderId, data) {
-    // Ensure the correct order is updated
-    if (orderId === data.id.toString()) {
-
-        const status = $("#status-" + data.id)[0];
-        if (status) {
-            status.textContent = data.status;
-        }
-        const dateOrdered = $("#date-ordered-" + data.id)[0];
-        if (dateOrdered) {
-            dateOrdered.textContent = data.date_ordered;
-        }
-        const dateReceived = $("#date-received-" + data.id)[0];
-        if (dateReceived) {
-            dateReceived.textContent = data.date_received;
-        }
-        const dateCalled = $("#date-called-" + data.id)[0];
-        if (dateCalled) {
-            dateCalled.textContent = data.date_called;
-        }
-        const datePickedUp = $("#date-picked-up-" + data.id)[0];
-        if (datePickedUp) {
-            datePickedUp.textContent = data.date_picked_up;
-        }
-        const previousStep = $("#previous-step-" + data.id)[0];
-        if (previousStep) {
-            if (data.status_previous_step) {
-                previousStep.textContent = data.status_previous_step;
-                previousStep.parentNode.classList.remove("visually-hidden");
-                if (data.status_previous_step === "Delete") {
-                    previousStep.parentNode.setAttribute("data-bs-toggle", "modal");
-                    previousStep.parentNode.setAttribute("data-bs-target", "#delete-order-" + data.id);
-                } else {
-                    previousStep.parentNode.removeAttribute("data-bs-toggle");
-                    previousStep.parentNode.removeAttribute("data-bs-target");
-                }
-            } else {
-                previousStep.parentNode.classList.add("visually-hidden");
-            }
-        }
-        const nextStep = $("#next-step-" + data.id)[0];
-        if (nextStep) {
-            if (data.status_next_step) {
-                nextStep.textContent = data.status_next_step;
-                nextStep.parentNode.classList.remove("visually-hidden");
-            } else {
-                nextStep.parentNode.classList.add("visually-hidden");
-            }
-        }
-    }
 }
+
+// Add previous step and next step buttons to order snippets
+document.addEventListener('DOMContentLoaded', function () {
+    addButtonEvents();
+});
 
 
 function updateOrderStatus(orderId, action) {
@@ -106,9 +62,10 @@ function updateOrderStatus(orderId, action) {
             if (data.redirect) {
                 window.location.href = data.redirect;
             } else {
-                update_order_snippet(orderId, data);
+                console.log("success")
+                $('#order-card-' + orderId).replaceWith(data.order);
+                addButtonEvents();
             }
-
         })
         .catch(error => {
             console.error('Error:', error);
