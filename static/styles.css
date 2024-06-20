@@ -152,3 +152,7 @@ form, .form-select, .form-control, .select2, .select2-results, .btn-sm, .filter-
     padding-left: calc(var(--bs-gutter-x) * .2);
     padding-right: calc(var(--bs-gutter-x) * .2)
 }
+
+.vendor-rank {
+    width: 100px;
+}

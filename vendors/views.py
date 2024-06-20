@@ -1,4 +1,4 @@
-from django.shortcuts import reverse
+from django.shortcuts import reverse, redirect
 from django.db.models.functions import Lower
 from django.views import generic
 
@@ -9,6 +9,7 @@ from .forms import VendorForm
 class VendorListCreateView(generic.CreateView):
     model = Vendor
     form_class = VendorForm
+    template_name = "vendors/vendor_home.html"
 
     def get_success_url(self):
         return reverse("vendors:list-vendors")
@@ -24,6 +25,7 @@ class VendorListCreateView(generic.CreateView):
 class VendorUpdateView(generic.UpdateView):
     model = Vendor
     form_class = VendorForm
+    template_name = "vendors/vendor_home.html"
 
     def get_success_url(self):
         return reverse("vendors:list-vendors")
@@ -35,6 +37,13 @@ class VendorUpdateView(generic.UpdateView):
         context["vendor_list"] = Vendor.objects.all().order_by(Lower("name"))
         context["action"] = "update"
         return context
+
+    def post(self, request, *args, **kwargs):
+        if "cancel" in request.POST:
+            url = self.get_success_url()
+            return redirect(url)
+        else:
+            return super(VendorUpdateView, self).post(request, *args, **kwargs)
 
 
 class VendorDeleteView(generic.DeleteView):

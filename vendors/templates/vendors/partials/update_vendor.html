@@ -1,0 +1,20 @@
+<div class="col-4">
+    <form class="form vendor-form" method="post">
+        {% csrf_token %}
+        <div class="card border-warning bg-ticket mt-2 mb-1">
+            <div class="card-header bg-warning pb-2">
+                <div class="row ">
+                    <span class="col-auto">Edit vendor</span>
+                </div>
+            </div>
+            <div class="card-body py-0">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item px-0 pb-1">
+                        {% include 'vendors/partials/vendor_form_fields.html' with save_button=True %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </form>
+</div>
