@@ -11,4 +11,5 @@ class VendorForm(forms.ModelForm):
             "ordering_method",
             "order_day",
             "delivery_day",
+            "rank",
         ]

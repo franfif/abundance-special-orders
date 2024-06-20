@@ -2,7 +2,7 @@ from django import forms
 from django_select2 import forms as s2forms
 from bootstrap_datepicker_plus.widgets import DatePickerInput
 
-from .models import Order
+from .models import Order, Vendor
 from customers.models import Customer, CustomerStatus
 
 from customers.forms import CustomerForm
@@ -18,10 +18,27 @@ class CustomerWidget(s2forms.ModelSelect2Widget):
 
     def build_attrs(self, base_attrs, extra_attrs=None):
         attrs = super().build_attrs(base_attrs, extra_attrs)
-        # Customize the "Please enter 2 or more characters" message
         attrs["data-minimum-input-length"] = 0
         attrs["data-placeholder"] = "Search a customer by their name or phone number"
         return attrs
+
+    def get_queryset(self):
+        return Customer.objects.order_by("last_name", "first_name")
+
+
+class VendorWidget(s2forms.ModelSelect2Widget):
+    search_fields = [
+        "name__icontains",
+    ]
+
+    def build_attrs(self, base_attrs, extra_attrs=None):
+        attrs = super().build_attrs(base_attrs, extra_attrs)
+        attrs["data-minimum-input-length"] = 0
+        attrs["data-placeholder"] = "Search a vendor by their name"
+        return attrs
+
+    def get_queryset(self):
+        return Vendor.objects.order_by("rank", "name")
 
 
 class CreateOrderForm(forms.ModelForm):
@@ -62,6 +79,7 @@ class CreateOrderForm(forms.ModelForm):
 
         widgets = {
             "customer": CustomerWidget,
+            "vendor": VendorWidget,
             "date_ordered": DatePickerInput(options=date_picker_options),
             "date_received": DatePickerInput(options=date_picker_options),
             "date_called": DatePickerInput(options=date_picker_options),
@@ -78,7 +96,7 @@ class CreateOrderForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Set the custom label for the ForeignKey field
+        # Set the custom label for the Vendor field
         self.fields["vendor"].empty_label = "Vendor"
 
     def clean(self):

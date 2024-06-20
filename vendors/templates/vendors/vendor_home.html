@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load bootstrap5 %}
+
+<div class="row">
+    {% if action == 'update' %}
+    {% include 'vendors/partials/update_vendor.html' %}
+    {% else %}
+    {% include 'vendors/partials/add_vendor.html' %}
+    {% endif %}
+
+    {# {% include 'vendors/partials/vendor_filter.html' %} #}
+</div>
+
+<div class="row">
+    {% include 'vendors/partials/list_vendors.html' %}
+</div>
+
+{% endblock %}

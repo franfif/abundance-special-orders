@@ -1,4 +1,4 @@
-<div class="card border-primary bg-ticket my-2">
+<div class="card border-primary bg-ticket my-1">
     <div class="card-header">
         <div class="row ">
             <span class="col-auto">
@@ -6,9 +6,16 @@
             </span>
             <span class="col-auto ms-auto ">
                 <span class="col-auto">
-                        <a class="btn-orders" href="{% url 'vendors:edit-vendor' vendor.id %}">
-                            <i class="fa-solid fa-pen"></i></a>
-                        {% include 'vendors/partials/delete_vendor.html' %}
+                    <span class="badge rounded-pill bg-secondary">
+                        {% if vendor.rank > 99 %}
+                            <i class="fa-solid fa-infinity"></i>
+                        {% else %}
+                            {{ vendor.rank }}
+                        {% endif %}
+                    </span>
+                    <a class="btn-orders" href="{% url 'vendors:edit-vendor' vendor.id %}">
+                        <i class="fa-solid fa-pen"></i></a>
+                    {% include 'vendors/partials/delete_vendor.html' %}
                 </span>
             </span>
         </div>

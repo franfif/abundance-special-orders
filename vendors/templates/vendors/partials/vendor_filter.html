@@ -1,0 +1,16 @@
+{% load bootstrap5 %}
+
+<div class="col">
+    <form class="filter vendor-filter row my-2" method="get">
+        <div class="col">
+            {% bootstrap_field filter.form.name show_label=False size="small" layout="horizontal"
+            form_group_class="mb-1 pe-0" field_class=" pe-0" label_class="" %}
+        </div>
+        <div class="col-auto mb-1 me-0 justify-content-end">
+            <div class="row mb-1 mx-0 justify-content-end gap-2">
+                <a class="col btn btn-dark btn-sm" href="#" onclick="location.reload()">Clear filters</a>
+            </div>
+            <input class="align-self-end btn btn-primary btn-sm" type="submit" value="Apply filters"/>
+        </div>
+    </form>
+</div>
