@@ -62,7 +62,6 @@ function updateOrderStatus(orderId, action) {
             if (data.redirect) {
                 window.location.href = data.redirect;
             } else {
-                console.log("success")
                 $('#order-card-' + orderId).replaceWith(data.order);
                 addButtonEvents();
             }

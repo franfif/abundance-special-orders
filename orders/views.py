@@ -204,7 +204,6 @@ def send_order_to_trash(request, pk):
 
 def restore_order(request, pk):
     order = get_object_or_404(Order, id=pk)
-    print(order.description)
     if request.method == "POST":
         order.restore()
         messages.success(
