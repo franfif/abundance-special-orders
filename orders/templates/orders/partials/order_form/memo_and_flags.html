@@ -9,7 +9,8 @@
         <div class="mb-1 col row">
             <div class="col memo_required_toast-btn">
                 <div class="form-check">
-                    <input type="checkbox" name="is_stand_by" class="form-check-input" id="is_stand_by_order_form">
+                    <input type="checkbox" name="is_stand_by" class="form-check-input" id="is_stand_by_order_form"
+                           {% if form.is_stand_by.value %}checked{% endif %}>
                     <label class="form-check-label" for="is_stand_by_order_form">Stand By</label>
                 </div>
             </div>
@@ -17,7 +18,8 @@
         <div class="mb-1 col row">
             <div class="col memo_required_toast-btn">
                 <div class="form-check">
-                    <input type="checkbox" name="is_cancelled" class="form-check-input" id="is_cancelled_order_form">
+                    <input type="checkbox" name="is_cancelled" class="form-check-input" id="is_cancelled_order_form"
+                           {% if form.is_cancelled.value %}checked{% endif %}>
                     <label class="form-check-label" for="is_cancelled_order_form">Cancelled</label>
                 </div>
             </div>
@@ -25,7 +27,8 @@
         <div class="mb-1 col row">
             <div class="col">
                 <div class="form-check">
-                    <input type="checkbox" name="paid" class="form-check-input" id="paid_order_form">
+                    <input type="checkbox" name="paid" class="form-check-input" id="paid_order_form"
+                           {% if form.paid.value %}checked{% endif %}>
                     <label class="form-check-label" for="paid_order_form">Paid </label>
                 </div>
             </div>
