@@ -1,0 +1,30 @@
+<!-- Pickup Modal -->
+<div class="modal fade"
+     id="pickup-order-{{ order.id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="staticBackdrop{{ order.id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdrop{{ order.id }}">Pick-Up Order</h5>
+                <button type="button" class="close btn-orders" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="p-2" aria-hidden="true"><i class="fa-regular fa-circle-xmark"></i></span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <p>This order has not yet been paid.</p>
+                <p>Are you sure you want to mark it as picked-up?</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <form action="{% url 'orders:unpaid-pickup' order.id %}"
+                      method="post">
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                    <input type="hidden" value="{{ request.get_full_path }}" name="url">
+                    <input class="btn btn-success btn-sm" type="submit" name="paid" value="It has been paid!">
+                    <input class="btn btn-warning btn-sm" type="submit" name="not_paid"
+                           value="Not paid ¯\_(ツ)_/¯">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

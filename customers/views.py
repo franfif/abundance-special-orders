@@ -17,8 +17,6 @@ class CustomerView(generic.View):
     def get_success_url(self):
         customer_full_info = self.request.GET.get("customer_full_info", "")
         status = self.request.GET.get("status", "")
-        print(f"customer full info: {customer_full_info}")
-        print(f"status: {status}")
 
         success_url = reverse("customers:list-customers")
         success_url += f"?customer_full_info={customer_full_info}&status={status}"
@@ -52,8 +50,6 @@ class CustomerUpdateView(CustomerListCreateView, generic.UpdateView):
         return context
 
     def post(self, request, *args, **kwargs):
-        print("request.POST")
-        print(request.POST)
         if "cancel" in request.POST:
             url = self.get_success_url()
             return redirect(url)
