@@ -36,6 +36,42 @@ class OrderFilter(FilterWithAny):
         null_label=None,
     )
 
+    def __init__(self, *args, **kwargs):
+        initial = kwargs.pop("initial", {})
+        super().__init__(*args, **kwargs)
+        print("init initial:", initial)
+        # Set initial values for BooleanFilter fields
+        for field_name, value in initial.items():
+            print("field_name:", field_name)
+            print("value:", value)
+            if field_name in self.filters:
+                self.filters[field_name].field.initial = value
+                print(self.filters[field_name].field.initial)
+
+        self.has_bottle_deposit = BooleanFilter(
+            widget=BooleanRadioSelect,
+            label="Bottle Deposit",
+            initial=initial.get("has_bottle_deposit", ""),
+        )
+        self.is_stand_by = BooleanFilter(
+            widget=BooleanRadioSelect,
+            label="Stand By",
+            initial=initial.get("is_stand_by", ""),
+        )
+        self.is_cancelled = BooleanFilter(
+            widget=BooleanRadioSelect,
+            label="Cancelled",
+            initial=initial.get("is_cancelled", False),
+        )
+        self.paid = BooleanFilter(
+            widget=BooleanRadioSelect, label="Paid", initial=initial.get("paid", "")
+        )
+        self.customer_full_info = CharFilter(
+            label="Customer information",
+            method="search_customer",
+            initial=initial.get("customer_full_info", ""),
+        )
+
     class Meta:
         model = Order
         fields = {

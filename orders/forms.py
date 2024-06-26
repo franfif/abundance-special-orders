@@ -1,4 +1,6 @@
 from django import forms
+from django.core.exceptions import FieldError
+from django.db.models import Q
 from django_select2 import forms as s2forms
 from bootstrap_datepicker_plus.widgets import DatePickerInput
 
@@ -121,3 +123,62 @@ class CreateOrderForm(forms.ModelForm):
             cleaned_data["customer"] = new_customer
 
         return cleaned_data
+
+
+class OrderFilterForm(forms.Form):
+    vendor = forms.ModelChoiceField(
+        queryset=Vendor.objects.all(),
+        empty_label="Vendor",
+        required=False,
+    )
+    has_bottle_deposit = forms.BooleanField(
+        required=False,
+        label="Bottle Deposit",
+    )
+    paid = forms.BooleanField(
+        required=False,
+        label="Paid",
+    )
+    status = forms.ChoiceField(
+        choices=Order.ORDER_STATUS,
+        required=False,
+        label="Status",
+    )
+    is_stand_by = forms.BooleanField(
+        required=False,
+        label="Stand By",
+    )
+    is_cancelled = forms.BooleanField(
+        required=False,
+        label="Cancelled",
+    )
+    customer_full_info = forms.CharField(
+        required=False,
+        label="Customer information",
+        # method="search_customer",
+    )
+
+    def search_customer(self, queryset, name, value):
+        # Clean the input value for phone number search
+        phone_number = "".join(filter(str.isdigit, value))
+        if phone_number == "":
+            phone_number = "no_phone_search"
+        for term in value.split():
+            try:
+                queryset = queryset.filter(
+                    Q(first_name__icontains=term)
+                    | Q(last_name__icontains=term)
+                    | Q(company__icontains=term)
+                    | Q(email__icontains=term)
+                    | Q(phone_number__contains=phone_number)
+                )
+            # If the field is not found, try to search in the related model
+            except FieldError:
+                queryset = queryset.filter(
+                    Q(customer__first_name__icontains=term)
+                    | Q(customer__last_name__icontains=term)
+                    | Q(customer__company__icontains=term)
+                    | Q(customer__email__icontains=term)
+                    | Q(customer__phone_number__contains=phone_number)
+                )
+        return queryset

@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, reverse, get_object_or_404
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.db.models import Q
 from django.contrib import messages
 from django.template.loader import render_to_string
@@ -9,16 +9,33 @@ from django.db.models.functions import Lower
 from django_filters.views import FilterView
 
 from .models import Order
-from .forms import CreateOrderForm
-from .templatetags.orders_extras import previous_step, next_step
+from .forms import CreateOrderForm, OrderFilterForm
 from .filters import OrderFilter, CustomerOrderFilter
 
 
 class OrderFilterView(FilterView):
     model = Order
-    filterset_class = OrderFilter
+    # filterset_class = OrderFilter(
+    #     initial={"is_stand_by": True, "is_cancelled": False, "paid": True}
+    # )
     template_name = "orders/order_base.html"
-    context_object_name = "filter"
+    # context_object_name = "filter"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        initial_values = {
+            # "is_stand_by": True,
+            "is_cancelled": False,
+            # "paid": True,
+        }
+        session_filter_data = self.request.session.get("order_filter", initial_values)
+
+        context["filter"] = OrderFilter(
+            # initial=initial_values,
+            data=session_filter_data,
+            queryset=Order.objects.exclude(status=Order.DELETED),
+        )
+        return context
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -28,7 +45,24 @@ class OrderFilterView(FilterView):
         elif "status" in self.kwargs:
             queryset = queryset.filter(status=self.kwargs["status"].upper())
         else:
-            queryset = queryset.filter(~Q(status=Order.DELETED) & ~Q(is_cancelled=True))
+            # queryset = queryset.filter(~Q(status=Order.DELETED) & ~Q(is_cancelled=True))
+            # initial_values = {
+            #     "is_stand_by": True,
+            #     "is_cancelled": False,
+            #     "paid": True,
+            # }
+            # queryset = OrderFilter(
+            #     initial=initial_values,
+            #     # data=self.request.session["order_filter"],
+            #     queryset=Order.objects.exclude(status=Order.DELETED),
+            # ).qs
+
+            session_filter_data = self.request.session.get("order_filter", None)
+            if session_filter_data:
+                queryset = OrderFilter(
+                    data=session_filter_data,
+                    queryset=Order.objects.exclude(status=Order.DELETED),
+                ).qs
 
         # Set default ordering
         default_ordering = self.request.GET.get("ordering", None)
@@ -75,6 +109,40 @@ class OrderListCreateView(generic.CreateView, OrderFilterView):
         order = form.save(commit=False)
         order.update_status()
         return super().form_valid(form)
+
+
+class OrderCreateEditView(generic.View):
+    form_class = CreateOrderForm
+    filter_form_class = OrderFilterForm
+    template_name = "orders/order_base.html"
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        filter_form = self.filter_form_class()
+        return render(
+            request, self.template_name, {"form": form, "filter_form": filter_form}
+        )
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        filter_form = self.filter_form_class(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.update_status()
+            return redirect("orders:home")
+        return render(
+            request, self.template_name, {"form": form, "filter_form": filter_form}
+        )
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # # Add in a QuerySet of all the orders
+        # context["order_list"] = Order.objects.exclude(status=Order.DELETED).order_by(
+        #     "-date_created", Lower("vendor__name")
+        # )
+        context["action"] = "create"
+        return context
 
 
 class OrderUpdateView(generic.UpdateView, OrderFilterView):
@@ -129,17 +197,24 @@ class CustomerOrderListView(OrderListCreateView):
 
 
 def filter_orders(request, **kwargs):
+    print(request.GET)
+    # Save the GET parameters in a session variable
+    request.session["order_filter"] = request.GET
+    print(request.session["order_filter"])
+
     # Create an instance of OrderFilter with the GET parameters
     if "customer_id" in kwargs:
         # Show all orders by customer
         customer_id = kwargs["customer_id"]
         order_filter = CustomerOrderFilter(
-            request.GET, queryset=Order.objects.filter(customer=customer_id)
+            request.session["order_filter"],
+            queryset=Order.objects.filter(customer=customer_id),
         )
     else:
         # Show all orders except the deleted ones
         order_filter = OrderFilter(
-            request.GET, queryset=Order.objects.exclude(status=Order.DELETED)
+            request.session["order_filter"],
+            queryset=Order.objects.exclude(status=Order.DELETED),
         )
 
     # Get the filtered queryset
@@ -161,6 +236,13 @@ def filter_orders(request, **kwargs):
     )
     # Convert the list to JSON and return it as a response
     return JsonResponse({"item_list_html": orders_html})
+
+
+def save_filters(request):
+    if request.method == "POST":
+        request.session["order_filter"] = request.POST
+        return JsonResponse({"status": "ok"})
+    return JsonResponse({"status": "error"}, status=400)
 
 
 def order_update_status(request, order_id, action):

@@ -30,4 +30,6 @@ urlpatterns = [
         views.unpaid_pickup,
         name="unpaid-pickup",
     ),
+    path("save_filters/", views.save_filters, name="save_filters"),
+    path("test_create/", views.OrderCreateEditView.as_view(), name="test-create"),
 ]

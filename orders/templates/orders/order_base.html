@@ -28,8 +28,69 @@
 
 <!--  Filters  -->
 <div id="collapse-filters" class="order-filters collapse collapse-filters">
-    {% include 'orders/partials/order_filter.html' %}
+    {# {% include 'orders/partials/order_filter.html' %} #}
+
+    <!--   beginning of new form  #########-->
+
+    <div class="card filter-card px-1 mt-2">
+        <form class="filter order-filter" method="get">
+            <div class="filter-form-div row mt-1 align-items-end">
+                <div class="col row">
+                    <div class="col mb-1 row">
+                        <div class="col">
+                            {{ form.vendor.field }}
+                        </div>
+                    </div>
+                    <div class="col mb-1 row">
+                        <div class="col">
+                            {{ form.status }}
+                        </div>
+                    </div>
+                    <div class="mb-1 pe-0 row">
+                        <div class="col pe-0">
+                            {{ form.customer_full_info }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col row">
+                    <div class="col row mb-1 mx-1 px-0 rounded-1 filter-group">
+                        {{ form.has_bottle_deposit.label_tag }}
+                        <div class="col-auto">
+                            {{ form.has_bottle_deposit.field }}
+                        </div>
+                    </div>
+                    <div class="col row mb-1 mx-1 px-0 rounded-1 filter-group">
+                        {{ form.paid.label_tag }}
+                        <div class="col-auto">
+                            {{ form.paid.field }}
+                        </div>
+                    </div>
+                    <div class="col row mb-1 mx-1 px-0 rounded-1 filter-group">
+                        {{ form.is_stand_by.label_tag }}
+                        <div class="col-auto">
+                            {{ form.is_stand_by.field }}
+                        </div>
+                    </div>
+                    <div class="col row mb-1 mx-1 px-0 rounded-1 filter-group">
+                        {{ form.is_cancelled.label_tag }}
+                        <div class="col-auto">
+                            {{ form.is_cancelled.field }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto align-items-end">
+                    <div class="row mb-1 mx-0 justify-content-end gap-2">
+                        <a id="reset-filters" class="col btn btn-dark btn-sm" href="#">Clear
+                            filters</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
+
+
+<!--    ##########-->
 
 <!--  Order Form-->
 <div id="collapse-order-form"
