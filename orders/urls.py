@@ -15,12 +15,12 @@ urlpatterns = [
     path(
         "orders/<status>/", views.OrderListCreateView.as_view(), name="filtered-orders"
     ),
-    path("<int:pk>/delete_order/", views.send_order_to_trash, name="delete-order"),
     path(
-        "<int:pk>/delete_order/filter/",
+        "orders/<status>/filter/",
         views.filter_orders,
         name="filter-orders",
     ),
+    path("<int:pk>/delete_order/", views.send_order_to_trash, name="delete-order"),
     path("<int:pk>/restore_order/", views.restore_order, name="restore-order"),
     path(
         "order_update_status/<int:order_id>/<action>/",
