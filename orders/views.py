@@ -20,23 +20,6 @@ class OrderFilterView(FilterView):
     template_name = "orders/order_base.html"
     context_object_name = "filter"
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-
-        if "customer_id" in self.kwargs:
-            queryset = queryset.filter(customer__id=self.kwargs["customer_id"])
-        elif "status" in self.kwargs:
-            queryset = queryset.filter(status=self.kwargs["status"].upper())
-        else:
-            queryset = queryset.filter(~Q(status=Order.DELETED) & ~Q(is_cancelled=True))
-
-        # Set default ordering
-        default_ordering = self.request.GET.get("ordering", None)
-        if not default_ordering:
-            # Default ordering if none is provided in the request
-            queryset = queryset.order_by("-date_created", Lower("vendor__name"))
-        return queryset
-
 
 class OrderListCreateView(generic.CreateView, OrderFilterView):
     form_class = CreateOrderForm
@@ -64,10 +47,6 @@ class OrderListCreateView(generic.CreateView, OrderFilterView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the orders
-        context["order_list"] = Order.objects.exclude(status=Order.DELETED).order_by(
-            "-date_created", Lower("vendor__name")
-        )
         context["action"] = "create"
         return context
 
