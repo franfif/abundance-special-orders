@@ -1,9 +1,24 @@
 const filter_form_fields = $('.filter .form-select, .filter input')
 const eventType = {'text': 'keyup', 'select-one': 'change', 'radio': 'change'};
 
+// Save initial form data for when filters are reset
+if (sessionStorage.getItem('initialFormData') === null) {
+    sessionStorage.setItem('initialFormData', $('.filter').serialize());
+}
+
+// Display filters when the page is loaded if shown before reload
+if (sessionStorage.getItem('showFilters') === 'true') {
+    $("#collapse-filters")[0].classList.add("show")
+} else {
+    $("#collapse-filters")[0].classList.remove("show")
+}
+
+// Call updateList function when the page is loaded
+updateList();
+
+// Update the list of items based on the filter data
 function updateList() {
-    // Serialize the form data
-    const formData = $('.filter').serialize();
+    const formData = sessionStorage.getItem('formData') || $('.filter').serialize();
 
     // Ajax request to get updated list and change page content
     $.ajax({
@@ -11,6 +26,7 @@ function updateList() {
         url: 'filter/',
         data: formData,
         success: (response) => {
+            // Replace the list of items from the server response
             $('.item-list').html(response.item_list_html);
         },
         error: function (error) {
@@ -19,15 +35,48 @@ function updateList() {
     });
 }
 
-function formFieldEvent(index, field) {
+// Associate each filter fields with actions
+filter_form_fields.each(function () {
     // Prevent form submission when the Enter key is pressed
-    field.addEventListener('keydown', (event) => {
+    this.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
         }
     });
-    // Add updateList function to form fields
-    field.addEventListener(eventType[field.type], updateList);
-}
+    this.addEventListener(eventType[this.type], () => {
+        // Save field name and id in sessionStorage to mark the field as checked when reloaded
+        sessionStorage.setItem(this.name, this.id);
+        // Save form data in sessionStorage to keep the filters when the page is reloaded
+        sessionStorage.setItem('formData', $('.filter').serialize());
+        // Run updateList function when field is updated
+        updateList();
+    });
+    // Mark the fields as checked when the page is reloaded
+    if (sessionStorage.getItem(this.name) === this.id) {
+        $('input[name=' + this.name + '][id=' + this.id + ']').prop("checked", "checked");
+    }
+});
 
-filter_form_fields.each(formFieldEvent)
+
+// Save filter display state in sessionStorage
+const btnShowFilters = $('#btn-show-filters')[0]
+btnShowFilters.addEventListener('click', function (event) {
+    const currentDisplay = sessionStorage.getItem('showFilters')
+    sessionStorage.setItem('showFilters', currentDisplay === 'true' ? 'false' : 'true')
+})
+
+// Actions when the reset filters button is clicked
+const btnResetFilters = $('#reset-filters')[0]
+btnResetFilters.addEventListener('click', function (event) {
+    // Remove field state from sessionStorage
+    filter_form_fields.each(resetFields)
+    // Apply initial filters to formData
+    sessionStorage['formData'] = sessionStorage.getItem('initialFormData')
+    // Run updateList function to reset the list
+    updateList()
+});
+
+// Remove field state from sessionStorage
+function resetFields(index, field) {
+    sessionStorage.removeItem(field.name);
+}
