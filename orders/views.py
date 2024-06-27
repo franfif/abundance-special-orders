@@ -90,17 +90,19 @@ class CustomerOrderListView(OrderListCreateView):
 
 
 def filter_orders(request, **kwargs):
-    # Create an instance of OrderFilter with the GET parameters
+    # Get the filters from the request
+    order_filters = request.GET
+
     if "customer_id" in kwargs:
         # Show all orders by customer
         customer_id = kwargs["customer_id"]
         order_filter = CustomerOrderFilter(
-            request.GET, queryset=Order.objects.filter(customer=customer_id)
+            order_filters, queryset=Order.objects.filter(customer=customer_id)
         )
     else:
         # Show all orders except the deleted ones
         order_filter = OrderFilter(
-            request.GET, queryset=Order.objects.exclude(status=Order.DELETED)
+            order_filters, queryset=Order.objects.exclude(status=Order.DELETED)
         )
 
     # Get the filtered queryset
