@@ -51,10 +51,6 @@ class OrderUpdateView(generic.UpdateView, OrderFilterView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the orders
-        context["order_list"] = Order.objects.exclude(status=Order.DELETED).order_by(
-            "-date_created", Lower("vendor__name")
-        )
         context["action"] = "update"
         context["order"] = self.get_object()
         return context
