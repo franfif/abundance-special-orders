@@ -17,4 +17,5 @@
     <div id="new-customer-form" class="mx-2 visually-hidden">
         {% include 'customers/partials/customer_form_fields.html' with form=form.new_customer_form %}
     </div>
+    {{ form.create_new_customer.as_hidden }}
 </div>

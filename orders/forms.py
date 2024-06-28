@@ -1,4 +1,5 @@
 from django import forms
+from django.shortcuts import get_object_or_404
 from django_select2 import forms as s2forms
 from bootstrap_datepicker_plus.widgets import DatePickerInput
 
@@ -43,6 +44,9 @@ class VendorWidget(s2forms.ModelSelect2Widget):
 
 class CreateOrderForm(forms.ModelForm):
     new_customer_form = CustomerForm()
+    create_new_customer = forms.BooleanField(
+        required=False, label="Create a new customer", initial="false"
+    )
 
     class Meta:
         model = Order
@@ -58,6 +62,7 @@ class CreateOrderForm(forms.ModelForm):
             "memo",
             "employee_initials",
             "customer",
+            "create_new_customer",
             "is_stand_by",
             "is_cancelled",
             "date_ordered",
@@ -100,24 +105,23 @@ class CreateOrderForm(forms.ModelForm):
         self.fields["vendor"].empty_label = "Vendor"
 
     def clean(self):
-        new_customer_data = {
-            "first_name": self.data.get("first_name"),
-            "last_name": self.data.get("last_name"),
-            "company": self.data.get("company"),
-            "phone_number": self.data.get("phone_number"),
-            "email": self.data.get("email"),
-        }
-        if self.data.get("status"):
-            new_customer_data["status"] = CustomerStatus.objects.get(
-                id=self.data.get("status")
-            )
-
         cleaned_data = super().clean()
-        customer = cleaned_data.get("customer")
 
-        if not customer and any(new_customer_data.values()):
-            # Create a new customer if it doesn't exist
-            new_customer = Customer.objects.create(**new_customer_data)
-            cleaned_data["customer"] = new_customer
+        if self.data.get("create_new_customer") == "true":
+            # Create a new customer
+            new_customer_data = {
+                "first_name": self.data.get("first_name"),
+                "last_name": self.data.get("last_name"),
+                "company": self.data.get("company"),
+                "phone_number": self.data.get("phone_number"),
+                "email": self.data.get("email"),
+            }
+            if any(new_customer_data.values()):
+                if self.data.get("status"):
+                    new_customer_data["status"] = get_object_or_404(
+                        CustomerStatus, id=self.data.get("status")
+                    )
+                new_customer = Customer.objects.create(**new_customer_data)
+                cleaned_data["customer"] = new_customer
 
         return cleaned_data
