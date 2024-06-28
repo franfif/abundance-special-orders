@@ -1,10 +1,10 @@
 {% if order.date_ordered %}
-<button class="col-auto btn btn-secondary btn-sm mx-1 mb-1"
+<button class="col-auto btn btn-secondary btn-sm mx-1 mb-0"
         name="delete" disabled>
     Delete
 </button>
 {% else %}
-<button class="col-auto btn btn-danger btn-sm mx-1 mb-1" type="button" name="delete"
+<button class="col-auto btn btn-danger btn-sm mx-1 mb-0" type="button" name="delete"
         data-order-id="{{ order.id }}"
         data-bs-toggle="modal"
         data-bs-target="#delete-order-{{ order.id }}">

@@ -2,7 +2,7 @@
 {% load orders_extras %}
 
 <div class="col">
-    {% bootstrap_field form.memo size="small" form_group_class="mb-1" show_label=False rows="3" %}
+    {% bootstrap_field form.memo size="small" form_group_class="mb-0" show_label=False rows="3" %}
 </div>
 <div class="col">
     <div class="row">
@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="row">
-        {% bootstrap_field form.employee_initials size="small" form_group_class="mb-1 col-auto" show_label=False
+        {% bootstrap_field form.employee_initials size="small" form_group_class="mb-0 col-auto" show_label=False
         %}
         {% include 'orders/partials/buttons/save.html' %}
         {% if action == 'update' %}

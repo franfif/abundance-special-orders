@@ -1,4 +1,4 @@
-<div class="card p-2 mt-2 {% if action == 'update' %}form-card-update{% else %}form-card-create{% endif %}">
+<div class="card p-1 pt-2 mt-2 {% if action == 'update' %}form-card-update{% else %}form-card-create{% endif %}">
     <form class="form order-form" method="post">
         {% csrf_token %}
         <div class="row">
