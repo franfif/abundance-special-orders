@@ -1,36 +1,41 @@
 {% load bootstrap5 %}
-<div class="card filter-card px-1 mt-2">
+<div class="card filter-card p-1 mt-2">
     <form class="filter order-filter" method="get">
-        <div class="filter-form-div row mt-1 align-items-end">
-            <div class="col row">
+        <div class="filter-form-div row align-items-end">
+            <div class="col row my-auto">
                 {% bootstrap_field filter.form.vendor show_label=False size="small" layout="horizontal"
                 form_group_class="col mb-1" field_class="col" label_class="col-auto" %}
+
                 {% bootstrap_field filter.form.status show_label=False size="small" layout="horizontal"
                 form_group_class="col mb-1" field_class="col" label_class="col-auto" %}
+
                 {% bootstrap_field filter.form.customer_full_info show_label=False size="small" layout="horizontal"
-                form_group_class="mb-1 pe-0" field_class="col pe-0" label_class="col-auto" %}
+                form_group_class="pe-0" field_class="col pe-0" label_class="col-auto" %}
             </div>
-            <div class="col row">
+            <div class="col row my-auto">
                 {% bootstrap_field filter.form.has_bottle_deposit show_label=True size="small"
-                layout="horizontal" form_group_class="col row mb-1 mx-1 px-0 rounded-1 filter-group"
-                field_class="col-auto" label_class="col-auto" %}
+                layout="horizontal" form_group_class="col row mx-1 px-0 rounded-1 filter-group"
+                field_class="col-lg-5 col-auto my-1 px-1" label_class="col-lg-7 col-auto my-auto px-1" %}
+
                 {% bootstrap_field filter.form.paid show_label=True size="small"
-                layout="horizontal" form_group_class="col row mb-1 mx-1 px-0 rounded-1 filter-group"
-                field_class="col-auto" label_class="col-auto" %}
+                layout="horizontal" form_group_class="col row mx-1 px-0 rounded-1 filter-group"
+                field_class="col-lg-5 col-auto my-1 px-1" label_class="col-lg-7 col-auto my-auto px-1" %}
+
                 {% bootstrap_field filter.form.is_stand_by show_label=True size="small"
-                layout="horizontal" form_group_class="col row mb-1 mx-1 px-0 rounded-1 filter-group"
-                field_class="col-auto" label_class="col-auto" %}
+                layout="horizontal" form_group_class="col row mx-1 px-0 rounded-1 filter-group"
+                field_class="col-lg-5 col-auto my-1 px-1" label_class="col-lg-7 col-auto my-auto px-1" %}
+
                 {% bootstrap_field filter.form.is_cancelled show_label=True size="small"
-                layout="horizontal" form_group_class="col row mb-1 mx-1 px-0 rounded-1 filter-group"
-                field_class="col-auto" label_class="col-auto" %}
+                layout="horizontal" form_group_class="col row mx-1 px-0 rounded-1 filter-group"
+                field_class="col-lg-5 col-auto my-1 px-1" label_class="col-lg-7 col-auto my-auto px-1" %}
 
             </div>
-            <div class="col-auto align-items-end">
-                {# {% bootstrap_field filter.form.ordering show_label=false size="small" layout="horizontal" #}
-                {# form_group_class="col-auto row mb-1 mx-0 px-0" field_class="col-auto px-0" %} #}
+            <div class="col-auto align-items-end my-auto">
+                {% bootstrap_field filter.form.ordering show_label=false size="small" layout="horizontal"
+                form_group_class="col-auto row mx-0 mb-1 px-0" field_class="col-auto px-0" %}
 
-                <div class="row mb-1 mx-0 justify-content-end gap-2">
-                    <a class="col btn btn-dark btn-sm" href="#" onclick="location.reload()">Clear filters</a>
+                <div class="row mx-0 justify-content-end gap-2">
+                    <button id="reset-filters" class="col btn btn-dark btn-sm" type="reset">Clear filters</button>
                 </div>
             </div>
         </div>

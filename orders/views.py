@@ -1,5 +1,4 @@
 from django.shortcuts import redirect, reverse, get_object_or_404
-from django.db.models import Q
 from django.contrib import messages
 from django.template.loader import render_to_string
 from django.views import generic
@@ -10,7 +9,6 @@ from django_filters.views import FilterView
 
 from .models import Order
 from .forms import CreateOrderForm
-from .templatetags.orders_extras import previous_step, next_step
 from .filters import OrderFilter, CustomerOrderFilter
 
 
@@ -20,43 +18,14 @@ class OrderFilterView(FilterView):
     template_name = "orders/order_base.html"
     context_object_name = "filter"
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-
-        if "customer_id" in self.kwargs:
-            queryset = queryset.filter(customer__id=self.kwargs["customer_id"])
-        elif "status" in self.kwargs:
-            queryset = queryset.filter(status=self.kwargs["status"].upper())
-        else:
-            queryset = queryset.filter(~Q(status=Order.DELETED) & ~Q(is_cancelled=True))
-
-        # Set default ordering
-        default_ordering = self.request.GET.get("ordering", None)
-        if not default_ordering:
-            # Default ordering if none is provided in the request
-            queryset = queryset.order_by("-date_created", Lower("vendor__name"))
-        return queryset
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["origin"] = "order"
+        return context
 
 
 class OrderListCreateView(generic.CreateView, OrderFilterView):
     form_class = CreateOrderForm
-
-    def get_initial(self):
-        try:
-            original_order = get_object_or_404(Order, id=self.kwargs["pk"])
-            initial = {
-                "description": original_order.description,
-                "vendor": original_order.vendor,
-                "product_number": original_order.product_number,
-                "quantity": original_order.quantity,
-                "has_bottle_deposit": original_order.has_bottle_deposit,
-                "number_bottle_deposit": original_order.number_bottle_deposit,
-                "memo": original_order.memo,
-                "customer": original_order.customer,
-            }
-            return initial
-        except KeyError:
-            return {}
 
     def get_success_url(self):
         return reverse("orders:home")
@@ -64,10 +33,6 @@ class OrderListCreateView(generic.CreateView, OrderFilterView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the orders
-        context["order_list"] = Order.objects.exclude(status=Order.DELETED).order_by(
-            "-date_created", Lower("vendor__name")
-        )
         context["action"] = "create"
         return context
 
@@ -86,10 +51,6 @@ class OrderUpdateView(generic.UpdateView, OrderFilterView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the orders
-        context["order_list"] = Order.objects.exclude(status=Order.DELETED).order_by(
-            "-date_created", Lower("vendor__name")
-        )
         context["action"] = "update"
         context["order"] = self.get_object()
         return context
@@ -117,29 +78,33 @@ class OrderUpdateView(generic.UpdateView, OrderFilterView):
 class CustomerOrderListView(OrderListCreateView):
     filterset_class = CustomerOrderFilter
 
-    def get_queryset(self):
-        queryset = Order.objects.filter(customer=self.kwargs["customer_id"])
-
-        # Set default ordering
-        default_ordering = self.request.GET.get("ordering", None)
-        if not default_ordering:
-            # Default ordering if none is provided in the request
-            queryset = queryset.order_by("-date_created", Lower("vendor__name"))
-        return queryset
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        context["origin"] = "customer"
+        return context
 
 
 def filter_orders(request, **kwargs):
-    # Create an instance of OrderFilter with the GET parameters
+    # Get the filters from the request
+    order_filters = request.GET
+
     if "customer_id" in kwargs:
         # Show all orders by customer
         customer_id = kwargs["customer_id"]
         order_filter = CustomerOrderFilter(
-            request.GET, queryset=Order.objects.filter(customer=customer_id)
+            order_filters, queryset=Order.objects.filter(customer=customer_id)
+        )
+    elif "status" in kwargs:
+        # Show all orders by status
+        status = kwargs["status"]
+        order_filter = OrderFilter(
+            order_filters, queryset=Order.objects.filter(status__iexact=status)
         )
     else:
         # Show all orders except the deleted ones
         order_filter = OrderFilter(
-            request.GET, queryset=Order.objects.exclude(status=Order.DELETED)
+            order_filters, queryset=Order.objects.exclude(status=Order.DELETED)
         )
 
     # Get the filtered queryset
