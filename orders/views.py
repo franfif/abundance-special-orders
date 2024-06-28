@@ -101,7 +101,9 @@ def filter_orders(request, **kwargs):
     elif "status" in kwargs:
         # Show all orders by status
         status = kwargs["status"]
-        order_filter = OrderFilter(queryset=Order.objects.filter(status__iexact=status))
+        order_filter = OrderFilter(
+            order_filters, queryset=Order.objects.filter(status__iexact=status)
+        )
     else:
         # Show all orders except the deleted ones
         order_filter = OrderFilter(
