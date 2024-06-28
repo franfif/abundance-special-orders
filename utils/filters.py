@@ -18,16 +18,16 @@ class FilterWithAny(FilterSet):
     def search_customer(self, queryset, name, value):
         # Clean the input value for phone number search
         phone_number = "".join(filter(str.isdigit, value))
-        if phone_number == "":
-            phone_number = "no_phone_search"
-        for term in value.split():
+        terms = value.split()
+        terms.append(phone_number)
+        for term in terms:
             try:
                 queryset = queryset.filter(
                     Q(first_name__icontains=term)
                     | Q(last_name__icontains=term)
                     | Q(company__icontains=term)
                     | Q(email__icontains=term)
-                    | Q(phone_number__contains=phone_number)
+                    | Q(phone_number__contains=term)
                 )
             # If the field is not found, try to search in the related model
             except FieldError:
@@ -36,6 +36,6 @@ class FilterWithAny(FilterSet):
                     | Q(customer__last_name__icontains=term)
                     | Q(customer__company__icontains=term)
                     | Q(customer__email__icontains=term)
-                    | Q(customer__phone_number__contains=phone_number)
+                    | Q(customer__phone_number__contains=term)
                 )
         return queryset
