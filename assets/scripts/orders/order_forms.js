@@ -9,13 +9,13 @@ const existing_customer_form = document.getElementById('existing-customer-form')
 // Create a new customer - Replace the customer search with the customer form
 if (btn_new_customer) {
     btn_new_customer.addEventListener('click', (event) => {
-        $('#id_customer').val(null).trigger('change');
         new_customer_form.classList.remove('visually-hidden');
         existing_customer_form.classList.add('visually-hidden');
         btn_existing_customer.classList.add('btn-secondary');
         btn_existing_customer.classList.remove('btn-primary');
         btn_new_customer.classList.add('btn-primary');
         btn_new_customer.classList.remove('btn-secondary');
+        $('#id_create_new_customer').val(true);
     });
 }
 // Search for a customer - Replace the new customer form with the customer search
@@ -27,6 +27,7 @@ if (btn_existing_customer) {
         btn_new_customer.classList.remove('btn-primary');
         btn_existing_customer.classList.add('btn-primary');
         btn_existing_customer.classList.remove('btn-secondary');
+        $('#id_create_new_customer').val(false);
     });
 }
 
