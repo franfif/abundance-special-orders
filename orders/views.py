@@ -78,20 +78,9 @@ class OrderUpdateView(generic.UpdateView, OrderFilterView):
 class CustomerOrderListView(OrderListCreateView):
     filterset_class = CustomerOrderFilter
 
-    def get_queryset(self):
-        queryset = Order.objects.filter(customer=self.kwargs["customer_id"])
-
-        # Set default ordering
-        default_ordering = self.request.GET.get("ordering", None)
-        if not default_ordering:
-            # Default ordering if none is provided in the request
-            queryset = queryset.order_by("-date_created", Lower("vendor__name"))
-        return queryset
-
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the orders
         context["origin"] = "customer"
         return context
 
