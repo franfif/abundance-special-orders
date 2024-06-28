@@ -1,5 +1,4 @@
 from django.shortcuts import redirect, reverse, get_object_or_404
-from django.db.models import Q
 from django.contrib import messages
 from django.template.loader import render_to_string
 from django.views import generic
