@@ -18,6 +18,11 @@ class OrderFilterView(FilterView):
     template_name = "orders/order_base.html"
     context_object_name = "filter"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["origin"] = "order"
+        return context
+
 
 class OrderListCreateView(generic.CreateView, OrderFilterView):
     form_class = CreateOrderForm
@@ -86,6 +91,13 @@ class CustomerOrderListView(OrderListCreateView):
             # Default ordering if none is provided in the request
             queryset = queryset.order_by("-date_created", Lower("vendor__name"))
         return queryset
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the orders
+        context["origin"] = "customer"
+        return context
 
 
 def filter_orders(request, **kwargs):

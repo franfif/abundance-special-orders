@@ -2,8 +2,14 @@ const filter_form_fields = $('.filter .form-select, .filter input')
 const eventType = {'text': 'keyup', 'select-one': 'change', 'radio': 'change'};
 
 // Save initial form data for when filters are reset
-if (sessionStorage.getItem('initialFormData') === null) {
-    sessionStorage.setItem('initialFormData', $('.filter').serialize());
+// If the page is a customer order page
+if (origin === "customer" && sessionStorage.getItem('initialCustomerFormData') === null) {
+    sessionStorage.setItem('initialCustomerFormData', $('.filter').serialize());
+} else {
+    // If the page is a regular order page
+    if (sessionStorage.getItem('initialFormData') === null) {
+        sessionStorage.setItem('initialFormData', $('.filter').serialize());
+    }
 }
 
 // Display filters when the page is loaded if shown before reload
@@ -71,7 +77,11 @@ btnResetFilters.addEventListener('click', function (event) {
     // Remove field state from sessionStorage
     filter_form_fields.each(resetFields)
     // Apply initial filters to formData
-    sessionStorage['formData'] = sessionStorage.getItem('initialFormData')
+    if (origin === "customer") {
+        sessionStorage['formData'] = sessionStorage.getItem('initialCustomerFormData')
+    } else {
+        sessionStorage['formData'] = sessionStorage.getItem('initialFormData')
+    }
     // Run updateList function to reset the list
     updateList()
 });
