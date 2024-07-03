@@ -137,7 +137,7 @@ def filter_orders(request, **kwargs):
             "-date_created", Lower("vendor__name")
         )
 
-    paginator = Paginator(filtered_orders, 16)
+    paginator = Paginator(filtered_orders, 20)
     page_number = request.GET.get("page")
     page_orders = paginator.get_page(page_number)
 
