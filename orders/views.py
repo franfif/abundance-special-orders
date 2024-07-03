@@ -50,6 +50,8 @@ class OrderListCreateView(generic.CreateView, OrderFilterView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context["action"] = "create"
+        if self.get_initial and "pk" in self.kwargs:
+            context["action"] = "copy"
         return context
 
     def form_valid(self, form):
