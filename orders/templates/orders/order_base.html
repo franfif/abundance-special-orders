@@ -37,7 +37,7 @@
 
 <!--  Order Form-->
 <div id="collapse-order-form"
-     class="row px-1 order-form collapse collapse-order-form {% if action == 'update' %}show{% endif %}">
+     class="row px-1 order-form collapse collapse-order-form {% if action == 'update' or action == 'copy' %}show{% endif %}">
     {% include 'orders/partials/order_form.html' %}
 </div>
 
