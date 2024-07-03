@@ -1,12 +1,6 @@
 {% if page.has_other_pages %}
 <nav aria-label="...">
     <ul class="pagination pagination-sm justify-content-center">
-        <!--        <li class="page-item {% if not page.has_previous %} disabled {% endif %}">-->
-        <!--            <span class="btn-pagination page-link"-->
-        <!--                  data-page="{% if page.has_previous %}page={{ page.previous_page_number }}{% endif %}">-->
-        <!--                Previous-->
-        <!--            </span>-->
-        <!--        </li>-->
         {% for num in page.paginator.page_range %}
         {% if num == page.number %}
         <li class="page-item active">
@@ -20,10 +14,6 @@
         </li>
         {% endif %}
         {% endfor %}
-        <!--        <li class="page-item {% if not page.has_next %} disabled {% endif %}">-->
-        <!--            <span class="btn-pagination page-link"-->
-        <!--                  data-page="{% if page.has_next %}page={{ page.next_page_number }}{% endif %}">Next</span>-->
-        <!--        </li>-->
     </ul>
 </nav>
 {% endif %}
