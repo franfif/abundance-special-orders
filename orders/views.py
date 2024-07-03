@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, reverse, get_object_or_404
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.template.loader import render_to_string
 from django.views import generic
 from django.http import JsonResponse
@@ -136,10 +137,14 @@ def filter_orders(request, **kwargs):
             "-date_created", Lower("vendor__name")
         )
 
+    paginator = Paginator(filtered_orders, 20)
+    page_number = request.GET.get("page")
+    page_orders = paginator.get_page(page_number)
+
     # Render items to a string
     orders_html = render_to_string(
         "orders/partials/list_orders.html",
-        {"order_list": filtered_orders},
+        {"order_list": page_orders},
         request=request,
     )
     # Convert the list to JSON and return it as a response

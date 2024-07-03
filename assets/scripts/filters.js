@@ -26,8 +26,8 @@ updateList();
 
 // Update the list of items based on the filter data
 function updateList() {
-    const formData = sessionStorage.getItem('formData') || $('.filter').serialize();
-
+    let formData = sessionStorage.getItem('formData') || $('.filter').serialize();
+    formData += sessionStorage.getItem('page') || '';
     // Ajax request to get updated list and change page content
     $.ajax({
         type: 'GET',
@@ -36,6 +36,8 @@ function updateList() {
         success: (response) => {
             // Replace the list of items from the server response
             $('.item-list').html(response.item_list_html);
+            // Add events to pagination buttons
+            addEventPaginationButtons();
             // Add previous and next steps buttons to the order snippets
             addButtonEvents();
         },
@@ -58,6 +60,8 @@ filter_form_fields.each(function () {
         sessionStorage.setItem(this.name, this.id);
         // Save form data in sessionStorage to keep the filters when the page is reloaded
         sessionStorage.setItem('formData', $('.filter').serialize());
+        // Reinitialize the page number when a filter is updated
+        sessionStorage.setItem('page', "");
         // Run updateList function when field is updated
         updateList();
     });
@@ -67,10 +71,19 @@ filter_form_fields.each(function () {
     }
 });
 
+function addEventPaginationButtons() {
+    $('document').ready(function () {
+        $('.btn-pagination ').click(function () {
+            console.log('button clicked');
+            sessionStorage.setItem('page', "&" + this.dataset.page);
+            updateList()
+        });
+    });
+}
+
 
 // Save filter display state in sessionStorage
-const btnShowFilters = $('#btn-show-filters')[0]
-btnShowFilters.addEventListener('click', function (event) {
+$('#btn-show-filters').click(function (event) {
     const currentDisplay = sessionStorage.getItem('showFilters')
     sessionStorage.setItem('showFilters', currentDisplay === 'true' ? 'false' : 'true')
 })
@@ -86,6 +99,8 @@ btnResetFilters.addEventListener('click', function (event) {
     } else {
         sessionStorage['formData'] = sessionStorage.getItem('initialFormData')
     }
+    // Reinitialize the page number when filters are reset
+    sessionStorage.setItem('page', "");
     // Run updateList function to reset the list
     updateList()
 });

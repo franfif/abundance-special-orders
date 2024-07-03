@@ -1,0 +1,19 @@
+{% if page.has_other_pages %}
+<nav aria-label="...">
+    <ul class="pagination pagination-sm justify-content-center">
+        {% for num in page.paginator.page_range %}
+        {% if num == page.number %}
+        <li class="page-item active">
+            <span class="btn-pagination page-link" data-page="page={{ num }}"
+                  aria-current="page">{{ num }}
+            </span>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <span class="btn-pagination page-link" data-page="page={{ num }}">{{ num }}</span>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</nav>
+{% endif %}

@@ -39,14 +39,6 @@ export function addButtonEvents() {
     }
 }
 
-// // Add previous step and next step buttons to order snippets
-// => Removed because orders could change after load
-// window.addEventListener('load', function () {
-//     console.log("addButtonEvents in progress")
-//     addButtonEvents();
-// });
-
-
 function updateOrderStatus(orderId, action) {
 
     const csrftoken = getCookie('csrftoken');
