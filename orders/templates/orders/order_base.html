@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load bootstrap5 %}
+{% load static %}
 {% block content %}
 
 <script>const origin = "{{ origin }}"</script>
@@ -37,13 +38,19 @@
 
 <!--  Order Form-->
 <div id="collapse-order-form"
-     class="row px-1 order-form collapse collapse-order-form {% if action == 'update' %}show{% endif %}">
+     class="row px-1 order-form collapse collapse-order-form {% if action == 'update' or action == 'copy' %}show{% endif %}">
     {% include 'orders/partials/order_form.html' %}
 </div>
 
 <!--  Include list of orders-->
 <div class="item-list order-list">
-    {% include 'orders/partials/list_orders.html' with order_list=filter.qs %}
+    <div class="position-relative loading-container">
+        <div class="position-absolute top-50 start-50 translate-middle ">
+            <img src="{% static 'media/Abundance_Logo_Sq.png' %}" width="400"
+                 class="rotate d-inline-block align-middle me-2"
+                 alt="">
+        </div>
+    </div>
 </div>
 
 {% endblock %}

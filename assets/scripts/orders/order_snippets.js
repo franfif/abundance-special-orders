@@ -17,7 +17,7 @@ for (const btn of btns_order_more_info) {
     });
 }
 
-function addButtonEvents() {
+export function addButtonEvents() {
     const previousStepButtons = $('.btn-previous-step');
 
     for (const button of previousStepButtons) {
@@ -38,12 +38,6 @@ function addButtonEvents() {
         });
     }
 }
-
-// Add previous step and next step buttons to order snippets
-document.addEventListener('DOMContentLoaded', function () {
-    addButtonEvents();
-});
-
 
 function updateOrderStatus(orderId, action) {
 

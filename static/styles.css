@@ -156,3 +156,20 @@ form, .form-select, .form-control, .select2, .select2-results, .btn-sm, .filter-
 .vendor-rank {
     width: 100px;
 }
+
+.loading-container {
+    height: 500px;
+}
+
+.rotate {
+    animation: rotation 2s infinite linear;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}

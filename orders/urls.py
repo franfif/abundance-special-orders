@@ -11,7 +11,7 @@ urlpatterns = [
     path(
         "<int:pk>/copy_order/", views.OrderListCreateView.as_view(), name="copy-order"
     ),
-    path("<int:pk>/copy_order/filters/", views.filter_orders, name="filter-orders"),
+    path("<int:pk>/copy_order/filter/", views.filter_orders, name="filter-orders"),
     path(
         "orders/<status>/", views.OrderListCreateView.as_view(), name="filtered-orders"
     ),
