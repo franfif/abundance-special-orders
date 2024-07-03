@@ -1,5 +1,4 @@
 from django.shortcuts import reverse, redirect
-from django.db.models.functions import Lower
 from django.views import generic
 
 from .models import Vendor
@@ -18,7 +17,7 @@ class VendorListCreateView(generic.CreateView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the vendors
-        context["vendor_list"] = Vendor.objects.all().order_by(Lower("name"))
+        context["vendor_list"] = Vendor.objects.all()
         return context
 
 
@@ -34,7 +33,7 @@ class VendorUpdateView(generic.UpdateView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the vendors
-        context["vendor_list"] = Vendor.objects.all().order_by(Lower("name"))
+        context["vendor_list"] = Vendor.objects.all()
         context["action"] = "update"
         return context
 
@@ -56,5 +55,5 @@ class VendorDeleteView(generic.DeleteView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the vendors
-        context["vendor_list"] = Vendor.objects.all().order_by(Lower("name"))
+        context["vendor_list"] = Vendor.objects.all()
         return context
