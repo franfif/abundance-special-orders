@@ -27,6 +27,22 @@ class OrderFilterView(FilterView):
 class OrderListCreateView(generic.CreateView, OrderFilterView):
     form_class = CreateOrderForm
 
+    def get_initial(self):
+        if "pk" in self.kwargs:
+            original_order = get_object_or_404(Order, id=self.kwargs["pk"])
+            initial = {
+                "description": original_order.description,
+                "vendor": original_order.vendor,
+                "product_number": original_order.product_number,
+                "quantity": original_order.quantity,
+                "has_bottle_deposit": original_order.has_bottle_deposit,
+                "number_bottle_deposit": original_order.number_bottle_deposit,
+                "memo": original_order.memo,
+                "customer": original_order.customer,
+            }
+            return initial
+        return {}
+
     def get_success_url(self):
         return reverse("orders:home")
 
