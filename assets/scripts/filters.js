@@ -1,3 +1,5 @@
+import {addButtonEvents} from './orders/order_snippets' ;
+
 const filter_form_fields = $('.filter .form-select, .filter input')
 const eventType = {'text': 'keyup', 'select-one': 'change', 'radio': 'change'};
 
@@ -34,6 +36,8 @@ function updateList() {
         success: (response) => {
             // Replace the list of items from the server response
             $('.item-list').html(response.item_list_html);
+            // Add previous and next steps buttons to the order snippets
+            addButtonEvents();
         },
         error: function (error) {
             console.error('Error:', error);

@@ -17,7 +17,7 @@ for (const btn of btns_order_more_info) {
     });
 }
 
-function addButtonEvents() {
+export function addButtonEvents() {
     const previousStepButtons = $('.btn-previous-step');
 
     for (const button of previousStepButtons) {
@@ -39,10 +39,12 @@ function addButtonEvents() {
     }
 }
 
-// Add previous step and next step buttons to order snippets
-document.addEventListener('DOMContentLoaded', function () {
-    addButtonEvents();
-});
+// // Add previous step and next step buttons to order snippets
+// => Removed because orders could change after load
+// window.addEventListener('load', function () {
+//     console.log("addButtonEvents in progress")
+//     addButtonEvents();
+// });
 
 
 function updateOrderStatus(orderId, action) {
