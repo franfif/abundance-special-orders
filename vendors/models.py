@@ -22,5 +22,8 @@ class Vendor(models.Model):
     )
     rank = models.PositiveSmallIntegerField(blank=False, null=False, default="99")
 
+    class Meta:
+        ordering = ["rank", "name"]
+
     def __str__(self):
         return self.name
