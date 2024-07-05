@@ -20,6 +20,7 @@ class OrderFilter(FilterWithAny):
     customer_full_info = CharFilter(
         label="Customer information", method="search_customer"
     )
+    description = CharFilter(label="Description", method="search_description")
 
     ordering = OrderingFilter(
         choices=(
@@ -40,6 +41,7 @@ class OrderFilter(FilterWithAny):
         model = Order
         fields = {
             "vendor",
+            "description",
             "has_bottle_deposit",
             "paid",
             "status",

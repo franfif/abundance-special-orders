@@ -3,14 +3,20 @@
     <form class="filter order-filter" method="get">
         <div class="filter-form-div row align-items-end">
             <div class="col row my-auto">
-                {% bootstrap_field filter.form.vendor show_label=False size="small" layout="horizontal"
-                form_group_class="col mb-1" field_class="col" label_class="col-auto" %}
+                <div class="row">
+                    {% bootstrap_field filter.form.description show_label=False size="small" layout="horizontal"
+                    form_group_class="col pe-0 mb-1" field_class="col" label_class="col-auto" %}
 
-                {% bootstrap_field filter.form.status show_label=False size="small" layout="horizontal"
-                form_group_class="col mb-1" field_class="col" label_class="col-auto" %}
+                    {% bootstrap_field filter.form.vendor show_label=False size="small" layout="horizontal"
+                    form_group_class="col mb-1" field_class="col" label_class="col-auto" %}
+                </div>
+                <div class="row">
+                    {% bootstrap_field filter.form.customer_full_info show_label=False size="small" layout="horizontal"
+                    form_group_class="col pe-0" field_class="col" label_class="col-auto" %}
 
-                {% bootstrap_field filter.form.customer_full_info show_label=False size="small" layout="horizontal"
-                form_group_class="pe-0" field_class="col pe-0" label_class="col-auto" %}
+                    {% bootstrap_field filter.form.status show_label=False size="small" layout="horizontal"
+                    form_group_class="col" field_class="col" label_class="col-auto" %}
+                </div>
             </div>
             <div class="col row my-auto">
                 {% bootstrap_field filter.form.has_bottle_deposit show_label=True size="small"

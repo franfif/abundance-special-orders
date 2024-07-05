@@ -39,3 +39,9 @@ class FilterWithAny(FilterSet):
                     | Q(customer__phone_number__contains=term)
                 )
         return queryset
+
+    def search_description(self, queryset, name, value):
+        terms = value.split()
+        for term in terms:
+            queryset = queryset.filter(description__icontains=term)
+        return queryset
