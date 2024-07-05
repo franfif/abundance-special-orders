@@ -16,9 +16,15 @@
                     <span id="status-{{ order.id }}"
                           class="col-auto badge text-dark {{ order|status_badge }}">{{ order|status }}</span>
                     {% if order.is_cancelled %}
-                    <span id="cancelled-{{ order.id }}" class="col-auto badge text-dark bg-warning">Cancelled</span>
+                    <span id="cancelled-{{ order.id }}" class="col-auto badge bg-dark" data-bs-toggle="tooltip"
+                          data-bs-placement="bottom" title="Order cancelled">
+                        <i class="fa-solid fa-ban"></i>
+                    </span>
                     {% elif order.is_stand_by %}
-                    <span id="stand-by-{{ order.id }}" class="col-auto badge text-dark bg-warning">Stand-By</span>
+                    <span id="stand-by-{{ order.id }}" class="col-auto badge bg-dark" data-bs-toggle="tooltip"
+                          data-bs-placement="bottom" title="Order paused">
+                        <i class="fa-solid fa-pause"></i>
+                    </span>
                     {% endif %}
                 </div>
                 <div class="order-header-btn col-auto ms-auto">
