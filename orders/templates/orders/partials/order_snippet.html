@@ -14,7 +14,7 @@
                 <div class="order-header col-auto">
                     <span id="date-created-{{ order.id }}" class="col-auto me-auto badge bg-light text-dark">{{ order.date_created|short_date }}</span>
                     <span id="status-{{ order.id }}"
-                          class="col-auto badge text-dark bg-info">{{ order|status }}</span>
+                          class="col-auto badge text-dark {{ order|status_badge }}">{{ order|status }}</span>
                     {% if order.is_cancelled %}
                     <span id="cancelled-{{ order.id }}" class="col-auto badge text-dark bg-warning">Cancelled</span>
                     {% elif order.is_stand_by %}

@@ -123,6 +123,36 @@ form, .form-select, .form-control, .select2, .select2-results, .btn-sm, .filter-
     padding: 0;
 }
 
+.bg-incomplete {
+    /*background-color: #FF0000;*/
+    background-color: #FFB3B3;
+}
+
+.bg-ready_to_order {
+    /*background-color: #FFA500;*/
+    background-color: #FFD580;
+}
+
+.bg-ordered {
+    /*background-color: #FFFF00;*/
+    background-color: #FFFFB3;
+}
+
+.bg-received {
+    /*background-color: #008000;*/
+    background-color: #B3FFB3;
+}
+
+.bg-called {
+    /*background-color: #0000FF;*/
+    background-color: #B3D9FF;
+}
+
+.bg-picked_up {
+    /*background-color: #800080;*/
+    background-color: #D9B3FF;
+}
+
 .order-header {
     padding: 0;
 }
