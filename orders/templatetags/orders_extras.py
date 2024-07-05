@@ -21,6 +21,13 @@ def status(value):
 
 
 @register.filter
+def status_badge(value):
+    if value.status is not None:
+        return "bg-" + value.status.lower()
+    return "bg-" + default_values.NO_STATUS.lower()
+
+
+@register.filter
 def short_date(value):
     if value is not None:
         return value.strftime("%a, %b %d %Y")
