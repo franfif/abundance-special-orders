@@ -44,7 +44,7 @@
             <div class="row">
                 <div class="order-header order-description col">
                     <span class="col-auto">{{ order|quantity }}
-                        <span class="order-small-text"> units of </span>
+                        <span class="order-small-text"> {{ order|unit_of }} </span>
                         {{ order.description }}</span>
                 </div>
                 <div class="order-header-btn col-auto ms-auto">

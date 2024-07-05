@@ -37,6 +37,16 @@ def quantity(value):
 
 
 @register.filter
+def unit_of(value):
+    try:
+        if value.quantity > 1:
+            return "units of"
+        return "unit of"
+    except TypeError:
+        return "unit of"
+
+
+@register.filter
 def vendor(value):
     if value.vendor is not None:
         return value.vendor
