@@ -75,7 +75,10 @@
             </div>
 
         </div>
-        <div class="card-body order-body">
+        <div class="card-body order-body"
+             data-bs-toggle="collapse"
+             data-bs-target=".collapse-{{order.id}}"
+             aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item px-0">
                     <div>{{ order|vendor }} - {{ order|product_number }}</div>
@@ -113,23 +116,17 @@
                     </li>
                 </ul>
             </div>
-            <div class="row justify-content-between btn-order-bottom">
-                <button class="col btn btn-sm btn-light btn-previous-step{% if not order.status|previous_step %} disabled {% endif %}"
+        </div>
+        <div class="card-footer py-0">
+            <div class="row justify-content-between btn-order-bottom p-0">
+                <button class="col btn btn-sm btn-light btn-previous-step me-1{% if not order.status|previous_step %} disabled {% endif %}"
                         data-order-id="{{ order.id }}"
                         data-bs-toggle="{% if order.status|previous_step == 'Delete' %}modal{% endif %}"
                         data-bs-target="#delete-order-{{ order.id }}">
                     <span><i class="fa-solid fa-chevron-left"></i></span>
                     <span id="previous-step-{{ order.id }}">{{ order.status|previous_step|default_if_none:"" }}</span>
                 </button>
-                <span class="btn-order-more-hide mx-auto">
-                    <button class="align-text-top btn-orders btn-order-more-info" type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target=".collapse-{{order.id}}"
-                            aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
-                        <i class="fa-solid fa-circle-chevron-down"></i>
-                    </button>
-                </span>
-                <button class="col btn btn-sm btn-light btn-next-step{% if not order.status|next_step %} disabled {% endif %}"
+                <button class="col btn btn-sm btn-light btn-next-step ms-1{% if not order.status|next_step %} disabled {% endif %}"
                         data-order-id="{{ order.id }}" data-next-status="{{ order.status|next_step }}"
                         data-paid="{{ order.paid }}"
                         data-bs-toggle="{% if order.status|next_step == 'Picked-Up' and not order.paid %}modal{% endif %}"
