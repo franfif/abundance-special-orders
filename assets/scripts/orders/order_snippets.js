@@ -17,26 +17,24 @@ for (const btn of btns_order_more_info) {
     });
 }
 
-export function addButtonEvents() {
-    const previousStepButtons = $('.btn-previous-step');
+function handlerPreviousStepClick(event) {
+    const orderId = event.currentTarget.dataset.orderId;
+    updateOrderStatus(orderId, 'previous_step');
+}
 
-    for (const button of previousStepButtons) {
-        button.addEventListener('click', function () {
-            const orderId = this.dataset.orderId;
-            updateOrderStatus(orderId, 'previous_step');
-        });
+function handlerNextStepClick(event) {
+    if (event.currentTarget.dataset.nextStatus !== 'Picked-Up' || event.currentTarget.dataset.paid !== "False") {
+        const orderId = event.currentTarget.dataset.orderId;
+        updateOrderStatus(orderId, 'next_step');
     }
+}
 
-    const nextStepButtons = $('.btn-next-step');
-    for (const button of nextStepButtons) {
-        button.addEventListener('click', function () {
-            // Don't update an order to picked up if it is unpaid
-            if (this.dataset.nextStatus !== 'Picked-Up' || this.dataset.paid !== "False") {
-                const orderId = this.dataset.orderId;
-                updateOrderStatus(orderId, 'next_step');
-            }
-        });
-    }
+export function addButtonEvents(orderCardId = null) {
+    const previousStepButtons = orderCardId ? $(orderCardId + ' .btn-previous-step') : $('.btn-previous-step');
+    previousStepButtons.on("click", handlerPreviousStepClick);
+
+    const nextStepButtons = orderCardId ? $(orderCardId + ' .btn-next-step') : $('.btn-next-step');
+    nextStepButtons.on("click", handlerNextStepClick);
 }
 
 function updateOrderStatus(orderId, action) {
@@ -56,8 +54,9 @@ function updateOrderStatus(orderId, action) {
             if (data.redirect) {
                 window.location.href = data.redirect;
             } else {
-                $('#order-card-' + orderId).replaceWith(data.order);
-                addButtonEvents();
+                const orderCardId = '#order-card-' + orderId
+                $(orderCardId).replaceWith(data.order);
+                addButtonEvents(orderCardId);
             }
         })
         .catch(error => {
