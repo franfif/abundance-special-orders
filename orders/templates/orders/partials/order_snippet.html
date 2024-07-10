@@ -11,7 +11,10 @@
     <div class="card my-2 {% if not order.is_stand_by and not order.is_cancelled %} border-primary {% endif %}">
         <div class="card-header">
             <div class="row ">
-                <div class="order-header col-auto">
+                <div class="order-header col" role="button"
+                     data-bs-toggle="collapse"
+                     data-bs-target=".collapse-{{order.id}}"
+                     aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
                     <span id="date-created-{{ order.id }}" class="col-auto me-auto badge bg-light text-dark">{{ order.date_created|short_date }}</span>
                     <span id="status-{{ order.id }}"
                           class="col-auto badge text-dark {{ order|status_badge }}">{{ order|status }}</span>
@@ -48,7 +51,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="order-header order-description col">
+                <div class="order-header order-description col" role="button"
+                     data-bs-toggle="collapse"
+                     data-bs-target=".collapse-{{order.id}}"
+                     aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
                     <span class="col-auto">{{ order|quantity }}
                         <span class="order-small-text"> {{ order|unit_of }} </span>
                         {{ order.description }}</span>
@@ -75,7 +81,7 @@
             </div>
 
         </div>
-        <div class="card-body order-body"
+        <div class="card-body order-body" role="button"
              data-bs-toggle="collapse"
              data-bs-target=".collapse-{{order.id}}"
              aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
