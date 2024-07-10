@@ -56,8 +56,13 @@ filter_form_fields.each(function () {
         }
     });
     this.addEventListener(eventType[this.type], () => {
-        // Save field name and id in sessionStorage to mark the field as checked when reloaded
-        sessionStorage.setItem(this.name, this.id);
+        if (this.type === 'radio') {
+            // Save field name and id in sessionStorage to mark the field as checked when reloaded
+            sessionStorage.setItem(this.name, this.id);
+        } else {
+            // Save field name and value in sessionStorage
+            sessionStorage.setItem(this.name, this.value);
+        }
         // Save form data in sessionStorage to keep the filters when the page is reloaded
         sessionStorage.setItem('formData', $('.filter').serialize());
         // Reinitialize the page number when a filter is updated
@@ -65,9 +70,16 @@ filter_form_fields.each(function () {
         // Run updateList function when field is updated
         updateList();
     });
-    // Mark the fields as checked when the page is reloaded
-    if (sessionStorage.getItem(this.name) === this.id) {
-        $('input[name=' + this.name + '][id=' + this.id + ']').prop("checked", "checked");
+    if (this.type === 'radio') {
+        // Mark the fields as checked when the page is reloaded
+        if (sessionStorage.getItem(this.name) === this.id) {
+            $('input[name=' + this.name + '][id=' + this.id + ']').prop("checked", "checked");
+        }
+    } else {
+        // Keep the field value when the page is reloaded
+        if (sessionStorage.getItem(this.name)) {
+            this.value = sessionStorage.getItem(this.name);
+        }
     }
 });
 
