@@ -92,7 +92,7 @@ if (sessionStorage.getItem("show_form") === "show") {
 const book_price = document.getElementById('id_book_price');
 if (book_price) {
     book_price.addEventListener('change', (event) => {
-        if (book_price.value >= 100 && book_price.value % 2 === 0) {
+        if (book_price.value >= 500 && !(book_price.value.includes('.'))) {
             book_price.value /= 100;
         }
         book_price.value = parseFloat(book_price.value).toFixed(2);
