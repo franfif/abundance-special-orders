@@ -7,8 +7,7 @@ from django.db.models.functions import Lower
 from .models import Customer
 from .filters import CustomerFilter
 
-
-display_choice = "table"
+from preferences.models import Preference
 
 
 class CustomerView(generic.View):
@@ -47,6 +46,7 @@ class CustomerUpdateView(CustomerListCreateView, generic.UpdateView):
         context = super().get_context_data(**kwargs)
         # Add action to context
         context["action"] = "update"
+        context["display_choice"] = Preference.objects.get(user__username=self.request.user).customer_view
         return context
 
     def post(self, request, *args, **kwargs):
