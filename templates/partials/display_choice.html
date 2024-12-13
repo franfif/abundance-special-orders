@@ -1,0 +1,10 @@
+<div class="row col justify-content-end">
+    <input type="radio" class="btn-check" name="display-choice"
+           id="display-cards" autocomplete="off" onclick="this.blur();" {% if display_choice == "CARDS" %}checked{% endif %}>
+    <label style="width: 3rem;" class="btn btn-outline-secondary btn-sm rounded-pill me-1"
+           for="display-cards" onclick="this.blur();">Cards</label>
+    <input type="radio" class="btn-check" name="display-choice" id="display-list"
+           autocomplete="off" onclick="this.blur();" {% if display_choice == "LIST" %}checked{% endif %}>
+    <label style="width: 3rem;" class="btn btn-outline-secondary btn-sm rounded-pill"
+           for="display-list" onclick="this.blur();">List</label>
+</div>

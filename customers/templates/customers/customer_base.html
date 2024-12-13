@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load bootstrap5 %}
+{% load static %}
 {% block content %}
-<div class="row">
+
+<div class="row mt-2">
     {% if action == 'update' %}
     {% include 'customers/partials/update_customer.html' %}
     {% else %}
@@ -19,21 +21,21 @@
                 form_group_class="col mb-1" field_class="col" label_class="col-auto" %}
             </div>
             <div class="col-auto mb-1 me-0 justify-content-end">
-                {% if action == 'update' %}
-                <a class="align-self-end btn btn-light btn-sm"
-                   href="{% url 'customers:edit-customer' customer.id %}">Clear filters</a>
-                {% else %}
-                <a class="align-self-end btn btn-light btn-sm"
-                   href="{% url 'customers:list-customers' %}">Clear filters</a>
-                {% endif %}
-                <input class="align-self-end btn btn-primary btn-sm" type="submit" value="Apply filters"/>
+                <button id="reset-filters" class="col btn btn-dark btn-sm" type="reset">Clear filters</button>
             </div>
         </form>
         {% include 'partials/display_choice.html' %}
     </div>
 </div>
+<!--  Include list of orders-->
 <div class="item-list customer-list">
-    {% include 'customers/partials/list_customers.html' with customer_list=filter.qs %}
+    <div class="position-relative loading-container">
+        <div class="position-absolute top-50 start-50 translate-middle ">
+            <img src="{% static 'media/Abundance_Logo_Sq.png' %}" width="400"
+                 class="rotate d-inline-block align-middle me-2"
+                 alt="">
+        </div>
+    </div>
 </div>
 
 {% endblock %}
