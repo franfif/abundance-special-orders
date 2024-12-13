@@ -12,6 +12,8 @@ from .models import Order
 from .forms import CreateOrderForm
 from .filters import OrderFilter, CustomerOrderFilter
 
+from preferences.models import Preference
+
 
 class OrderFilterView(FilterView):
     model = Order
@@ -22,6 +24,7 @@ class OrderFilterView(FilterView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["origin"] = "order"
+        context["display_choice"] = Preference.objects.get(user__username__iexact="abundance").order_view
         return context
 
 

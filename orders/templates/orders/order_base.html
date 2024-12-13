@@ -4,31 +4,35 @@
 {% block content %}
 
 <script>const origin = "{{ origin }}"</script>
+<div class="row mt-2">
+    <div class="row col-6 px-1">
+        <!--  Button to display filter form  -->
+        <button id="btn-show-filters" type="button" class="btn btn-sm me-1 filter-btn col-auto"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse-filters"
+                aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
+            <i class="fa-solid fa-filter col-auto my-auto"></i>
+        </button>
 
-<div class="row px-1">
-    <!--  Button to display filter form  -->
-    <button id="btn-show-filters" type="button" class="btn btn-sm mt-2 me-1 filter-btn col-auto"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapse-filters"
-            aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
-        <i class="fa-solid fa-filter col-auto my-auto"></i>
-    </button>
+        <!--  Button to display order form -->
+        <button id="btn-order-form" type="button"
+                class="btn btn-sm {% if action == 'update' %}btn-warning{% else %}btn-primary{% endif %} col-auto"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse-order-form"
+                aria-expanded="{% if action == 'update' %}true{% else %}false{% endif %}"
+                aria-controls="collapseExample"
+                onclick="this.blur();">
+            {% if action == 'update' %}
+            <i class="fa-solid fa-cart-arrow-down col-auto my-auto"></i>
+            Update Order
+            {% else %}
+            <i class="fa-solid fa-cart-plus col-auto my-auto"></i>
+            Add New Order
+            {% endif %}
+        </button>
 
-    <!--  Button to display order form -->
-    <button id="btn-order-form" type="button"
-            class="btn btn-sm mt-2 {% if action == 'update' %}btn-warning{% else %}btn-primary{% endif %} col-auto"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapse-order-form"
-            aria-expanded="{% if action == 'update' %}true{% else %}false{% endif %}" aria-controls="collapseExample"
-            onclick="this.blur();">
-        {% if action == 'update' %}
-        <i class="fa-solid fa-cart-arrow-down col-auto my-auto"></i>
-        Update Order
-        {% else %}
-        <i class="fa-solid fa-cart-plus col-auto my-auto"></i>
-        Add New Order
-        {% endif %}
-    </button>
+    </div>
+    {% include 'partials/display_choice.html' %}
 </div>
 
 <!--  Filters  -->
