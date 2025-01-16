@@ -207,3 +207,18 @@ form, .form-select, .form-control, .select2, .select2-results, .btn-sm, .filter-
 td .list-group-item {
     background: none;
 }
+
+@media print {
+
+    .no-print {
+        display: none;
+    }
+
+    body {
+        font-size: 10%;
+    }
+
+    main {
+    font-size: inherit;
+    }
+}
