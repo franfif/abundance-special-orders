@@ -1,0 +1,120 @@
+{% load orders_extras %}
+
+<tr id="order-card-{{ order.id }}"
+    data-vendor="{{ order.vendor.id }}"
+    data-status="{{ order.status }}"
+    data-customer="{{ order.customer.id }}"
+    data-has_bottle_deposit="{{ order.has_bottle_deposit }}"
+    data-paid="{{ order.paid }}"
+    data-is_stand_by="{{ order.is_stand_by }}"
+    data-is_cancelled="{{ order.is_cancelled }}"
+>
+    <td class="col-date"
+        role="button"
+        data-bs-toggle="collapse"
+        data-bs-target=".collapse-{{order.id}}"
+        aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
+        <span class="col-auto me-auto badge text-dark">
+            {{ order.date_created|short_date }}
+        </span>
+        <div class="collapse collapse-{{order.id}}">
+            <div>Employee: {{ order.employee_initials }}</div>
+        </div>
+    </td>
+    <td class="col-status">
+        <div class="d-flex justify-content-between">
+            <button class="btn btn-sm btn-light btn-previous-step me-1{% if not order.status|previous_step %} disabled {% endif %} no-print"
+                    data-order-id="{{ order.id }}"
+                    data-bs-toggle="{% if order.status|previous_step == 'Delete' %}modal{% endif %}"
+                    data-bs-target="#delete-order-{{ order.id }}">
+                <span><i class="fa-solid fa-chevron-left"></i></span>
+                <span id="previous-step-{{ order.id }}">{{ order.status|previous_step|default_if_none:"" }}</span>
+            </button>
+            <span id="status-{{ order.id }}" class="badge text-dark {{ order|status_badge }} ">
+                {{ order|status }}
+            </span>
+            <button class="btn btn-sm btn-light btn-next-step ms-1{% if not order.status|next_step %} disabled {% endif %} no-print"
+                    data-order-id="{{ order.id }}" data-next-status="{{ order.status|next_step }}"
+                    data-paid="{{ order.paid }}"
+                    data-bs-toggle="{% if order.status|next_step == 'Picked-Up' and not order.paid %}modal{% endif %}"
+                    data-bs-target="#pickup-order-{{ order.id }}">
+                <span id="next-step-{{ order.id }}">{{ order.status|next_step|default_if_none:"" }}</span>
+                <span><i class="fa-solid fa-chevron-right"></i></span>
+            </button>
+        </div>
+    </td>
+    <td class="col-description"
+        role="button"
+        data-bs-toggle="collapse"
+        data-bs-target=".collapse-{{order.id}}"
+        aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
+        {{ order|quantity }}
+        <span class="order-small-text"> {{ order|unit_of }} </span>
+        {{ order.description }}
+        <div class="collapse collapse-{{order.id}}">Memo: {{ order.memo }}</div>
+    </td>
+    <td class="col-vendor"
+        role="button"
+        data-bs-toggle="collapse"
+        data-bs-target=".collapse-{{order.id}}"
+        aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">{{ order|vendor }} - {{
+        order|product_number }}
+        <div class="collapse collapse-{{order.id}}">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item px-0 ">
+                    <div>Ordered: <span id="date-ordered-{{ order.id }}">{{ order.date_ordered|date }}</span></div>
+                    <div>Received: <span id="date-received-{{ order.id }}">{{ order.date_received|date }}</span>
+                    </div>
+                    <div>Called: <span id="date-called-{{ order.id }}">{{ order.date_called|date }}</span></div>
+                    <div>Picked-up: <span id="date-picked-up-{{ order.id }}">{{ order.date_picked_up|date }}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </td>
+    <td class="col-price">${{ order|book_price }} => ${{ order|total_price }} ({{ order|paid }})
+        <div class="collapse collapse-{{order.id}}">
+            <div>Bottle Deposit: {{ order.has_bottle_deposit }}</div>
+            <div>Number of Bottles: {{ order.number_bottle_deposit }}</div>
+        </div>
+    </td>
+    <td class="col-customer"
+        role="button"
+        data-bs-toggle="collapse"
+        data-bs-target=".collapse-{{order.id}}"
+        aria-expanded="false" aria-controls="collapseExample" onclick="this.blur();">
+        <div>{{ order|customer_name }}</div>
+        <div>{{ order.customer.phone_number_formatted|default_if_none:"" }}</div>
+        <div>{{ order.customer.email|default_if_none:"" }}</div>
+        <div class="collapse collapse-{{order.id}}">
+            <div class="customer-company">{{ order|customer_company }}</div>
+            <div class="customer-status">{{ order|customer_status }}</div>
+        </div>
+    </td>
+    <td class="col-actions">
+        <div class="d-flex">
+            {% if order.status != "DELETED" %}
+            <a class="btn-orders mx-1 py-1 px-2" href="{% url 'orders:edit-order' order.id %}" title="Edit">
+                <i class="fa-solid fa-pen"></i>
+            </a>
+            <a class="btn-orders mx-1 py-1 px-2" href="{% url 'orders:copy-order' order.id %}" title="Copy">
+                <i class="fa-solid fa-copy"></i>
+            </a>
+            {% else %}
+            <form action="{% url 'orders:restore-order' order.id %}" method="post" class="d-inline-block me-1">
+                {% csrf_token %}
+                <button class="btn-orders mx-1" type="submit" name="restore" title="Restore">
+                    <i class="fa-solid fa-trash-arrow-up"></i>
+                </button>
+            </form>
+            <button class="btn-orders mx-1" data-order-id="{{ order.id }}" data-bs-toggle="modal"
+                    data-bs-target="#force-delete-order-{{ order.id }}" title="Force Delete">
+                <i class="fa-solid fa-skull-crossbones"></i>
+            </button>
+            {% include 'orders/partials/modals/force_delete_modal.html' %}
+            {% endif %}
+        </div>
+    </td>
+</tr>
+
+{% include 'orders/partials/modals/modal_conditions.html' %}
