@@ -15,14 +15,12 @@
                 <p>Are you sure you want to mark it as picked-up?</p>
             </div>
             <div class="modal-footer justify-content-center">
-                <form action="{% url 'orders:unpaid-pickup' order.id %}"
-                      method="post">
+                <form action="{% url 'orders:unpaid-pickup' order.id %}" method="post">
                     {% csrf_token %}
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
                     <input type="hidden" value="{{ request.get_full_path }}" name="url">
                     <input class="btn btn-success btn-sm" type="submit" name="paid" value="It has been paid!">
-                    <input class="btn btn-warning btn-sm" type="submit" name="not_paid"
-                           value="Not paid ¯\_(ツ)_/¯">
+                    <input class="btn btn-warning btn-sm" type="submit" name="not_paid" value="Not paid ¯\_(ツ)_/¯">
                 </form>
             </div>
         </div>
