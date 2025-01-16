@@ -239,7 +239,7 @@ def unpaid_pickup(request, pk):
     return redirect("orders:home")
 
 
-def display_cards(request, pk=None, action=None, status=None):
+def display_cards(request, **kwargs):
     if request.method == "POST":
         print("in order views display cards")
         preference = Preference.objects.get(user__username__iexact="abundance")
@@ -248,7 +248,7 @@ def display_cards(request, pk=None, action=None, status=None):
     return JsonResponse({"status": "success"})
 
 
-def display_list(request, pk=None, action=None, status=None):
+def display_list(request, **kwargs):
     if request.method == "POST":
         print("in order views display list")
         preference = Preference.objects.get(user__username__iexact="abundance")

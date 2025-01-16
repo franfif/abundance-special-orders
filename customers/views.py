@@ -118,7 +118,7 @@ def filter_customers(request, **kwargs):
     # Convert the list to JSON and return it as a response
     return JsonResponse({"item_list_html": customers_html})
 
-def display_cards(request):
+def display_cards(request, **kwargs):
     if request.method == "POST":
         preference = Preference.objects.get(user__username__iexact="abundance")
         preference.customer_view = Preference.CARDS
@@ -126,7 +126,7 @@ def display_cards(request):
     return JsonResponse({"status": "success"})
 
 
-def display_list(request):
+def display_list(request, **kwargs):
     if request.method == "POST":
         preference = Preference.objects.get(user__username__iexact="abundance")
         preference.customer_view = Preference.LIST
