@@ -1,0 +1,9 @@
+{% load orders_extras %}
+
+{% if order.status|previous_step == 'Delete' %}
+{% include 'orders/partials/modals/delete_modal.html' %}
+{% endif %}
+
+{% if order.status|next_step == 'Picked-Up' and not order.paid %}
+{% include 'orders/partials/modals/pickup_modal.html' %}
+{% endif %}
