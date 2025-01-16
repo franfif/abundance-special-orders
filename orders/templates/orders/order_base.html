@@ -4,7 +4,7 @@
 {% block content %}
 
 <script>const origin = "{{ origin }}"</script>
-<div class="row mt-2">
+<div class="row mt-2 no-print">
     <div class="row col-6 px-1">
         <!--  Button to display filter form  -->
         <button id="btn-show-filters" type="button" class="btn btn-sm me-1 filter-btn col-auto"
@@ -36,13 +36,13 @@
 </div>
 
 <!--  Filters  -->
-<div id="collapse-filters" class="row px-1 order-filters collapse collapse-filters">
+<div id="collapse-filters" class="row px-1 order-filters collapse collapse-filters no-print">
     {% include 'orders/partials/order_filter.html' %}
 </div>
 
 <!--  Order Form-->
 <div id="collapse-order-form"
-     class="row px-1 order-form collapse collapse-order-form {% if action == 'update' or action == 'copy' %}show{% endif %}">
+     class="row px-1 order-form collapse collapse-order-form {% if action == 'update' or action == 'copy' %}show{% endif %} no-print">
     {% include 'orders/partials/order_form.html' %}
 </div>
 
