@@ -1,24 +1,49 @@
-from django.urls import path
+from django.urls import path, include
 
 from . import views
 
 app_name = "orders"
-urlpatterns = [
-    path("", views.OrderListCreateView.as_view(), name="home"),
+
+filter_and_display_paths = [
     path("filter/", views.filter_orders, name="filter-orders"),
-    path("<int:pk>/edit_order/", views.OrderUpdateView.as_view(), name="edit-order"),
-    path("<int:pk>/edit_order/filter/", views.filter_orders, name="filter-orders"),
-    path(
-        "<int:pk>/copy_order/", views.OrderListCreateView.as_view(), name="copy-order"
+    path("display_cards/", views.display_cards, name="display-cards"),
+    path("display_list/", views.display_list, name="display-list"),
+]
+
+urlpatterns = [
+    path("",
+        include(
+            [
+                path("", views.OrderListCreateView.as_view(), name="home"),
+                *filter_and_display_paths,
+            ]
+        ),
     ),
-    path("<int:pk>/copy_order/filter/", views.filter_orders, name="filter-orders"),
-    path(
-        "orders/<status>/", views.OrderListCreateView.as_view(), name="filtered-orders"
+    path("<int:pk>/edit_order/",
+        include(
+            [
+                path("", views.OrderUpdateView.as_view(), name="edit-order"),
+                *filter_and_display_paths,
+            ]
+         ),
     ),
     path(
-        "orders/<status>/filter/",
-        views.filter_orders,
-        name="filter-orders",
+        "<int:pk>/copy_order/",
+        include(
+            [
+                path("", views.OrderListCreateView.as_view(), name="copy-order"),
+                *filter_and_display_paths,
+            ]
+        ),
+    ),
+    path(
+        "orders/<status>/",
+        include (
+            [
+                path("", views.OrderListCreateView.as_view(), name="filtered-orders"),
+                *filter_and_display_paths,
+            ]
+        ),
     ),
     path("<int:pk>/delete_order/", views.send_order_to_trash, name="delete-order"),
     path("<int:pk>/restore_order/", views.restore_order, name="restore-order"),

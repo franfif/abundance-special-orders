@@ -1,10 +1,11 @@
-{% if display_choice == 'cards' %}
+{% if display == 'CARDS' %}
 
 {% include 'customers/partials/customer_card.html' %}
 
 {% else %}
 
-{% include 'customers/partials/customer_table.html' %}
+{% include 'customers/partials/customer_list.html' %}
 
 {% endif %}
 
+{% include "partials/pagination.html" with page=customer_list %}

@@ -1,19 +1,73 @@
 {% if page.has_other_pages %}
 <nav aria-label="...">
     <ul class="pagination pagination-sm justify-content-center">
-        {% for num in page.paginator.page_range %}
-        {% if num == page.number %}
-        <li class="page-item active">
-            <span class="btn-pagination page-link" data-page="page={{ num }}"
-                  aria-current="page">{{ num }}
-            </span>
+        <li class="page-item {% if not page.has_previous %}disabled{% endif %}">
+            <span class="btn-pagination page-link"
+                  data-page="{% if page.has_previous %}page={{ page.previous_page_number }}{% endif %}"><i
+                    class="fa-solid fa-chevron-left"></i></span>
         </li>
-        {% else %}
-        <li class="page-item">
-            <span class="btn-pagination page-link" data-page="page={{ num }}">{{ num }}</span>
+        <li class="page-item {% if page.number == 1 %}active{% endif %}">
+            <span class="btn-pagination page-link" data-page="page=1">1</span>
+        </li>
+        {% if page.number > 5 %}
+        <li class="page-item disabled">
+            <span class="page-link" data-page="">...</span>
         </li>
         {% endif %}
-        {% endfor %}
+
+        {% if page.number > 4 %}
+        <li class="page-item">
+            <span class="btn-pagination page-link" data-page="page={{ page.number|add:'-3' }}">{{ page.number|add:'-3' }}</span>
+        </li>
+        {% endif %}
+
+        {% if page.number > 3 %}
+        <li class="page-item">
+            <span class="btn-pagination page-link" data-page="page={{ page.number|add:'-2' }}">{{ page.number|add:"-2" }}</span>
+        </li>
+        {% endif %}
+        {% if page.number > 2 %}
+        <li class="page-item">
+            <span class="btn-pagination page-link" data-page="page={{ page.number|add:'-1' }}">{{ page.number|add:"-1" }}</span>
+        </li>
+        {% endif %}
+        {% if page.number > 1 and page.number < page.paginator.num_pages %}
+        <li class="page-item active">
+            <span class="btn-pagination page-link" data-page="page={{ page.number }}">{{ page.number }}</span>
+        </li>
+        {% endif %}
+        {% if page.number|add:"1" < page.paginator.num_pages %}
+        <li class="page-item">
+                    <span class="btn-pagination page-link"
+                          data-page="page={{ page.number|add:'1' }}">{{ page.number|add:"1" }}</span>
+        </li>
+        {% endif %}
+        {% if page.number|add:"2" < page.paginator.num_pages %}
+        <li class="page-item">
+                    <span class="btn-pagination page-link"
+                          data-page="page={{ page.number|add:'2' }}">{{ page.number|add:"2" }}</span>
+        </li>
+        {% endif %}
+        {% if page.number|add:"3" < page.paginator.num_pages %}
+        <li class="page-item">
+                    <span class="btn-pagination page-link"
+                          data-page="page={{ page.number|add:'3' }}">{{ page.number|add:"3" }}</span>
+        </li>
+        {% endif %}
+        {% if page.number|add:"4" < page.paginator.num_pages %}
+        <li class="page-item disabled">
+            <span class="page-link">...</span>
+        </li>
+        {% endif %}
+
+        <li class="page-item {% if page.number == page.paginator.num_pages %}active{% endif %}">
+            <span class="btn-pagination page-link" data-page="page={{ page.paginator.num_pages }}">{{ page.paginator.num_pages }}</span>
+        </li>
+        <li class="page-item {% if not page.has_next %}disabled{% endif %}">
+            <span class="btn-pagination page-link "
+                  data-page="{% if page.has_next %}page={{ page.next_page_number }}{% endif %}"><i
+                    class="fa-solid fa-chevron-right"></i></span>
+        </li>
     </ul>
 </nav>
 {% endif %}

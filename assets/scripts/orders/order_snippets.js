@@ -30,6 +30,7 @@ function handlerNextStepClick(event) {
 }
 
 export function addButtonEvents(orderCardId = null) {
+    // Add event listeners to button on 1 order or on all orders
     const previousStepButtons = orderCardId ? $(orderCardId + ' .btn-previous-step') : $('.btn-previous-step');
     previousStepButtons.on("click", handlerPreviousStepClick);
 
@@ -46,7 +47,7 @@ function updateOrderStatus(orderId, action) {
         method: 'PUT',
         headers: {
             'X-CSRFToken': csrftoken,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
     })
         .then(response => response.json())

@@ -15,17 +15,20 @@ if (origin === "customer" && sessionStorage.getItem('initialCustomerFormData') =
 }
 
 // Display filters when the page is loaded if shown before reload
-if (sessionStorage.getItem('showFilters') === 'true') {
-    $("#collapse-filters")[0].classList.add("show")
-} else {
-    $("#collapse-filters")[0].classList.remove("show")
+try {
+    if (sessionStorage.getItem('showFilters') === 'true') {
+        $("#collapse-filters")[0].classList.add("show")
+    } else {
+        $("#collapse-filters")[0].classList.remove("show")
+    }
+} catch (e) {
 }
 
 // Call updateList function when the page is loaded
 updateList();
 
 // Update the list of items based on the filter data
-function updateList() {
+export function updateList() {
     let formData = sessionStorage.getItem('formData') || $('.filter').serialize();
     formData += sessionStorage.getItem('page') || '';
     // Ajax request to get updated list and change page content
@@ -86,7 +89,6 @@ filter_form_fields.each(function () {
 function addEventPaginationButtons() {
     $('document').ready(function () {
         $('.btn-pagination ').click(function () {
-            console.log('button clicked');
             sessionStorage.setItem('page', "&" + this.dataset.page);
             updateList()
         });

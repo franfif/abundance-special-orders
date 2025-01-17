@@ -30,11 +30,11 @@
                     </span>
                     {% endif %}
                 </div>
-                <div class="order-header-btn col-auto ms-auto">
+                <div class="order-header-btn col-auto ms-auto no-print">
                     <div class="col-auto">
                         {% if order.status != "DELETED" %}
                         <div>
-                            <a class="btn-orders" href="{% url 'orders:edit-order' order.id %}">
+                            <a class="btn-orders" href="{% url 'orders:edit-order' order.id %}" title="Edit">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
                         </div>
@@ -42,7 +42,7 @@
 
                         <form action="{% url 'orders:restore-order' order.id %}" method="post">
                             {% csrf_token %}
-                            <button class="btn-orders" type="submit" name="restore">
+                            <button class="btn-orders" type="submit" name="restore" title="Restore">
                                 <i class="fa-solid fa-trash-arrow-up"></i>
                             </button>
                         </form>
@@ -59,11 +59,11 @@
                         <span class="order-small-text"> {{ order|unit_of }} </span>
                         {{ order.description }}</span>
                 </div>
-                <div class="order-header-btn col-auto ms-auto">
+                <div class="order-header-btn col-auto ms-auto no-print">
                     <div class="col-auto">
                         {% if order.status != "DELETED" %}
                         <div>
-                            <a class="btn-orders" href="{% url 'orders:copy-order' order.id %}">
+                            <a class="btn-orders" href="{% url 'orders:copy-order' order.id %}" title="Copy">
                                 <i class="fa-solid fa-copy"></i>
                             </a>
                         </div>
@@ -71,7 +71,7 @@
                         <button class="btn-orders"
                                 data-order-id="{{ order.id }}"
                                 data-bs-toggle="modal"
-                                data-bs-target="#force-delete-order-{{ order.id }}">
+                                data-bs-target="#force-delete-order-{{ order.id }}" title="Force Delete">
                             <i class="fa-solid fa-skull-crossbones"></i>
                         </button>
                         {% include 'orders/partials/modals/force_delete_modal.html' %}
@@ -145,10 +145,4 @@
     </div>
 </div>
 
-{% if order.status|previous_step == 'Delete' %}
-{% include 'orders/partials/modals/delete_modal.html' %}
-{% endif %}
-
-{% if order.status|next_step == 'Picked-Up' and not order.paid %}
-{% include 'orders/partials/modals/pickup_modal.html' %}
-{% endif %}
+{% include 'orders/partials/modals/modal_conditions.html' %}

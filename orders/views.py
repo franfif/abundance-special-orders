@@ -12,6 +12,8 @@ from .models import Order
 from .forms import CreateOrderForm
 from .filters import OrderFilter, CustomerOrderFilter
 
+from preferences.models import Preference
+
 
 class OrderFilterView(FilterView):
     model = Order
@@ -22,6 +24,7 @@ class OrderFilterView(FilterView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["origin"] = "order"
+        context["display_choice"] = Preference.objects.get(user__username__iexact="abundance").order_view
         return context
 
 
@@ -107,6 +110,7 @@ class CustomerOrderListView(OrderListCreateView):
 def filter_orders(request, **kwargs):
     # Get the filters from the request
     order_filters = request.GET
+    print(order_filters)
 
     if "customer_id" in kwargs:
         # Show all orders by customer
@@ -141,10 +145,16 @@ def filter_orders(request, **kwargs):
     page_number = request.GET.get("page")
     page_orders = paginator.get_page(page_number)
 
+    template = "orders/partials/order_list.html"
+    preference = Preference.objects.get(user__username__iexact="abundance")
+    if preference.order_view == Preference.LIST:
+        template = "orders/partials/order_table_snippet.html"
+
     # Render items to a string
     orders_html = render_to_string(
-        "orders/partials/list_orders.html",
-        {"order_list": page_orders},
+        "orders/partials/order_list.html",
+        {"order_list": page_orders,
+         "display": preference.order_view},
         request=request,
     )
     # Convert the list to JSON and return it as a response
@@ -169,9 +179,15 @@ def order_update_status(request, order_id, action):
             order.next_status()
         order.save()
 
+        # Define template for the order snippet
+        template = "orders/partials/order_table_snippet.html"
+        preference = Preference.objects.get(user__username__iexact="abundance")
+        if preference.order_view == Preference.CARDS:
+            template = "orders/partials/order_card_snippet.html"
+
         # Render order to a string
         order_html = render_to_string(
-            "orders/partials/order_snippet.html",
+            template,
             {"order": order},
             request=request,
         )
@@ -221,3 +237,21 @@ def unpaid_pickup(request, pk):
         order.next_status()
         order.save()
     return redirect("orders:home")
+
+
+def display_cards(request, **kwargs):
+    if request.method == "POST":
+        print("in order views display cards")
+        preference = Preference.objects.get(user__username__iexact="abundance")
+        preference.order_view = Preference.CARDS
+        preference.save()
+    return JsonResponse({"status": "success"})
+
+
+def display_list(request, **kwargs):
+    if request.method == "POST":
+        print("in order views display list")
+        preference = Preference.objects.get(user__username__iexact="abundance")
+        preference.order_view = Preference.LIST
+        preference.save()
+    return JsonResponse({"status": "success"})

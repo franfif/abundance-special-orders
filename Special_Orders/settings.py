@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "customers",
     "vendors",
     "orders",
+    "preferences",
     "django_select2",
     "bootstrap5",
     "bootstrap_datepicker_plus",

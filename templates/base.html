@@ -22,7 +22,7 @@
 <body class="h-100">
 
 <div class="cover-container d-flex w-100 h-100 mx-auto flex-column">
-    <nav class="container-fluid navbar sticky-top navbar-expand-md navbar-light bg-light py-0">
+    <nav class="container-fluid navbar sticky-top navbar-expand-md navbar-light bg-light py-0 no-print">
         <a class="navbar-brand" href="{% url 'orders:home' %}">
             <img src="{% static 'media/Abundance_Logo.png' %}" width="200" class="d-inline-block align-middle me-2"
                  alt="">
@@ -53,7 +53,7 @@
             {% block content %}{% endblock %}
         </div>
     </main>
-    <footer class="mt-auto">
+    <footer class="mt-auto no-print">
         <div class="text-center bg-light py-2 px-0 mt-4">
         <span>
             Developed by

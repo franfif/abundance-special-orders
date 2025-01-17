@@ -23,13 +23,14 @@
         <td>{{ customer.email|default_if_none:"" }}</td>
         <td>{{ customer.status|default_if_none:"" }}</td>
         <td>
-            <a type="button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show customer's orders"
+            <a class="btn-orders px-1" type="button" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="Show customer's orders"
                href="{% url 'customers:customer-orders' customer.id %}">
                 <i class="fa-solid fa-cart-shopping"></i>
             </a>
         </td>
         <td>
-            <a class="btn-orders"
+            <a class="btn-orders px-1"
                href="{% url 'customers:edit-customer' customer.id %}?customer_full_info={{ request.GET.customer_full_info }}&status={{ request.GET.status }}">
                 <i class="fa-solid fa-pen"></i>
             </a>

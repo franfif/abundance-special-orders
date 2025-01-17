@@ -1,0 +1,13 @@
+{% if order_list|length > 0 %}
+
+{% if display == 'CARDS' %}
+{% include 'orders/partials/order_card_list.html' %}
+{% else %}
+{% include 'orders/partials/order_table_list.html' %}
+{% endif %}
+
+{% include "partials/pagination.html" with page=order_list %}
+
+{% else %}
+<h2 class="text-center mt-5 mb-3">There are no orders yet.</h2>
+{% endif %}
