@@ -30,7 +30,7 @@
                     </span>
                     {% endif %}
                 </div>
-                <div class="order-header-btn col-auto ms-auto">
+                <div class="order-header-btn col-auto ms-auto no-print">
                     <div class="col-auto">
                         {% if order.status != "DELETED" %}
                         <div>
@@ -59,7 +59,7 @@
                         <span class="order-small-text"> {{ order|unit_of }} </span>
                         {{ order.description }}</span>
                 </div>
-                <div class="order-header-btn col-auto ms-auto">
+                <div class="order-header-btn col-auto ms-auto no-print">
                     <div class="col-auto">
                         {% if order.status != "DELETED" %}
                         <div>

@@ -91,7 +91,7 @@
             <div class="customer-status">{{ order|customer_status }}</div>
         </div>
     </td>
-    <td class="col-actions">
+    <td class="col-actions no-print">
         <div class="d-flex">
             {% if order.status != "DELETED" %}
             <a class="btn-orders mx-1 py-1 px-2" href="{% url 'orders:edit-order' order.id %}" title="Edit">
