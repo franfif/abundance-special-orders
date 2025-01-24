@@ -4,6 +4,7 @@ from django.template.loader import render_to_string
 from django.views import generic
 from django.http import JsonResponse
 from django.db.models.functions import Lower
+from django.urls import reverse_lazy
 
 from django_filters.views import FilterView
 
@@ -77,7 +78,8 @@ class CustomerUpdateView(generic.UpdateView, CustomerFilterView):
 
 
 class CustomerDeleteView(CustomerFilterView, generic.DeleteView):
-    pass
+    model = Customer
+    success_url = reverse_lazy("customers:list-customers")
 
 
 def filter_customers(request, **kwargs):
