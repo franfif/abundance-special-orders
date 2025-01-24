@@ -219,10 +219,14 @@ td .list-group-item {
     }
 
     body {
-        font-size: 10%;
+        font-size: 11px;
     }
 
     main {
         font-size: inherit;
+    }
+
+    .table>:not(caption)>*>* {
+        padding: 0;
     }
 }
