@@ -145,10 +145,7 @@ def filter_orders(request, **kwargs):
     page_number = request.GET.get("page")
     page_orders = paginator.get_page(page_number)
 
-    template = "orders/partials/order_list.html"
     preference = Preference.objects.get(user__username__iexact="abundance")
-    if preference.order_view == Preference.LIST:
-        template = "orders/partials/order_table_snippet.html"
 
     # Render items to a string
     orders_html = render_to_string(
