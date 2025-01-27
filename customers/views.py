@@ -23,6 +23,7 @@ class CustomerFilterView(FilterView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["origin"] = "customer"
         context["display_choice"] = Preference.objects.get(user__username__iexact="abundance").customer_view
         return context
 
@@ -104,7 +105,7 @@ def filter_customers(request, **kwargs):
     if not default_ordering:
         # Default ordering if none is provided in the request
         filtered_customers = filtered_customers.order_by(
-            Lower("last_name"), Lower("first_name")
+            Lower("last_name")
         )
 
     paginator = Paginator(filtered_customers, 20)
