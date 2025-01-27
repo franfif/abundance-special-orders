@@ -1,12 +1,12 @@
 import {addButtonEvents} from './orders/order_snippets' ;
 
-const filter_form_fields = $('.order-filter .form-select, .order-filter input')
+const order_filter_form_fields = $('.order-filter .form-select, .order-filter input')
 const eventType = {'text': 'keyup', 'select-one': 'change', 'radio': 'change'};
 
 // Save initial form data for when filters are reset
 // If the page is a customer order page
-if (origin === "customer-order" && sessionStorage.getItem('initialCustomerFormData') === null) {
-    sessionStorage.setItem('initialCustomerFormData', $('.order-filter').serialize());
+if (origin === "customer-order" && sessionStorage.getItem('initialCustomerOrderFormData') === null) {
+    sessionStorage.setItem('initialCustomerOrderFormData', $('.order-filter').serialize());
 }     // If the page is a regular order page
 if (origin === "order" && sessionStorage.getItem('initialFormData') === null) {
     sessionStorage.setItem('initialFormData', $('.order-filter').serialize());
@@ -53,7 +53,7 @@ export function updateList() {
 }
 
 // Associate each filter fields with actions
-filter_form_fields.each(function () {
+order_filter_form_fields.each(function () {
     // Prevent form submission when the Enter key is pressed
     this.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
@@ -105,14 +105,14 @@ $('#btn-show-filters').click(function (event) {
 })
 
 // Actions when the reset filters button is clicked
-const btnResetFilters = $('#reset-filters')[0]
+const btnResetFilters = $('#reset-order-filters')[0]
 if (origin === "customer-order" || origin === "order") {
     btnResetFilters.addEventListener('click', function (event) {
     // Remove field state from sessionStorage
-        filter_form_fields.each(resetFields)
+        order_filter_form_fields.each(resetFields)
         // Apply initial filters to formData
         if (origin === "customer-order") {
-            sessionStorage['formData'] = sessionStorage.getItem('initialCustomerFormData')
+            sessionStorage['formData'] = sessionStorage.getItem('initialCustomerOrderFormData')
         } else {
             if (origin === "order"){
                 sessionStorage['formData'] = sessionStorage.getItem('initialFormData')
