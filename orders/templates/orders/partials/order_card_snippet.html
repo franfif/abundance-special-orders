@@ -115,6 +115,9 @@
                         <div>Called: <span id="date-called-{{ order.id }}">{{ order.date_called|date }}</span></div>
                         <div>Picked-up: <span id="date-picked-up-{{ order.id }}">{{ order.date_picked_up|date }}</span>
                         </div>
+                        {% if order.status == "DELETED" %}
+                        <div>Deleted: <span id="date-deleted-{{ order.id }}">{{ order.date_deleted|date }}</span></div>
+                        {% endif %}
                     </li>
                     <li class="list-group-item px-0 ">
                         <div>Employee initials: {{ order.employee_initials }}</div>
