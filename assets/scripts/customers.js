@@ -1,5 +1,5 @@
 import {getCookie} from "./utils";
-import {updateList} from "./filters";
+import {updateList} from "./customer_filters";
 
 const btn_add_customer = document.getElementById('btn-add-customer');
 if (btn_add_customer) {
@@ -30,7 +30,7 @@ if (btn_display_cards) {
             },
             url: 'display_cards/',
             success: () => {
-                updateList();
+                updateCustomerList();
             },
             error: function (error) {
                 console.log('error');
@@ -51,7 +51,7 @@ if (btn_display_list) {
             },
             url: 'display_list/',
             success: (data) => {
-                updateList();
+                updateCustomerList();
             },
             error: function (error) {
                 console.log('error');

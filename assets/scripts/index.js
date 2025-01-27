@@ -2,7 +2,8 @@ import dirty from 'jquery.dirty';
 // import {getCookie} from './utils';
 import './orders';
 import './customers';
-import './filters';
+import './order_filters';
+import './customer_filters';
 import './utils';
 
 

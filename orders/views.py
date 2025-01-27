@@ -103,14 +103,13 @@ class CustomerOrderListView(OrderListCreateView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context["origin"] = "customer"
+        context["origin"] = "customer-order"
         return context
 
 
 def filter_orders(request, **kwargs):
     # Get the filters from the request
     order_filters = request.GET
-    print(order_filters)
 
     if "customer_id" in kwargs:
         # Show all orders by customer
@@ -145,10 +144,7 @@ def filter_orders(request, **kwargs):
     page_number = request.GET.get("page")
     page_orders = paginator.get_page(page_number)
 
-    template = "orders/partials/order_list.html"
     preference = Preference.objects.get(user__username__iexact="abundance")
-    if preference.order_view == Preference.LIST:
-        template = "orders/partials/order_table_snippet.html"
 
     # Render items to a string
     orders_html = render_to_string(
@@ -241,7 +237,6 @@ def unpaid_pickup(request, pk):
 
 def display_cards(request, **kwargs):
     if request.method == "POST":
-        print("in order views display cards")
         preference = Preference.objects.get(user__username__iexact="abundance")
         preference.order_view = Preference.CARDS
         preference.save()
@@ -250,7 +245,6 @@ def display_cards(request, **kwargs):
 
 def display_list(request, **kwargs):
     if request.method == "POST":
-        print("in order views display list")
         preference = Preference.objects.get(user__username__iexact="abundance")
         preference.order_view = Preference.LIST
         preference.save()
