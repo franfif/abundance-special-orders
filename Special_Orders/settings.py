@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "bootstrap_datepicker_plus",
     "fontawesomefree",
     "django_filters",
+    "django_apscheduler",
 ]
 
 MIDDLEWARE = [
@@ -188,3 +189,8 @@ CACHES = {
 SELECT2_CACHE_BACKEND = "select2"
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+
+
+# APScheduler configuration
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"  # Default format for datetime fields
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
