@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     "bootstrap_datepicker_plus",
     "fontawesomefree",
     "django_filters",
-    "django_apscheduler",
+    # "django_apscheduler",
 ]
 
 MIDDLEWARE = [
