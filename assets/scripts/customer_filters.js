@@ -1,5 +1,5 @@
 
-const customer_filter_form_fields = $('.customer-filter .form-select, .order-filter input')
+const customer_filter_form_fields = $('.customer-filter .form-select, .customer-filter input')
 const customer_eventType = {'text': 'keyup', 'select-one': 'change', 'radio': 'change'};
 
 // Save initial form data for when filters are reset
@@ -78,16 +78,13 @@ function addEventPaginationButtons() {
 }
 
 // Actions when the reset filters button is clicked
-const btnResetFilters = $('#reset-filters')[0]
+const btnResetFilters = $('#reset-customer-filters')[0]
 if (origin === "customer") {
     btnResetFilters.addEventListener('click', function (event) {
         // Remove field state from sessionStorage
         customer_filter_form_fields.each(resetFields)
         // Apply initial filters to formData
-            sessionStorage['CustomerFormData'] = sessionStorage.getItem('initialCustomerFormData')
-    //    } else {
-    //        sessionStorage['formData'] = sessionStorage.getItem('initialFormData')
-    //    }
+        sessionStorage['customerFormData'] = sessionStorage.getItem('initialCustomerFormData')
         // Reinitialize the page number when filters are reset
         sessionStorage.setItem('page', "");
         // Run updateCustomerList function to reset the list
