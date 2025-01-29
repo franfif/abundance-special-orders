@@ -1,5 +1,5 @@
 import {getCookie} from "./utils";
-import {updateList} from "./customer_filters";
+import {updateCustomerList} from "./customer_filters";
 
 const btn_add_customer = document.getElementById('btn-add-customer');
 if (btn_add_customer) {
