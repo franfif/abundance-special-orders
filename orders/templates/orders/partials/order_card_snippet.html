@@ -126,6 +126,7 @@
                 </ul>
             </div>
         </div>
+        {% if order.status != "DELETED" %}
         <div class="card-footer py-0 no-print">
             <div class="row justify-content-between btn-order-bottom p-0">
                 <button class="col btn btn-sm btn-light btn-previous-step me-1{% if not order.status|previous_step %} disabled {% endif %}"
@@ -145,6 +146,7 @@
                 </button>
             </div>
         </div>
+        {% endif %}
     </div>
 </div>
 
