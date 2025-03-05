@@ -2,8 +2,8 @@
 FROM python:3.11-slim-bullseye
 
 # Ensure that Python doesn't buffer the standard output to display log messages in real-time.
-ENV PYTHONUNBUFFERED 1
-ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
 
 # Set the working directory inside the container to /app. All the following commands will be executed in this directory
 WORKDIR /app
