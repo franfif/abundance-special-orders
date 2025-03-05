@@ -12,12 +12,14 @@ class CustomerStatus(models.Model):
     SHAREHOLDER = "SHAREHOLDER"
     SHAREHOLDER_RESALE = "SHAREHOLDER_RESALE"
     EMPLOYEE = "EMPLOYEE"
+    FLOWER = "FLOWER"
 
     STATUS_CHOICES = [
         (NON_SHAREHOLDER, "Non-shareholder"),
         (SHAREHOLDER, "Shareholder"),
         (SHAREHOLDER_RESALE, "Shareholder Resale"),
         (EMPLOYEE, "Employee"),
+        (FLOWER, "FLOWER (Non-Redeemable Share)"),
     ]
     status = models.CharField(choices=STATUS_CHOICES, max_length=64, unique=True)
     margin = models.DecimalField(
