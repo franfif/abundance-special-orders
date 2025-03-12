@@ -48,7 +48,10 @@ class Customer(models.Model):
         super(Customer, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.last_name}, {self.first_name}, {self.phone_number_formatted()}"
+        status = ""
+        if self.status and self.status.status == CustomerStatus.FLOWER:
+            status = ", FLOWER Member"
+        return f"{self.last_name}, {self.first_name}, {self.phone_number_formatted()}{status}"
 
     def add_margin(self, book_price):
         return book_price / (Decimal(100) - self.status.margin) * 100
