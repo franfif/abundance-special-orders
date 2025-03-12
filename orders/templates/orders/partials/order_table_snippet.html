@@ -75,7 +75,8 @@
             </ul>
         </div>
     </td>
-    <td class="col-price">${{ order|book_price }} => ${{ order|total_price }} ({{ order|paid }})
+    <td class="col-price">${{ order|book_price }} => ${{ order|total_price }}
+        <span class="col-auto badge text-dark {{ order|paid_badge }}">{{ order|paid }}</span>
         <div class="collapse collapse-{{order.id}}">
             <div>Bottle Deposit: {{ order.has_bottle_deposit }}</div>
             <div>Number of Bottles: {{ order.number_bottle_deposit }}</div>

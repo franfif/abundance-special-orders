@@ -98,3 +98,26 @@ if (book_price) {
         book_price.value = parseFloat(book_price.value).toFixed(2);
     });
 }
+
+// Toggle paid/Suspended checkboxes
+const btn_paid = document.getElementById('paid_order_form');
+const btn_is_suspended = document.getElementById('is_suspended_order_form');
+
+function toggle_paid_suspended() {
+    if (btn_paid && btn_is_suspended) {
+        // if paid is checked, is_suspended is unchecked
+        btn_paid.addEventListener("change", (e) => {
+            if (e.target.checked) {
+                btn_is_suspended.checked = false
+            }
+        })
+        // if is_suspended is checked, paid is unchecked
+        btn_is_suspended.addEventListener("change", (e) => {
+            if (e.target.checked) {
+                btn_paid.checked = false
+            }
+        })
+    }
+}
+
+toggle_paid_suspended()

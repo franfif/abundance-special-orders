@@ -50,6 +50,7 @@ class Order(models.Model):
         Customer, on_delete=models.PROTECT, blank=True, null=True
     )
     paid = models.BooleanField(default=False)
+    is_suspended = models.BooleanField(default=False)
 
     status = models.CharField(choices=ORDER_STATUS, max_length=64, null=True)
     is_stand_by = models.BooleanField(default=False)
@@ -154,6 +155,11 @@ class Order(models.Model):
         elif self.is_complete():
             self.status = self.READY_TO_ORDER
 
+        self.save()
+
+    def unsuspend_paid_order(self):
+        if self.paid:
+            self.is_suspended = False
         self.save()
 
     def send_to_trash(self):

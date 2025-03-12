@@ -17,6 +17,7 @@ class OrderFilter(FilterWithAny):
         widget=BooleanRadioSelect, label="Cancelled", initial=False
     )
     paid = BooleanFilter(widget=BooleanRadioSelect, label="Paid")
+    is_suspended = BooleanFilter(widget=BooleanRadioSelect, label="Suspended")
     customer_full_info = CharFilter(
         label="Customer information", method="search_customer"
     )
