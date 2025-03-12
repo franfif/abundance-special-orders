@@ -50,6 +50,7 @@ class Order(models.Model):
         Customer, on_delete=models.PROTECT, blank=True, null=True
     )
     paid = models.BooleanField(default=False)
+    is_suspended = models.BooleanField(default=False)
 
     status = models.CharField(choices=ORDER_STATUS, max_length=64, null=True)
     is_stand_by = models.BooleanField(default=False)
