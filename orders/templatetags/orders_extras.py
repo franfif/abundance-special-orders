@@ -10,6 +10,8 @@ register = template.Library()
 def paid(value):
     if value.paid:
         return "Paid"
+    if value.is_suspended:
+        return "Suspended"
     return "Not Paid"
 
 
