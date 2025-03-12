@@ -54,6 +54,7 @@ class CreateOrderForm(forms.ModelForm):
             "quantity",
             "book_price",
             "paid",
+            "is_suspended",
             "has_bottle_deposit",
             "number_bottle_deposit",
             "memo",
@@ -91,6 +92,7 @@ class CreateOrderForm(forms.ModelForm):
         labels = {
             "product_number": "Product #",
             "has_bottle_deposit": "Bottle Deposit",
+            "is_suspended": "Suspended",
             "is_stand_by": "Stand By",
             "is_cancelled": "Cancelled",
             "date_picked_up": "Date picked-up",
