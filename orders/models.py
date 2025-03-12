@@ -157,6 +157,11 @@ class Order(models.Model):
 
         self.save()
 
+    def unsuspend_paid_order(self):
+        if self.paid:
+            self.is_suspended = False
+        self.save()
+
     def send_to_trash(self):
         self.date_deleted = date.today()
         self.update_status()

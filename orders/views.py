@@ -61,6 +61,7 @@ class OrderListCreateView(generic.CreateView, OrderFilterView):
     def form_valid(self, form):
         order = form.save(commit=False)
         order.update_status()
+        order.unsuspend_paid_order()
         return super().form_valid(form)
 
 
@@ -94,6 +95,7 @@ class OrderUpdateView(generic.UpdateView, OrderFilterView):
             )
             return redirect("orders:home")
         order.update_status()
+        order.unsuspend_paid_order()
         return super().form_valid(form)
 
 
