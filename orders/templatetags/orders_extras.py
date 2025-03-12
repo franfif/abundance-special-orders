@@ -14,6 +14,14 @@ def paid(value):
         return "Suspended"
     return "Not Paid"
 
+@register.filter
+def paid_badge(value):
+    if value.paid:
+        return "bg-paid"
+    elif value.is_suspended:
+        return "bg-suspended"
+    return "bg-" + default_values.NO_STATUS.lower()
+
 
 @register.filter
 def status(value):
