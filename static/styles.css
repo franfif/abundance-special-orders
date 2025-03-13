@@ -79,6 +79,10 @@ form, .form-select, .form-control, .select2, .select2-results, .btn-sm, .filter-
     height: 31px;
 }
 
+.toast-container {
+    z-index: 2222;
+}
+
 .date-created {
     font-size: .875rem;
     height: 31px;
